@@ -1,17 +1,25 @@
 import React, {useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {server} from './config/endpoints'
+import {server} from './config/endpoints';
+import {useStateValue} from './context-api/Provider'; 
+import {setUser} from './context-api/actions';
 import Cookies from 'universal-cookie';
+
+// components
 import Login from './components/Login';
 import MainComponent from './components/MainComponent';
 import NewBlog from './components/NewBlog';
+import Header from './components/Header';
+
 import './App.css';
 const cookies = new Cookies();
 
 const App: React.FC = () => {
+  const [{}, dispatch] = useStateValue();
+
   useEffect(() => {
     const token : String = cookies.get('token');
-    console.log(token)
+    // console.log(token)
 
     if(token){
       // auto logging in a user logic
@@ -31,17 +39,21 @@ const App: React.FC = () => {
         return res.json()
       })
       .then(data => {
-        console.log(data.user)
+        // console.log(data.user)
+        dispatch(setUser(data.user));
       })
     }
   }, [])
   return (
     <div className="App">
-        <Switch>
-          <Route path="/" exact component={MainComponent}/>
-          <Route path="/blog/new" component={NewBlog}/>
-          <Route path="/login" component={Login}/>
-        </Switch>
+        <Header/>
+        <div className="container">
+          <Switch>
+            <Route path="/" exact component={MainComponent}/>
+            <Route path="/blogs/new" component={NewBlog}/>
+            <Route path="/login" component={Login}/>
+          </Switch>
+        </div>
     </div>
   );
 }
