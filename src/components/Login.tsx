@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Cookies from 'universal-cookie';
 import {useLocation} from 'react-router-dom';
 import {server,client} from '../config/endpoints';
@@ -8,7 +8,7 @@ import {setUser} from '../context-api/actions';
 const cookies = new Cookies();
 
 type Props = {
-    history: {push: (route: string) => void};
+    history: {push: (route: string) => void}
 }
 
 const Login : React.FC<Props> = ({history}) => {
@@ -19,25 +19,26 @@ const Login : React.FC<Props> = ({history}) => {
     }
     
     let query = useQuery();
+    // console.log('match',method)
     useEffect(() => {
         const token : String = cookies.get('token');
         // console.log(token)
-        // console.log('query', query.get("code"))
         if(!token){
             // logging user in logic
             // const code : string[] = window.location.href.split("=") //http://localhost:3000/?code=dsajdoiasjdoiajs we want the code
             const code = query.get("code")
             if(code){
                 // console.log(code[1]) // code
+                // fetch(`${server}/user/login`, {
                 fetch(`${server}/user/login`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
-                },
-                body: JSON.stringify({
-                    code: code
-                })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': "application/json",
+                    },
+                    body: JSON.stringify({
+                        code: code
+                    })
                 })
                 .then(res => {
                 return res.json()
@@ -64,7 +65,7 @@ const Login : React.FC<Props> = ({history}) => {
     }, [])
     return (
         <div>
-            <a href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect=${client}/`}>Login with Github</a>
+            <a href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=${client}/login/`}>Login with Github</a>
         </div>
     )
 }

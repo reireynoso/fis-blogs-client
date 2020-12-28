@@ -10,6 +10,8 @@ import Login from './components/Login';
 import MainComponent from './components/MainComponent';
 import NewBlog from './components/NewBlog';
 import Header from './components/Header';
+import NewCohort from './components/NewCohort';
+import LockedRoute from './routes/LockedRoute';
 
 import './App.css';
 const cookies = new Cookies();
@@ -52,6 +54,7 @@ const App: React.FC = () => {
             <Route path="/" exact component={MainComponent}/>
             <Route path="/blogs/new" component={NewBlog}/>
             <Route path="/login" component={Login}/>
+            <LockedRoute path="/cohort/new" component={NewCohort}/>
           </Switch>
         </div>
     </div>
