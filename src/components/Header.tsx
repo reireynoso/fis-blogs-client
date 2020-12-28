@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import {useStateValue} from '../context-api/Provider'
 import {setUser} from '../context-api/actions';
@@ -18,10 +18,17 @@ const Header : React.FC = () => {
 
     return (
         <header className="header">
-            Header
-            <Link to={!user ? "/login": ""}>
-                <button onClick={handleLogout}>{!user ? "Login": "Logout"}</button>
-            </Link>
+            <NavLink to={!user ? "/login": ""}>
+                <div onClick={handleLogout}>{!user ? "Login": "Logout"}</div>
+            </NavLink>
+
+            <NavLink to="/blogs/new">
+                <div>Submit a blog</div>
+            </NavLink>
+
+            <NavLink to={!user ? "/cohort/new": ""}>
+                <div>New Cohort</div>
+            </NavLink>
         </header>
     )
 }

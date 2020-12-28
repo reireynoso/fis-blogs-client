@@ -22,7 +22,6 @@ const App: React.FC = () => {
   useEffect(() => {
     const token : String = cookies.get('token');
     // console.log(token)
-
     if(token){
       // auto logging in a user logic
       fetch(`${server}/auto_login`, {
