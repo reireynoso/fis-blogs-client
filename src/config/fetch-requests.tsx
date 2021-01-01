@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 import {server} from '../config/endpoints';
 const cookies = new Cookies();
-
+const token : String = cookies.get('token');
 // handles new blog request
 type informationObjectType = {
     tags: string[],
@@ -14,7 +14,7 @@ export const newBlogRequest = (informationObject: informationObjectType) => {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application.json",
-            "Authorization": `Bearer ${cookies.get("token")}`
+            "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(informationObject)
     })
@@ -27,4 +27,20 @@ export const fetchCohorts = () => {
     .then(res => {
         return res.json()
     })
+}
+
+// handle submitting new cohort request
+export const newCohortRequest = (name: string) => {
+    return fetch(`${server}/cohort/new`, {
+        method: "POST",
+        headers: {
+            'Content-Type': "application/json",
+            'Accept': "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            name
+        })
+    })
+    .then(res => res.json())
 }

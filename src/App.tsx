@@ -13,11 +13,41 @@ import Header from './components/Header';
 import NewCohort from './components/NewCohort';
 import LockedRoute from './routes/LockedRoute';
 
+import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+
 import './App.css';
 const cookies = new Cookies();
 
+const useStyles = makeStyles((theme) => ({
+  '@global': {
+    ul: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    },
+  },
+  appBar: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+  },
+  toolbar: {
+    flexWrap: 'wrap',
+  },
+  toolbarTitle: {
+    flexGrow: 1,
+  },
+  link: {
+    margin: theme.spacing(1, 1.5),
+  },
+  heroContent: {
+    padding: theme.spacing(10, 0, 6),
+  }
+}));
+
 const App: React.FC = () => {
   const [{}, dispatch] = useStateValue();
+
+  const classes = useStyles();
 
   useEffect(() => {
     const token : String = cookies.get('token');
@@ -48,14 +78,14 @@ const App: React.FC = () => {
   return (
     <div className="App">
         <Header/>
-        <div className="container">
+        <Container className={classes.heroContent} component="main">
           <Switch>
             <Route path="/" exact component={MainComponent}/>
             <Route path="/blogs/new" component={NewBlog}/>
             <Route path="/login" component={Login}/>
             <LockedRoute path="/cohort/new" component={NewCohort}/>
           </Switch>
-        </div>
+        </Container>
     </div>
   );
 }

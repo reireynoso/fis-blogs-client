@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {server} from '../config/endpoints';
 import Cookies from 'universal-cookie';
+import {newCohortRequest} from '../config/fetch-requests';
+
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const cookies = new Cookies();
 
@@ -15,38 +20,37 @@ const NewCohort : React.FC = () => {
     const [serverMessage, setServerMessage] = useState("");
     const [statusCode, setStatusCode] = useState<Status>(Status.LOADING);
 
+    const useStyles = makeStyles(() => ({
+        formContainer: {
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: "300px",
+            margin: "auto"
+        }
+    }));
+
+    const classes = useStyles();
+
     useEffect(() => {
         console.log(statusCode, serverMessage);
     }, [statusCode, serverMessage])
 
     const onNameChange = (e:React.ChangeEvent<HTMLInputElement>) : void => {
         setName(e.target.value)
+        if(serverMessage || statusCode !== Status.LOADING){
+            setServerMessage("");
+            setStatusCode(Status.LOADING);
+        }
     }
 
     const handleSubmit = (e:React.FormEvent) : void => {
         e.preventDefault();
-        const token : String = cookies.get('token');
-        fetch(`${server}/cohort/new`, {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json",
-                'Accept': "application/json",
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                name
-            })
-        })
-        .then(res => res.json())
+        newCohortRequest(name)
         .then(data => {
             if(data.error){
+                // addressed user somehow submitting when NOT logged in, duplicate cohort name, blank cohort name
                 setStatusCode(Status.ERROR);
                 setServerMessage(data.error)
-            }
-            else if(data.errors){
-                // addresses the json web token errors i.e if a user somehow accesses this route even when they're not logged in
-                setStatusCode(Status.ERROR);
-                setServerMessage(data.errors[0].message)
             }
             else{
                 setStatusCode(Status.SUCCESS);
@@ -57,11 +61,23 @@ const NewCohort : React.FC = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="name" value={name} onChange={onNameChange}/>
-                <input type="submit" value="Submit"/>
-            </form>
+        <div className={classes.formContainer}>
+            <h1>Add a New Cohort</h1>
+            <TextField
+                error={statusCode === Status.ERROR}
+                required
+                variant="standard"
+                label="Cohort Name"
+                placeholder="Ex. NYC-040119"
+                helperText={statusCode === Status.ERROR ? serverMessage : "Format: CampusLocation-CohortDate"}
+                //{/*(errorLink && requestMsg) || */}
+                onChange={onNameChange}
+                value={name}
+            />
+            <Button onClick={handleSubmit} variant="contained" color="primary">
+                Submit Cohort Name
+            </Button>
+            {/* <input type="submit" value="Submit"/> */}
         </div>
     )
 }

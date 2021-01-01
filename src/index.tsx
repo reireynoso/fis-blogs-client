@@ -16,8 +16,8 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   // <ThemeProvider theme={theme}>
-  //   <CssBaseline/>
-    <React.StrictMode>
+  <React.StrictMode>
+      {/* <CssBaseline/> */}
       <StateProvider initialState={initialState} reducer={reducer}>
         <BrowserRouter>
           <App />
