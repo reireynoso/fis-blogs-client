@@ -14,6 +14,7 @@ import Drawer from '@material-ui/core/Drawer';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -33,9 +34,13 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
     link: {
-      margin: theme.spacing(1, 1.5),
+    //   margin: theme.spacing(1, 1.5),
       textDecoration: "none",
-      color: "inherit"
+      color: "inherit",
+    //   padding: "2px",
+    //   "&:hover": {
+    //       backgroundColor: "silver"
+    //   }
     },
     list: {
         display: "flex",
@@ -50,7 +55,7 @@ const Header : React.FC = () => {
     const [drawer, setDrawer] = useState(false);
     
     const classes = useStyles();
-    const matches = useMediaQuery('(min-width:450px)');
+    const matches = useMediaQuery('(min-width:530px)');
 
     useEffect(() => {
         if(matches && drawer){
@@ -60,8 +65,10 @@ const Header : React.FC = () => {
     
     const handleLogout = ():void => {
         if(user){
+            cookies.remove("token", {
+                path: "/"
+            });
             dispatch(setUser(null));
-            cookies.remove("token");
         }
         handleCloseDrawer();
     }
@@ -73,19 +80,44 @@ const Header : React.FC = () => {
 
     const navLinks = () => {
         return <>
-        <NavLink onClick={handleCloseDrawer} className={classes.link} to="/blogs/new">
-            Submit a blog
-        </NavLink>
+        <Button
+            className={classes.link}
+            component={NavLink}
+            to="/blogs/me"
+            onClick={handleCloseDrawer}
+        >
+            My Blogs
+        </Button>
+
+        <Button
+            component={NavLink}
+            onClick={handleCloseDrawer} 
+            className={classes.link} 
+            to="/blogs/new"
+        >
+            Submit a Blog
+        </Button>
 
         {
-            user?.admin && <NavLink onClick={handleCloseDrawer} className={classes.link} to={user && user.admin ? "/cohort/new": ""}>
+            user?.admin && <Button
+            component={NavLink}
+            onClick={handleCloseDrawer} 
+            className={classes.link} 
+            to={user && user.admin ? "/cohort/new": ""}
+            >
                 New Cohort
-            </NavLink>
+            </Button>
         }
 
-        <NavLink onClick={handleLogout} className={classes.link} to={!user ? "/login": ""}>
+        <Button
+            component={NavLink}
+            onClick={handleLogout} 
+            className={classes.link} 
+            to={!user ? "/login": ""}
+        >
             {!user ? "Login": "Logout"}
-        </NavLink>
+        </Button>
+
         </>
     }
 
@@ -93,9 +125,14 @@ const Header : React.FC = () => {
         <AppBar color="default" className={classes.appBar}>
             <Toolbar className={classes.toolbar}>
                 <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                    <NavLink className={classes.link} to="/">
+                    <Button
+                        component={NavLink}
+                        size="large"
+                        className={classes.link} 
+                        to="/"
+                    >
                         FIS Blogs
-                    </NavLink>
+                    </Button>
                 </Typography>
                 {
                     matches ? <nav>

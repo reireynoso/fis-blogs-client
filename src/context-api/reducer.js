@@ -1,6 +1,7 @@
 export const initialState = {
     user: null,
-    cohorts: []
+    cohorts: [],
+    userBlogs: null
 }
 
 const reducer = (state,action) => {
@@ -14,6 +15,11 @@ const reducer = (state,action) => {
             return {
                 ...state,
                 cohorts: action.cohorts
+            }
+        case "SET_USER_BLOGS":
+            return {
+                ...state,
+                userBlogs: action.userBlogs
             }
         default: 
             return state

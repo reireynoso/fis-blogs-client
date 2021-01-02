@@ -21,6 +21,19 @@ export const newBlogRequest = (informationObject: informationObjectType) => {
     .then(res => res.json())
 }
 
+// fetch logged in user's blogs from the server
+
+export const fetchUserBlogs = () => {
+    return fetch(`${server}/blog/me`, {
+        method: "get",
+        headers: {
+            "Accept": "application.json",
+            "Authorization": `Bearer ${token}`
+        },
+    })
+    .then(res => res.json())
+}
+
 // handles fetching cohorts from db
 export const fetchCohorts = () => {
     return fetch(`${server}/cohort`)
@@ -43,4 +56,44 @@ export const newCohortRequest = (name: string) => {
         })
     })
     .then(res => res.json())
+}
+
+// handle auto login request
+
+export const handleAutoLogin = () => {
+    return fetch(`${server}/auto_login`, {
+        // method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': "application/json",
+          'Authorization': `Bearer ${token}`
+        },
+      })
+      .then(res => {
+        // if the res status is 401, user with token doesn't exist in DB. Address to avoid possible errors
+        if(res.status === 401){
+          cookies.remove("token", {
+              path: "/"
+          });
+        }
+        return res.json()
+      })
+}
+
+// handle login request
+
+export const handleLogin = (code:string) => {
+    return fetch(`${server}/user/login`, {
+        method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json",
+            },
+            body: JSON.stringify({
+                code: code
+            })
+        })
+        .then(res => {
+            return res.json()
+        })
 }

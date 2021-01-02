@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Cookies from 'universal-cookie';
 import {useLocation} from 'react-router-dom';
-import {server,client} from '../config/endpoints';
+import {client} from '../config/endpoints';
 import {useStateValue} from '../context-api/Provider'
 import {setUser} from '../context-api/actions';
+import {handleLogin} from '../config/fetch-requests';
 
 const cookies = new Cookies();
 
@@ -19,7 +20,7 @@ const Login : React.FC<Props> = ({history}) => {
     }
     
     let query = useQuery();
-    // console.log('match',method)
+
     useEffect(() => {
         const token : String = cookies.get('token');
         // console.log(token)
@@ -30,19 +31,7 @@ const Login : React.FC<Props> = ({history}) => {
             if(code){
                 // console.log(code[1]) // code
                 // fetch(`${server}/user/login`, {
-                fetch(`${server}/user/login`, {
-                method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': "application/json",
-                    },
-                    body: JSON.stringify({
-                        code: code
-                    })
-                })
-                .then(res => {
-                return res.json()
-                })
+                handleLogin(code)
                 .then(data => {
                     let date : Object = new Date(Date.now()) // current time string
                     let expirationToken = new Date(new Date(date.toString()).getTime() + 60 * 60 * 24 * 1000); // add 24 hours to current time string
@@ -52,7 +41,7 @@ const Login : React.FC<Props> = ({history}) => {
                         // httponly: true, // only the server can access token 
                     }) // for expires property, a Date object is required
                     // console.log(cookies.get('token')); // get token
-                    console.log(data.user)
+                    // console.log(data.user)
                     dispatch(setUser(data.user));
                     // once token is set, redirect to main page
                     history.push('/')

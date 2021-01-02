@@ -1,13 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {server} from '../config/endpoints';
-import Cookies from 'universal-cookie';
 import {newCohortRequest} from '../config/fetch-requests';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
-const cookies = new Cookies();
 
 enum Status {
     LOADING = "loading",
@@ -70,14 +66,12 @@ const NewCohort : React.FC = () => {
                 label="Cohort Name"
                 placeholder="Ex. NYC-040119"
                 helperText={statusCode === Status.ERROR ? serverMessage : "Format: CampusLocation-CohortDate"}
-                //{/*(errorLink && requestMsg) || */}
                 onChange={onNameChange}
                 value={name}
             />
             <Button onClick={handleSubmit} variant="contained" color="primary">
                 Submit Cohort Name
             </Button>
-            {/* <input type="submit" value="Submit"/> */}
         </div>
     )
 }

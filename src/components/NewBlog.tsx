@@ -19,6 +19,19 @@ type Props = {
     history: {push: (route:string) => void}
 }
 
+const useStyles = makeStyles((theme) => ({
+    formContainer: {
+        display: "flex",
+        flexDirection: "column",
+        maxWidth: "300px",
+        margin: "auto"
+    },
+    message: {
+        textAlign: "center",
+        color: "#388e3c"
+    }
+}));
+
 const NewBlog : React.FC<Props> = ({history}) => {
 
     const [{user, cohorts}, dispatch] = useStateValue();
@@ -33,15 +46,6 @@ const NewBlog : React.FC<Props> = ({history}) => {
     const [errorCohort, setErrorCohort] = useState<boolean>(false);
 
     const [requestMsg, setRequestMsg] = useState<string>("")
-
-    const useStyles = makeStyles(() => ({
-        formContainer: {
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: "300px",
-            margin: "auto"
-        }
-    }));
 
     const classes = useStyles();
 
@@ -198,15 +202,15 @@ const NewBlog : React.FC<Props> = ({history}) => {
                             value={tags}
                         />
 
-                        <Button onClick={handleSubmit} variant="contained" color="primary">
+                        <Button disabled={errorTags || errorLink || errorCohort} onClick={handleSubmit} variant="contained" color="primary">
                             Post blog
                         </Button>
+                        {
+                            // displays success message. Message only shows if everything else has no error
+                            !errorTags && !errorCohort && !errorLink && requestMsg && <h1 className={classes.message}>{requestMsg}</h1>
+                        }
                     </div>
 
-                    {
-                        // displays success message. Message only shows if everything else has no error
-                        !errorTags && !errorCohort && !errorLink && requestMsg && <h1>{requestMsg}</h1>
-                    }
                 </>
 
             }
