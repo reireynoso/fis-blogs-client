@@ -1,7 +1,7 @@
 export const initialState = {
     user: null,
     cohorts: [],
-    userBlogs: null
+    userBlogs: []
 }
 
 const reducer = (state,action) => {
@@ -9,7 +9,8 @@ const reducer = (state,action) => {
         case "SET_USER":
             return {
                 ...state,
-                user: action.user
+                user: action.user,
+                userBlogs: action.user ? action.userBlogs : []
             }
         case "SET_COHORTS":
             return {

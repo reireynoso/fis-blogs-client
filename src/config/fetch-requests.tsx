@@ -23,16 +23,16 @@ export const newBlogRequest = (informationObject: informationObjectType) => {
 
 // fetch logged in user's blogs from the server
 
-export const fetchUserBlogs = () => {
-    return fetch(`${server}/blog/me`, {
-        method: "get",
-        headers: {
-            "Accept": "application.json",
-            "Authorization": `Bearer ${token}`
-        },
-    })
-    .then(res => res.json())
-}
+// export const fetchUserBlogs = () => {
+//     return fetch(`${server}/blog/me`, {
+//         method: "get",
+//         headers: {
+//             "Accept": "application.json",
+//             "Authorization": `Bearer ${token}`
+//         },
+//     })
+//     .then(res => res.json())
+// }
 
 // handles fetching cohorts from db
 export const fetchCohorts = () => {
