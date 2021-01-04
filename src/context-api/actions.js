@@ -18,3 +18,11 @@ export const setCohorts = (cohorts) => ({
 //     type: "SET_USER_BLOGS",
 //     userBlogs
 // })
+
+export const deleteUserBlog = (id) => {
+    console.log(id)
+    return ({
+        type: "DELETE_USER_BLOG",
+        id
+    })
+}

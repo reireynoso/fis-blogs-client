@@ -22,6 +22,12 @@ const reducer = (state,action) => {
                 ...state,
                 userBlogs: action.userBlogs
             }
+        case "DELETE_USER_BLOG":
+            const removedUserBlog = state.userBlogs.filter(userBlog => userBlog._id !== action.id)
+            return {
+                ...state,
+                userBlogs: removedUserBlog
+            }
         default: 
             return state
     }

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {NavLink, useHistory} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import {useStateValue} from '../context-api/Provider'
 import {setUser} from '../context-api/actions';
@@ -37,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
     //   margin: theme.spacing(1, 1.5),
       textDecoration: "none",
       color: "inherit",
-    //   padding: "2px",
-    //   "&:hover": {
-    //       backgroundColor: "silver"
-    //   }
+    },
+    activeLink: {
+        borderTop: "2px solid #bbb6b6",
+        borderBottom: "2px solid #bbb6b6",
     },
     list: {
         display: "flex",
@@ -82,6 +82,7 @@ const Header : React.FC = () => {
         return <>
         <Button
             className={classes.link}
+            activeClassName={classes.activeLink}
             component={NavLink}
             to="/blogs/me"
             onClick={handleCloseDrawer}
@@ -91,7 +92,8 @@ const Header : React.FC = () => {
 
         <Button
             component={NavLink}
-            onClick={handleCloseDrawer} 
+            onClick={handleCloseDrawer}
+            activeClassName={classes.activeLink} 
             className={classes.link} 
             to="/blogs/new"
         >
@@ -102,7 +104,8 @@ const Header : React.FC = () => {
             user?.admin && <Button
             component={NavLink}
             onClick={handleCloseDrawer} 
-            className={classes.link} 
+            className={classes.link}
+            activeClassName={classes.activeLink} 
             to={user && user.admin ? "/cohort/new": ""}
             >
                 New Cohort
@@ -112,7 +115,7 @@ const Header : React.FC = () => {
         <Button
             component={NavLink}
             onClick={handleLogout} 
-            className={classes.link} 
+            className={classes.link}
             to={!user ? "/login": ""}
         >
             {!user ? "Login": "Logout"}
