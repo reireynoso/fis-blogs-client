@@ -1,32 +1,34 @@
 export const initialState = {
     user: null,
     cohorts: [],
-    userBlogs: []
+    blogs: []
 }
 
 const reducer = (state,action) => {
     switch(action.type){
         case "SET_USER":
+            // console.log('hello', action)
             return {
                 ...state,
                 user: action.user,
-                userBlogs: action.user ? action.userBlogs : []
+                // blogs: action.user ? action.blogs : []
+                blogs: action.blogs
             }
         case "SET_COHORTS":
             return {
                 ...state,
                 cohorts: action.cohorts
             }
-        case "SET_USER_BLOGS":
+        // case "SET_USER_BLOGS":
+        //     return {
+        //         ...state,
+        //         userBlogs: action.userBlogs
+        //     }
+        case "DELETE_BLOG":
+            const removedUserBlog = state.blogs.filter(userBlog => userBlog._id !== action.id)
             return {
                 ...state,
-                userBlogs: action.userBlogs
-            }
-        case "DELETE_USER_BLOG":
-            const removedUserBlog = state.userBlogs.filter(userBlog => userBlog._id !== action.id)
-            return {
-                ...state,
-                userBlogs: removedUserBlog
+                blogs: removedUserBlog
             }
         default: 
             return state

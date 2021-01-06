@@ -21,6 +21,13 @@ export const newBlogRequest = (informationObject: informationObjectType) => {
     .then(res => res.json())
 }
 
+export const deleteBlogRequest = (selectedBlogId:string) => {
+    return fetch(`${server}/blog/delete/${selectedBlogId}`, {
+        method: "POST"
+      })
+      .then(res => res.json())
+} 
+
 // fetch logged in user's blogs from the server
 
 // export const fetchUserBlogs = () => {

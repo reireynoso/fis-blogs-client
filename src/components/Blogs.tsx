@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import BlogCard from './BlogCard';
 import {useStateValue} from '../context-api/Provider';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-// import {fetchUserBlogs} from '../config/fetch-requests';
-import {deleteUserBlog} from '../context-api/actions';
+import {deleteBlogRequest} from '../config/fetch-requests';
+import {deleteBlog} from '../context-api/actions';
 import {server} from '../config/endpoints';
 
 import Grid from '@material-ui/core/Grid';
@@ -56,7 +56,7 @@ interface Blog {
 const Blogs : React.FC<Props> = ({history}) => {
     // console.log(history.location.pathname)
     
-    const [{user,userBlogs}, dispatch] = useStateValue();
+    const [{user,blogs}, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
     const [selectedBlogTitle, setSelectedBlogTitle] = useState("")
     const [selectedBlogId, setSelectedBlogId] = useState("");
@@ -74,7 +74,7 @@ const Blogs : React.FC<Props> = ({history}) => {
     };
 
     const renderBlogs = () => {  
-        return userBlogs.map((blog: Blog) => {
+        return blogs.map((blog: Blog) => {
           const {title,createdAt,image,link,tags,approved,user, _id} = blog
           return <Grid
               item
@@ -100,7 +100,7 @@ const Blogs : React.FC<Props> = ({history}) => {
         <>
         <Grid container justify="center" className={classes.root} spacing={2}>
             {
-                !userBlogs.length ? (user ? "No blogs" : "You're not logged in!") : renderBlogs()
+                !blogs.length ? (user ? "No blogs" : "You're not logged in!") : renderBlogs()
             }
         </Grid>
         <Dialog
@@ -126,16 +126,12 @@ const Blogs : React.FC<Props> = ({history}) => {
                   </Button>
                   <Button variant="contained" onClick={() => {
                       // handle delete request
-                      console.log('fetch')
-                      fetch(`${server}/blog/delete/${selectedBlogId}`, {
-                        method: "POST"
-                      })
-                      .then(res => res.json())
+                      deleteBlogRequest(selectedBlogId)
                       .then(data => {
                         if(data.error){
                           alert("Something went wrong. Try again");
                         }else{
-                          dispatch(deleteUserBlog(selectedBlogId));
+                          dispatch(deleteBlog(selectedBlogId));
                           handleClose()
                         }
                       })
