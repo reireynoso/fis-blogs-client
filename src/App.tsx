@@ -38,7 +38,6 @@ const App: React.FC = () => {
       // auto logging in a user logic
       handleAutoLogin()
       .then(data => {
-        // console.log(data)
         dispatch(setUser(data.user, data.blogs));
       })
     }

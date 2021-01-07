@@ -23,7 +23,8 @@ const useStyles = makeStyles({
       width: "100%"
   },
   title: {
-    wordWrap: "break-word"
+    wordWrap: "break-word",
+    minHeight: "4em"
   },
   icon: {
       position: 'absolute',
@@ -61,6 +62,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, handleClickOpen
         <Typography className={classes.title} gutterBottom variant="h5" component="h2">
             {
                 truncate(title)
+                // truncate("hellosdasiduhaidhaihdiandianidhaiiuhroqwhe9iqyweojqwoeijqowiejreinadlde reyrenoso ksadhoasdoajoiajodijapowj")
             }
         </Typography>
         </CardContent>
