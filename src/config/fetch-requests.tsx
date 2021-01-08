@@ -28,6 +28,11 @@ export const deleteBlogRequest = (selectedBlogId:string) => {
       .then(res => res.json())
 } 
 
+export const fetchBlogs = () => {
+    return fetch(`${server}/blog/all`)
+    .then(res => res.json())
+}
+
 // fetch logged in user's blogs from the server
 
 // export const fetchUserBlogs = () => {

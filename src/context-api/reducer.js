@@ -12,12 +12,17 @@ const reducer = (state,action) => {
                 ...state,
                 user: action.user,
                 // blogs: action.user ? action.blogs : []
-                blogs: action.blogs
+                // blogs: action.blogs
             }
         case "SET_COHORTS":
             return {
                 ...state,
                 cohorts: action.cohorts
+            }
+        case "SET_BLOGS":
+            return {
+                ...state,
+                blogs: action.blogs
             }
         // case "SET_USER_BLOGS":
         //     return {

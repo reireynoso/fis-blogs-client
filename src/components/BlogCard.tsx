@@ -1,4 +1,5 @@
 import React from 'react';
+import {useStateValue} from '../context-api/Provider';
 
 import {truncate} from '../helpers/helper-methods'
 import { makeStyles } from '@material-ui/core/styles';
@@ -47,6 +48,7 @@ interface Props {
     approved: boolean,
     _id: string,
     user: {
+        _id: string,
         name: string
     },
     handleClickOpen: (id:string, title:string) => void,
@@ -55,9 +57,11 @@ interface Props {
 
 const BlogCard : React.FC<Props> = ({title,image,link,user, _id, handleClickOpen, handleClose}) => {
     const classes = useStyles();
-
+    const [{user:loggedUser}] = useStateValue();
     return <Card className={classes.root}>
-    <ClearIcon onClick={() => handleClickOpen(_id, title)} className={classes.icon}/>
+    {
+        loggedUser && (loggedUser.admin || loggedUser._id === user._id) && <ClearIcon onClick={() => handleClickOpen(_id, title)} className={classes.icon}/>
+    }
     <CardContent>
         <Typography className={classes.title} gutterBottom variant="h5" component="h2">
             {

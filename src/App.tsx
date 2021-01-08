@@ -17,6 +17,9 @@ import Blogs from './components/Blogs';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
+import {fetchBlogs} from './config/fetch-requests'; 
+import {setBlogs} from './context-api/actions';
+
 import './App.css';
 const cookies = new Cookies();
 
@@ -38,16 +41,21 @@ const App: React.FC = () => {
       // auto logging in a user logic
       handleAutoLogin()
       .then(data => {
-        dispatch(setUser(data.user, data.blogs));
+        dispatch(setUser(data.user));
       })
     }
+
+    fetchBlogs()
+    .then(data => {
+      dispatch(setBlogs(data.blogs))
+    })
   }, [])
   return (
     <div className="App">
         <Header/>
         <Container className={classes.heroContent} component="main">
           <Switch>
-            <Route path="/" exact component={MainComponent}/>
+            <Route path="/" exact component={Blogs}/>
             <Route path="/blogs/me" component={Blogs}/>
             <Route path="/blogs/new" component={NewBlog}/>
             <Route path="/login" component={Login}/>

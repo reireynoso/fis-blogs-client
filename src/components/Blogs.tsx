@@ -50,11 +50,12 @@ interface Blog {
     admin: boolean,
     email: string,
     image_url: string,
+    _id: string
   }
 }
 
 const Blogs : React.FC<Props> = ({history}) => {
-    console.log(history.location.pathname)
+    // console.log(history.location.pathname)
     
     const [{user,blogs}, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
@@ -108,7 +109,7 @@ const Blogs : React.FC<Props> = ({history}) => {
         <>
         <Grid container justify="center" className={classes.root} spacing={2}>
             {
-                !blogs.length ? (user ? "No blogs" : "You're not logged in!") : renderBlogs()
+                !user && history.location.pathname === "/blogs/me" ? "You're not logged in!" : renderBlogs()
             }
         </Grid>
         <Dialog

@@ -1,8 +1,7 @@
 // user actions
 export const setUser = (user, blogs) => ({
     type: "SET_USER",
-    user,
-    blogs
+    user
 })
 
 // cohort actions
@@ -18,6 +17,10 @@ export const setCohorts = (cohorts) => ({
 //     type: "SET_USER_BLOGS",
 //     userBlogs
 // })
+export const setBlogs = (blogs) => ({
+    type: "SET_BLOGS",
+    blogs
+})
 
 export const deleteBlog = (id) => {
     console.log(id)

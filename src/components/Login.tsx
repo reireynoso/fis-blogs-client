@@ -42,7 +42,7 @@ const Login : React.FC<Props> = ({history}) => {
                     }) // for expires property, a Date object is required
                     // console.log(cookies.get('token')); // get token
                     // console.log(data.user)
-                    dispatch(setUser(data.user, data.blogs));
+                    dispatch(setUser(data.user));
                     // once token is set, redirect to main page
                     history.push('/')
                 })
