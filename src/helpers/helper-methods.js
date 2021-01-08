@@ -4,3 +4,9 @@ export const truncate = (item) => {
     }
     return item
 }
+
+export const findUserBlogs = (blogs, user) => {
+    // inefficient approach
+    // return blogs
+    return blogs.filter(blog => blog.user._id === user._id)
+}
