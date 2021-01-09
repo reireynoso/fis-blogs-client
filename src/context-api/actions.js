@@ -1,5 +1,5 @@
 // user actions
-export const setUser = (user, blogs) => ({
+export const setUser = (user) => ({
     type: "SET_USER",
     user
 })

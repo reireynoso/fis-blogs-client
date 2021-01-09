@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import BlogCard from './BlogCard';
+import FilterComponent from './FilterComponet';
+
 import {useStateValue} from '../context-api/Provider';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {deleteBlogRequest} from '../config/fetch-requests';
@@ -107,6 +109,9 @@ const Blogs : React.FC<Props> = ({history}) => {
 
     return (
         <>
+        {
+            history.location.pathname === "/" && <FilterComponent/>
+        } 
         <Grid container justify="center" className={classes.root} spacing={2}>
             {
                 !user && history.location.pathname === "/blogs/me" ? "You're not logged in!" : renderBlogs()

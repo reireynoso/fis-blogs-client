@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles({
   root: {
@@ -69,6 +70,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, handleClickOpen
                 // truncate("hellosdasiduhaidhaihdiandianidhaiiuhroqwhe9iqyweojqwoeijqowiejreinadlde reyrenoso ksadhoasdoajoiajodijapowj")
             }
         </Typography>
+        <Divider/>
         </CardContent>
         <CardMedia
         className={classes.media}
