@@ -17,8 +17,8 @@ import Blogs from './components/Blogs';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
-import {fetchBlogs} from './config/fetch-requests'; 
-import {setBlogs} from './context-api/actions';
+import {fetchInitialData} from './config/fetch-requests'; 
+import {setInitialData} from './context-api/actions';
 
 import './App.css';
 const cookies = new Cookies();
@@ -45,9 +45,9 @@ const App: React.FC = () => {
       })
     }
 
-    fetchBlogs()
+    fetchInitialData()
     .then(data => {
-      dispatch(setBlogs(data.blogs))
+      dispatch(setInitialData(data.blogs, data.cohorts))
     })
   }, [])
   return (

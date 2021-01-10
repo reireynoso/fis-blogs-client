@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
-import {setCohorts} from '../context-api/actions';
+// import {setCohorts} from '../context-api/actions';
 
-import {newBlogRequest, fetchCohorts} from '../config/fetch-requests';
+import {newBlogRequest} from '../config/fetch-requests';
 import acceptableTags from '../config/tags';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NewBlog : React.FC<Props> = ({history}) => {
 
-    const [{user, cohorts}, dispatch] = useStateValue();
+    const [{user, cohorts}] = useStateValue();
     
     const [tags, setTags] = useState<string[]>([]);
     const [errorTags, setErrorTags] = useState<boolean>(false);
@@ -48,16 +48,6 @@ const NewBlog : React.FC<Props> = ({history}) => {
     const [requestMsg, setRequestMsg] = useState<string>("")
 
     const classes = useStyles();
-
-    useEffect(() => {
-        // auto fetch cohorts 
-        if(!cohorts.length){
-            fetchCohorts()
-            .then(data => {
-                dispatch(setCohorts(data));
-            })
-        }
-    }, [cohorts])
 
     const handleLinkChange = (e:React.ChangeEvent<HTMLInputElement>) :void => {
         if(errorLink) setErrorLink(false);

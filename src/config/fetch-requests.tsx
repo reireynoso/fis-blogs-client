@@ -28,8 +28,14 @@ export const deleteBlogRequest = (selectedBlogId:string) => {
       .then(res => res.json())
 } 
 
-export const fetchBlogs = () => {
-    return fetch(`${server}/blog/all`)
+// export const fetchBlogs = () => {
+//     return fetch(`${server}/blog/all`)
+//     .then(res => res.json())
+// }
+
+// fetches cohort and blogs
+export const fetchInitialData = () => {
+    return fetch(`${server}/initial-data`)
     .then(res => res.json())
 }
 
@@ -47,12 +53,12 @@ export const fetchBlogs = () => {
 // }
 
 // handles fetching cohorts from db
-export const fetchCohorts = () => {
-    return fetch(`${server}/cohort`)
-    .then(res => {
-        return res.json()
-    })
-}
+// export const fetchCohorts = () => {
+//     return fetch(`${server}/cohort`)
+//     .then(res => {
+//         return res.json()
+//     })
+// }
 
 // handle submitting new cohort request
 export const newCohortRequest = (name: string) => {

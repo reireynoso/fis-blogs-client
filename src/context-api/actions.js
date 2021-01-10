@@ -6,10 +6,10 @@ export const setUser = (user) => ({
 
 // cohort actions
 
-export const setCohorts = (cohorts) => ({
-    type: "SET_COHORTS",
-    cohorts
-})
+// export const setCohorts = (cohorts) => ({
+//     type: "SET_COHORTS",
+//     cohorts
+// })
 
 // blog actions
 
@@ -17,9 +17,15 @@ export const setCohorts = (cohorts) => ({
 //     type: "SET_USER_BLOGS",
 //     userBlogs
 // })
-export const setBlogs = (blogs) => ({
-    type: "SET_BLOGS",
-    blogs
+// export const setBlogs = (blogs) => ({
+//     type: "SET_BLOGS",
+//     blogs
+// })
+
+export const setInitialData = (blogs, cohorts) => ({
+    type: "SET_INITIAL_DATA",
+    blogs,
+    cohorts
 })
 
 export const deleteBlog = (id) => {
@@ -29,3 +35,14 @@ export const deleteBlog = (id) => {
         id
     })
 }
+
+// filter actions
+export const setTitleFilter = (input) => ({
+    type: "SET_TITLE_FILTER",
+    input
+})
+
+export const setTagFilter = (input) => ({
+    type: "SET_TAG_FILTER",
+    input
+})

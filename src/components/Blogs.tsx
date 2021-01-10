@@ -6,7 +6,7 @@ import {useStateValue} from '../context-api/Provider';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {deleteBlogRequest} from '../config/fetch-requests';
 import {deleteBlog} from '../context-api/actions';
-import {findUserBlogs} from '../helpers/helper-methods'
+import {findUserBlogs, handleFilter} from '../helpers/helper-methods'
 
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -59,7 +59,7 @@ interface Blog {
 const Blogs : React.FC<Props> = ({history}) => {
     // console.log(history.location.pathname)
     
-    const [{user,blogs}, dispatch] = useStateValue();
+    const [{user,blogs, titleFilter, tagFilter}, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
     const [selectedBlogTitle, setSelectedBlogTitle] = useState("")
     const [selectedBlogId, setSelectedBlogId] = useState("");
@@ -74,10 +74,9 @@ const Blogs : React.FC<Props> = ({history}) => {
 
     const determinePath = () => {
       if(history.location.pathname === "/blogs/me"){
-        console.log(blogs)
         return findUserBlogs(blogs, user)
       }
-      return blogs
+      return handleFilter(blogs, titleFilter, tagFilter);
     }
     
     const handleClose = ():void => {

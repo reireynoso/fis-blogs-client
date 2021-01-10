@@ -1,4 +1,7 @@
 import React from 'react';
+import {useStateValue} from '../context-api/Provider';
+import acceptableTags from '../config/tags';
+import {setTitleFilter, setTagFilter} from '../context-api/actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -17,16 +20,23 @@ const useStyles = makeStyles(() => ({
     },
     text: {
         // minWidth: 150,
-    }
+    },
   }));
 
 const FilterComponent : React.FC = () => {
-
+    const [{cohorts, titleFilter, tagFilter}, dispatch] = useStateValue();
     const classes = useStyles();
 
     return <Grid container justify="center" className={classes.root} spacing={2}>
         <Grid item>
-            <TextField className={classes.text} id="outlined-basic" label="Search by title" variant="outlined" />
+            <TextField 
+                className={classes.text} 
+                id="outlined-basic" 
+                label="Search by title" 
+                variant="outlined"
+                value={titleFilter} 
+                onChange={(e) => dispatch(setTitleFilter(e.target.value))}
+            />
         </Grid>
         <Grid item>
             <FormControl variant="outlined" className={classes.formControl}>
@@ -34,36 +44,54 @@ const FilterComponent : React.FC = () => {
                 <Select
                 labelId="tag-filter-select"
                 id="demo-simple-select-outlined"
-                //   value={age}
-                //   onChange={handleChange}
-                label="Age"
+                value={tagFilter}
+                onChange={(e) => dispatch(setTagFilter(e.target.value))}
+                label="tag"
                 >
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem 
+                    value=""
+                    >
+                        All
+                    </MenuItem>
+                {
+                    acceptableTags.map((tag: string) => (
+                        <MenuItem 
+                            key={tag}
+                            value={tag}
+                            >
+                                {tag}
+                            </MenuItem>
+                    ))
+                }
                 </Select>
         </FormControl>
         </Grid>
         <Grid item>
             <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="cohort-filter-select">Cohort</InputLabel>
-                    <Select
-                    labelId="cohort-filter-select"
-                    id="demo-simple-select-outlined"
-                    //   value={age}
-                    //   onChange={handleChange}
-                    label="Age"
+                <InputLabel id="cohort-filter-select">Cohort</InputLabel>
+                <Select
+                labelId="cohort-filter-select"
+                id="demo-simple-select-outlined"
+                //   value={age}
+                //   onChange={handleChange}
+                label="cohort"
+                >
+                    <MenuItem 
+                    value=""
                     >
-                    <MenuItem value="">
-                        <em>None</em>
+                        All
                     </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
+                {
+                    cohorts.map((cohort:{name:string}) => (
+                        <MenuItem 
+                            key={cohort.name}
+                            value={cohort.name}
+                            >
+                                {cohort.name}
+                            </MenuItem>
+                    ))
+                }
+                </Select>
             </FormControl>
         </Grid>
     </Grid>
