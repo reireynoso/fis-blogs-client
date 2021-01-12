@@ -27,9 +27,9 @@ const NewCohort : React.FC = () => {
 
     const classes = useStyles();
 
-    useEffect(() => {
-        console.log(statusCode, serverMessage);
-    }, [statusCode, serverMessage])
+    // useEffect(() => {
+    //     console.log(statusCode, serverMessage);
+    // }, [statusCode, serverMessage])
 
     const onNameChange = (e:React.ChangeEvent<HTMLInputElement>) : void => {
         setName(e.target.value)

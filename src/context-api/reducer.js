@@ -38,6 +38,11 @@ const reducer = (state,action) => {
         //         ...state,
         //         userBlogs: action.userBlogs
         //     }
+        case "ADD_BLOG":
+            return {
+                ...state,
+                blogs: [...state.blogs, action.blog]
+            }
         case "DELETE_BLOG":
             const removedUserBlog = state.blogs.filter(userBlog => userBlog._id !== action.id)
             return {
@@ -53,6 +58,11 @@ const reducer = (state,action) => {
             return {
                 ...state,
                 tagFilter: action.input
+            }
+        case "SET_COHORT_FILTER":
+            return {
+                ...state,
+                cohortFilter: action.input
             }
         default: 
             return state

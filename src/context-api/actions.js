@@ -22,6 +22,11 @@ export const setUser = (user) => ({
 //     blogs
 // })
 
+export const addBlog = (blog) => ({
+    type: "ADD_BLOG",
+    blog
+})
+
 export const setInitialData = (blogs, cohorts) => ({
     type: "SET_INITIAL_DATA",
     blogs,
@@ -29,7 +34,7 @@ export const setInitialData = (blogs, cohorts) => ({
 })
 
 export const deleteBlog = (id) => {
-    console.log(id)
+    // console.log(id)
     return ({
         type: "DELETE_BLOG",
         id
@@ -44,5 +49,10 @@ export const setTitleFilter = (input) => ({
 
 export const setTagFilter = (input) => ({
     type: "SET_TAG_FILTER",
+    input
+})
+
+export const setCohortFilter = (input) => ({
+    type: "SET_COHORT_FILTER",
     input
 })

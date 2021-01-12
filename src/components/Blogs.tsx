@@ -53,13 +53,17 @@ interface Blog {
     email: string,
     image_url: string,
     _id: string
+  },
+  cohort: {
+    admins: string[],
+    name: string
   }
 }
 
 const Blogs : React.FC<Props> = ({history}) => {
     // console.log(history.location.pathname)
     
-    const [{user,blogs, titleFilter, tagFilter}, dispatch] = useStateValue();
+    const [{user,blogs, titleFilter, tagFilter, cohortFilter}, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
     const [selectedBlogTitle, setSelectedBlogTitle] = useState("")
     const [selectedBlogId, setSelectedBlogId] = useState("");
@@ -76,7 +80,7 @@ const Blogs : React.FC<Props> = ({history}) => {
       if(history.location.pathname === "/blogs/me"){
         return findUserBlogs(blogs, user)
       }
-      return handleFilter(blogs, titleFilter, tagFilter);
+      return handleFilter(blogs, titleFilter, tagFilter, cohortFilter);
     }
     
     const handleClose = ():void => {
@@ -85,7 +89,7 @@ const Blogs : React.FC<Props> = ({history}) => {
 
     const renderBlogs = () => {  
         return determinePath().map((blog: Blog) => {
-          const {title,createdAt,image,link,tags,approved,user, _id} = blog
+          const {title,createdAt,image,link,tags,approved,user, _id, cohort} = blog
           return <Grid
               item
               key={_id}
@@ -98,8 +102,8 @@ const Blogs : React.FC<Props> = ({history}) => {
               tags={tags}
               approved={approved}
               createdAt={createdAt}
+              cohort={cohort}
               user={user}
-              handleClose={handleClose}
               handleClickOpen={handleClickOpen}
             />
           </Grid> 

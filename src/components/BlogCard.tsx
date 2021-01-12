@@ -37,6 +37,9 @@ const useStyles = makeStyles({
           background: "#9e9e9e",
           transition: "0.3s ease"
       }
+  },
+  author: {
+      background: "#1de9b6"
   }
 });
 
@@ -52,11 +55,14 @@ interface Props {
         _id: string,
         name: string
     },
-    handleClickOpen: (id:string, title:string) => void,
-    handleClose: () => void,
+    cohort: {
+        admins: string[],
+        name: string
+    }
+    handleClickOpen: (id:string, title:string) => void
   }
 
-const BlogCard : React.FC<Props> = ({title,image,link,user, _id, handleClickOpen, handleClose}) => {
+const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, handleClickOpen}) => {
     const classes = useStyles();
     const [{user:loggedUser}] = useStateValue();
     return <Card className={classes.root}>
@@ -78,7 +84,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, handleClickOpen
         title={title}
     />
     <CardContent>
-      <Typography gutterBottom component="h2">
+      <Typography className={user._id === loggedUser._id ? classes.author : ""} gutterBottom component="h2">
           {
               "By: " + user.name
           }

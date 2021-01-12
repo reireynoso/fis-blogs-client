@@ -5,8 +5,9 @@ export const truncate = (item) => {
     return item
 }
 
+// inefficient approach filtering
+
 export const findUserBlogs = (blogs, user) => {
-    // inefficient approach
     // return blogs
     return blogs.filter(blog => blog.user._id === user._id)
 }
@@ -15,10 +16,12 @@ const tagMatch = (blog, tag) => {
     return !tag || (tag && blog.tags[tag])
 }
 
-export const handleFilter = (blogs, title, tag) => {
-    return blogs.filter(blog => 
-            {
-                return blog.title.toLowerCase().includes(title.toLowerCase()) && tagMatch(blog,tag)
-            }
-        )
+const cohortMatch = (blog, cohort) => {
+    return !cohort || (cohort && blog.cohort.name === cohort)
 }
+
+export const handleFilter = (blogs, title, tag, cohort) => blogs.filter(blog => 
+    blog.title.toLowerCase().includes(title.toLowerCase()) 
+    && tagMatch(blog,tag) 
+    && cohortMatch(blog,cohort)
+)

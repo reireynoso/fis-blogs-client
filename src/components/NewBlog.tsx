@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
-// import {setCohorts} from '../context-api/actions';
+import {addBlog} from '../context-api/actions';
 
 import {newBlogRequest} from '../config/fetch-requests';
 import acceptableTags from '../config/tags';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NewBlog : React.FC<Props> = ({history}) => {
 
-    const [{user, cohorts}] = useStateValue();
+    const [{user, cohorts}, dispatch] = useStateValue();
     
     const [tags, setTags] = useState<string[]>([]);
     const [errorTags, setErrorTags] = useState<boolean>(false);
@@ -93,12 +93,13 @@ const NewBlog : React.FC<Props> = ({history}) => {
         }
 
         const result = await newBlogRequest(blogInformation);
-       
+        // console.log(result)
         if(result.error){
             handleError(result.error)
             return;
         }
-
+        // console.log(result)
+        dispatch(addBlog(result.blog))
         handleSuccess()
     }
 

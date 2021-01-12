@@ -1,7 +1,7 @@
 import React from 'react';
 import {useStateValue} from '../context-api/Provider';
 import acceptableTags from '../config/tags';
-import {setTitleFilter, setTagFilter} from '../context-api/actions';
+import {setTitleFilter, setTagFilter, setCohortFilter} from '../context-api/actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +13,10 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(() => ({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
+        // position: "sticky",
+        // top: "70px",
+        // zIndex: 150
     },
     formControl: {
         minWidth: 120,
@@ -24,7 +27,7 @@ const useStyles = makeStyles(() => ({
   }));
 
 const FilterComponent : React.FC = () => {
-    const [{cohorts, titleFilter, tagFilter}, dispatch] = useStateValue();
+    const [{cohorts, titleFilter, tagFilter, cohortFilter}, dispatch] = useStateValue();
     const classes = useStyles();
 
     return <Grid container justify="center" className={classes.root} spacing={2}>
@@ -72,8 +75,8 @@ const FilterComponent : React.FC = () => {
                 <Select
                 labelId="cohort-filter-select"
                 id="demo-simple-select-outlined"
-                //   value={age}
-                //   onChange={handleChange}
+                value={cohortFilter}
+                onChange={(e) => dispatch(setCohortFilter(e.target.value))}
                 label="cohort"
                 >
                     <MenuItem 
@@ -84,11 +87,11 @@ const FilterComponent : React.FC = () => {
                 {
                     cohorts.map((cohort:{name:string}) => (
                         <MenuItem 
-                            key={cohort.name}
-                            value={cohort.name}
-                            >
-                                {cohort.name}
-                            </MenuItem>
+                        key={cohort.name}
+                        value={cohort.name}
+                        >
+                            {cohort.name}
+                        </MenuItem>
                     ))
                 }
                 </Select>
