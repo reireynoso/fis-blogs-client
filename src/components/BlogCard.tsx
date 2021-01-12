@@ -84,7 +84,7 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
         title={title}
     />
     <CardContent>
-      <Typography className={user._id === loggedUser._id ? classes.author : ""} gutterBottom component="h2">
+      <Typography className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} gutterBottom component="h2">
           {
               "By: " + user.name
           }
@@ -99,7 +99,7 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
         rel="noopener" 
         className={classes.link}
       >
-        Button Link
+        View in Medium
       </Link>
     </CardActions>
   </Card>

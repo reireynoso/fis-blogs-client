@@ -21,7 +21,8 @@ const NewCohort : React.FC = () => {
             display: "flex",
             flexDirection: "column",
             maxWidth: "300px",
-            margin: "auto"
+            margin: "auto",
+            textAlign: "center"
         }
     }));
 

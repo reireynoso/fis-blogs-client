@@ -11,9 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
-import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -117,6 +115,8 @@ const Header : React.FC = () => {
             onClick={handleLogout} 
             className={classes.link}
             to={!user ? "/login": ""}
+            color={!user ? "default" : "secondary"}
+            variant="contained"
         >
             {!user ? "Login": "Logout"}
         </Button>

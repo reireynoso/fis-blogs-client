@@ -6,7 +6,22 @@ import {useStateValue} from '../context-api/Provider'
 import {setUser} from '../context-api/actions';
 import {handleLogin} from '../config/fetch-requests';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
+
 const cookies = new Cookies();
+
+const useStyles = makeStyles({
+    root: {
+      width: 250,
+      height: 150,
+      margin: "auto",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  });
 
 type Props = {
     history: {push: (route: string) => void}
@@ -14,6 +29,7 @@ type Props = {
 
 const Login : React.FC<Props> = ({history}) => {
     const [{}, dispatch] = useStateValue();
+    const classes = useStyles();
 
     const useQuery = () => {
         return new URLSearchParams(useLocation().search)
@@ -53,9 +69,16 @@ const Login : React.FC<Props> = ({history}) => {
         }
     }, [])
     return (
-        <div>
-            <a href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=${client}/login/`}>Login with Github</a>
-        </div>
+        <Card className={classes.root}>
+            <Button
+                href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=${client}/login/`}
+                
+                variant="contained"
+                color="primary"
+            >
+                Login with Github
+            </Button>
+        </Card>
     )
 }
 

@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         maxWidth: "300px",
-        margin: "auto"
+        margin: "auto",
+        textAlign: "center"
     },
     message: {
         textAlign: "center",
@@ -123,85 +124,82 @@ const NewBlog : React.FC<Props> = ({history}) => {
     } 
 
     return (
-        <div>
+        <div className={classes.formContainer}>
             {
                 !user ?  
-                "Please Login first before posting a blog" 
+                "Please login before posting a blog!" 
                 :
                 <>
-                    <div className={classes.formContainer}>
-                        <h1>New Medium Blog</h1>
+                    <h1>New Medium Blog</h1>
+                    <TextField
+                        error={errorLink}
+                        variant="standard"
+                        label="Link URL"
+                        placeholder="Medium Blog"
+                        helperText={(errorLink && requestMsg) || "Please provide a friend link"}
+                        onChange={handleLinkChange}
+                        value={link}
+                    />
+
+                    <FormControl error={errorCohort}>
+                        <InputLabel id="demo-simple-select-label">Cohort</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-label"
+                        value={cohort}
+                        onChange={handleCohortChange}
+                        >
+                            {
+                                cohorts.map((cohort:{name:string}) => (
+                                    <MenuItem 
+                                        key={cohort.name}
+                                        value={cohort.name}
+                                        >
+                                            {cohort.name}
+                                        </MenuItem>
+                                ))
+                            }
+                        </Select>
+                        <FormHelperText>{(errorCohort && requestMsg) || "If your cohort is not listed, let an instructor know!"}</FormHelperText>
+                    </FormControl>
+                    
+                    <Autocomplete
+                        multiple
+                        id="tags-standard"
+                        limitTags={3}
+                        options={acceptableTags}
+                        // getOptionLabel={(option) => option.name}
+                        renderInput={(params) => (
                         <TextField
-                            error={errorLink}
+                            {...params}
                             variant="standard"
-                            label="Link URL"
-                            placeholder="Medium Blog"
-                            helperText={(errorLink && requestMsg) || "Please provide a friend link"}
-                            onChange={handleLinkChange}
-                            value={link}
+                            label="Tags"
+                            placeholder="Select tags"
+                            error={tags.length > 5 || errorTags}
+                            helperText={(errorTags && requestMsg) || "At least 1 tag! 5 tags max!"}
                         />
-
-                        <FormControl error={errorCohort}>
-                            <InputLabel id="demo-simple-select-label">Cohort</InputLabel>
-                            <Select
-                            labelId="demo-simple-select-label"
-                            value={cohort}
-                            onChange={handleCohortChange}
-                            >
-                                {
-                                    cohorts.map((cohort:{name:string}) => (
-                                        <MenuItem 
-                                            key={cohort.name}
-                                            value={cohort.name}
-                                            >
-                                                {cohort.name}
-                                            </MenuItem>
-                                    ))
+                        )}
+                        // getOptionSelected={(option, value) => {
+                        //     console.log(option.name)
+                        //     return option.name === value.name
+                        // }}
+                        // onInputChange={(val) => console.log('change', val)}
+                        onChange={(_, val) => {
+                                if(errorTags){
+                                    setErrorTags(false)
                                 }
-                            </Select>
-                            <FormHelperText>{(errorCohort && requestMsg) || "If your cohort is not listed, let an instructor know!"}</FormHelperText>
-                        </FormControl>
-                        
-                        <Autocomplete
-                            multiple
-                            id="tags-standard"
-                            limitTags={3}
-                            options={acceptableTags}
-                            // getOptionLabel={(option) => option.name}
-                            renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                variant="standard"
-                                label="Tags"
-                                placeholder="Select tags"
-                                error={tags.length > 5 || errorTags}
-                                helperText={(errorTags && requestMsg) || "At least 1 tag! 5 tags max!"}
-                            />
-                            )}
-                            // getOptionSelected={(option, value) => {
-                            //     console.log(option.name)
-                            //     return option.name === value.name
-                            // }}
-                            // onInputChange={(val) => console.log('change', val)}
-                            onChange={(_, val) => {
-                                    if(errorTags){
-                                        setErrorTags(false)
-                                    }
-                                // on select, the function manages adding the selected value to the array value and set the tags.
-                                    setTags(val);
-                            }}
-                            value={tags}
-                        />
+                            // on select, the function manages adding the selected value to the array value and set the tags.
+                                setTags(val);
+                        }}
+                        value={tags}
+                    />
 
-                        <Button disabled={errorTags || errorLink || errorCohort} onClick={handleSubmit} variant="contained" color="primary">
-                            Post blog
-                        </Button>
-                        {
-                            // displays success message. Message only shows if everything else has no error
-                            !errorTags && !errorCohort && !errorLink && requestMsg && <h1 className={classes.message}>{requestMsg}</h1>
-                        }
-                    </div>
-
+                    <Button disabled={errorTags || errorLink || errorCohort} onClick={handleSubmit} variant="contained" color="primary">
+                        Post blog
+                    </Button>
+                    {
+                        // displays success message. Message only shows if everything else has no error
+                        !errorTags && !errorCohort && !errorLink && requestMsg && <h1 className={classes.message}>{requestMsg}</h1>
+                    }
                 </>
 
             }
