@@ -4,7 +4,7 @@ import {useStateValue} from '../context-api/Provider';
 
 type Props = {
     component: React.FC,
-    path: string
+    path: string,
 }
 const LockedRoute:React.FC<Props> = ({component: Component, ...rest}) => {
     const [{user}] = useStateValue();
