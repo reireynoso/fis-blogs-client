@@ -4,7 +4,8 @@ export const initialState = {
     blogs: [],
     titleFilter: "",
     tagFilter: "",
-    cohortFilter: ""
+    cohortFilter: "",
+    selectedCohort: null
 }
 
 const reducer = (state,action) => {
@@ -22,6 +23,11 @@ const reducer = (state,action) => {
                 ...state,
                 cohorts: action.cohorts,
                 blogs: action.blogs
+            }
+        case "SELECT_COHORT": 
+            return {
+                ...state,
+                selectedCohort: action.selectedCohort
             }
         // case "SET_COHORTS":
         //     return {

@@ -6,7 +6,7 @@ import {useStateValue} from '../context-api/Provider';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {deleteBlogRequest} from '../config/fetch-requests';
 import {deleteBlog} from '../context-api/actions';
-import {findUserBlogs, handleFilter} from '../helpers/helper-methods'
+import {findUserBlogs, handleFilter, findCohortBlogs} from '../helpers/helper-methods'
 
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -63,7 +63,16 @@ interface Blog {
 const Blogs : React.FC<Props> = ({history}) => {
     // console.log(history.location.pathname)
     
-    const [{user,blogs, titleFilter, tagFilter, cohortFilter}, dispatch] = useStateValue();
+    const [{
+      user,
+      blogs, 
+      titleFilter, 
+      tagFilter, 
+      cohortFilter, 
+      selectedCohort
+    }, 
+      dispatch
+    ] = useStateValue();
     const [open, setOpen] = useState(false);
     const [selectedBlogTitle, setSelectedBlogTitle] = useState("")
     const [selectedBlogId, setSelectedBlogId] = useState("");
@@ -79,8 +88,11 @@ const Blogs : React.FC<Props> = ({history}) => {
     const determinePath = () => {
       if(history.location.pathname === "/blogs/me"){
         return findUserBlogs(blogs, user)
+      }else if(history.location.pathname === "/cohort/admin"){
+        return findCohortBlogs(blogs, selectedCohort)
+      }else{
+        return handleFilter(blogs, titleFilter, tagFilter, cohortFilter);
       }
-      return handleFilter(blogs, titleFilter, tagFilter, cohortFilter);
     }
     
     const handleClose = ():void => {

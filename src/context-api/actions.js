@@ -11,6 +11,12 @@ export const setUser = (user) => ({
 //     cohorts
 // })
 
+// cohort admin actions
+export const selectCohort = (selectedCohort) => ({
+    type: "SELECT_COHORT",
+    selectedCohort
+})
+
 // blog actions
 
 // export const setUserBlogs = (userBlogs) => ({
