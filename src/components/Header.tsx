@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
       borderBottom: `1px solid ${theme.palette.divider}`,
+      zIndex: 10
     },
     toolbar: {
       flexWrap: 'wrap',
@@ -53,7 +54,7 @@ const Header : React.FC = () => {
     const [drawer, setDrawer] = useState(false);
     
     const classes = useStyles();
-    const matches = useMediaQuery('(min-width:530px)');
+    const matches = useMediaQuery('(min-width:640px)');
 
     useEffect(() => {
         if(matches && drawer){

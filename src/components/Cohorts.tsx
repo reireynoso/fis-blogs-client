@@ -1,4 +1,5 @@
 import React from 'react';
+import {useStateValue} from '../context-api/Provider'
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
-      zIndex: -1
+      zIndex: 5
     },
     drawerPaper: {
       width: drawerWidth,
@@ -39,9 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 const Cohorts: React.FC = () => {
-
+    const [{user, cohorts}, dispatch] = useStateValue();
     const classes = useStyles();
-
+    console.log(cohorts)
     return  (
         <div className={classes.root}>
           <Drawer
@@ -54,20 +55,27 @@ const Cohorts: React.FC = () => {
             <Toolbar />
             <div className={classes.drawerContainer}>
               <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
+                  <ListItem>
+                    <ListItemText primary={"Cohorts"} />
                   </ListItem>
-                ))}
               </List>
               <Divider />
               <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
+                {cohorts.map((cohort: {
+                    _id: string,
+                    name: string,
+                    admins: {
+                        admin: boolean,
+                        email: string,
+                        image_url: string,
+                        name: string,
+                        _id: string,
+
+                    }[]
+                }) => (
+                <ListItem onClick={() => console.log(cohort)} button key={cohort._id}>
+                    <ListItemText primary={cohort.name} />
+                </ListItem>
                 ))}
               </List>
             </div>
