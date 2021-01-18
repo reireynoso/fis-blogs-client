@@ -100,7 +100,11 @@ const Blogs : React.FC<Props> = ({history}) => {
     };
 
     const renderBlogs = () => {  
-        return determinePath().map((blog: Blog) => {
+        const matchingBlogs = determinePath();
+        if(!matchingBlogs.length){
+          return "No blogs"
+        }
+        return matchingBlogs.map((blog: Blog) => {
           const {title,createdAt,image,link,tags,approved,user, _id, cohort} = blog
           return <Grid
               item
@@ -116,6 +120,7 @@ const Blogs : React.FC<Props> = ({history}) => {
               createdAt={createdAt}
               cohort={cohort}
               user={user}
+              history={history}
               handleClickOpen={handleClickOpen}
             />
           </Grid> 

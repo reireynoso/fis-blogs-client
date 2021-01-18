@@ -8,7 +8,7 @@ export const truncate = (item) => {
 // inefficient approach filtering
 
 export const findCohortBlogs = (blogs, cohort) => {
-    return blogs.filter(blog => blog.cohort.name === cohort.name)
+    return blogs.filter(blog => blog.cohort.name === cohort.name && !blog.approved)
 }
 
 export const findUserBlogs = (blogs, user) => {
@@ -25,6 +25,7 @@ const cohortMatch = (blog, cohort) => {
 
 export const handleFilter = (blogs, title, tag, cohort) => blogs.filter(blog => 
     blog.title.toLowerCase().includes(title.toLowerCase()) 
+    && blog.approved
     && tagMatch(blog,tag) 
     && cohortMatch(blog,cohort)
 )

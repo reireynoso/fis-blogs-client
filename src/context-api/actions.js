@@ -39,6 +39,11 @@ export const setInitialData = (blogs, cohorts) => ({
     cohorts
 })
 
+export const approveBlog = (blogId) => ({
+    type: "APPROVE_BLOG",
+    blogId
+})
+
 export const deleteBlog = (id) => {
     // console.log(id)
     return ({

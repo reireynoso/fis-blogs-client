@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
+
+import {approveBlog} from '../context-api/actions';
 
 import {truncate} from '../helpers/helper-methods'
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +13,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
   root: {
@@ -40,9 +43,13 @@ const useStyles = makeStyles({
   },
   author: {
       background: "#1de9b6"
+  },
+  button: {
+    marginBottom: "1rem",
+    background: "green",
+    color: "white"
   }
 });
-
 interface Props {
     title: string,
     createdAt: string,
@@ -58,13 +65,20 @@ interface Props {
     cohort: {
         admins: string[],
         name: string
-    }
+    },
+    history: {
+      location: {
+          pathname: string
+      }
+    },
     handleClickOpen: (id:string, title:string) => void
   }
 
-const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, handleClickOpen}) => {
+const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, history, approved, handleClickOpen}) => {
     const classes = useStyles();
-    const [{user:loggedUser}] = useStateValue();
+    const [{user:loggedUser}, dispatch] = useStateValue();
+    const [approval, setApproval] = useState(false);
+
     return <Card className={classes.root}>
     {
         loggedUser && (loggedUser.admin || loggedUser._id === user._id) && <ClearIcon onClick={() => handleClickOpen(_id, title)} className={classes.icon}/>
@@ -102,6 +116,23 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
         View in Medium
       </Link>
     </CardActions>
+    {
+      history.location.pathname === "/cohort/admin" && !approved && <Button
+        variant="contained"
+        className={classes.button}
+        disabled={approval}
+        onClick={() => {
+          setApproval(true)
+
+          setTimeout(() => {
+            dispatch(approveBlog(_id));
+            setApproval(false)
+          }, 1000)
+        }}
+        >
+          {approval ? "Updating..." : "Approve"}
+      </Button>
+    }
   </Card>
 }
 

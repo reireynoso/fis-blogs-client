@@ -88,8 +88,15 @@ const Cohorts: React.FC = (props:any) => {
             </div>
           </Drawer>
           <main className={classes.content}>
-            <h1>{selectedCohort?.name}</h1>
-            <Blogs {...props} history={props.history}/>
+            {
+                selectedCohort ? <>
+                    <h1>{selectedCohort?.name}</h1>
+                    <h3>Reviews Blogs for Approval</h3>
+                    <Blogs {...props} history={props.history}/>
+                </>
+                :
+                "Select cohort"
+            } 
           </main>
         </div>
       );

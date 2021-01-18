@@ -55,6 +55,18 @@ const reducer = (state,action) => {
                 ...state,
                 blogs: removedUserBlog
             }
+        case "APPROVE_BLOG": 
+        const updatedBlogs = state.blogs.map(blog => {
+            if(blog._id === action.blogId){
+                blog.approved = true
+            }
+            return blog
+        })
+
+        return {
+            ...state,
+            blogs: updatedBlogs
+        }
         case "SET_TITLE_FILTER":
             return {
                 ...state,
