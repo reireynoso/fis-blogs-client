@@ -28,6 +28,16 @@ export const deleteBlogRequest = (selectedBlogId:string) => {
       .then(res => res.json())
 } 
 
+export const approveBlogRequest = (selectedBlogId:string) => {
+    return fetch(`${server}/blog/approve/${selectedBlogId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+}
+
 // export const fetchBlogs = () => {
 //     return fetch(`${server}/blog/all`)
 //     .then(res => res.json())

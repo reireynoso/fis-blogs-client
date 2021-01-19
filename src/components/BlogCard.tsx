@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 
 import {approveBlog} from '../context-api/actions';
+import {approveBlogRequest} from '../config/fetch-requests';
 
 import {truncate} from '../helpers/helper-methods'
 import { makeStyles } from '@material-ui/core/styles';
@@ -124,10 +125,24 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
         onClick={() => {
           setApproval(true)
 
-          setTimeout(() => {
-            dispatch(approveBlog(_id));
-            setApproval(false)
-          }, 1000)
+          approveBlogRequest(_id)
+          .then(res => {
+            if(res.status !== 200){
+              return res.json()
+            }else{
+              setTimeout(() => {
+                dispatch(approveBlog(_id));
+                setApproval(false)
+              }, 1000)
+            }
+          })
+          .then(result => {
+            if(result){
+              // console.log(result.error)
+              alert(`ERROR: ${result.error}. Try again.`);
+              setApproval(false);
+            }
+          })
         }}
         >
           {approval ? "Updating..." : "Approve"}
