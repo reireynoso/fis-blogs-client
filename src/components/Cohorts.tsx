@@ -18,6 +18,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Clear from '@material-ui/icons/Clear';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from '@material-ui/core/Avatar';
+import { server } from '../config/endpoints';
 
 const drawerWidth = 240;
 
@@ -43,6 +48,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
+enum Action {
+    ADD = "add",
+    REMOVE = "remove"
+}
 const Cohorts: React.FC = (props:any) => {
     const [{user, cohorts, selectedCohort}, dispatch] = useStateValue();
 
@@ -98,6 +108,73 @@ const Cohorts: React.FC = (props:any) => {
                 "Select cohort"
             } 
           </main>
+
+          {
+              selectedCohort && <Drawer
+              className={classes.drawer}
+              variant="permanent"
+              anchor="right"
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              <Toolbar />
+              <div className={classes.drawerContainer}>
+                <List>
+                    <ListItem>
+                      <ListItemText primary={"Admins"} />
+                    </ListItem>
+                </List>
+                <Divider />
+                <List>
+                  {selectedCohort?.admins.map((user: {
+                      _id: string,
+                      name: string,
+                      admin: boolean,
+                      image_url: string,
+                      email: string
+                  }) => (
+                  <ListItem key={user._id}>
+                      <ListItemAvatar>
+                        <Avatar
+                            alt={user.image_url}
+                            src={user.image_url}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText primary={user.name} />
+                      <ListItemIcon onClick={() => {
+                          fetch(`${server}/cohort/${selectedCohort._id}`, {
+                              method: "PATCH",
+                              headers: {
+                                  "Content-Type": "application/json",
+                                  "Accept": "application/json"
+                              },
+                              body: JSON.stringify({
+                                  action: Action.REMOVE,
+                                  userId: user._id
+                              })
+                          })
+                          .then(res => {
+                              if(res.status === 401){
+                                  alert("error")
+                              }
+
+                              return res.json()
+                          })
+                          .then(data =>{
+                              if(data){
+                                  // remove admin
+                              }
+                          })
+                      }}>
+                          <Clear />
+                      </ListItemIcon>
+                  </ListItem>
+                  ))}
+                </List>
+              </div>
+            </Drawer>
+          }   
         </div>
       );
 }
