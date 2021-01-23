@@ -3,7 +3,7 @@ import {useStateValue} from '../context-api/Provider'
 
 import Blogs from './Blogs';
 
-import {selectCohort} from '../context-api/actions';
+import {selectCohort, removeUserAdmin} from '../context-api/actions';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -57,7 +57,6 @@ const Cohorts: React.FC = (props:any) => {
     const [{user, cohorts, selectedCohort}, dispatch] = useStateValue();
 
     const classes = useStyles();
-
     return  (
         <div className={classes.root}>
           <Drawer
@@ -143,6 +142,7 @@ const Cohorts: React.FC = (props:any) => {
                       </ListItemAvatar>
                       <ListItemText primary={user.name} />
                       <ListItemIcon onClick={() => {
+                          dispatch(removeUserAdmin(user._id))
                           fetch(`${server}/cohort/${selectedCohort._id}`, {
                               method: "PATCH",
                               headers: {
@@ -155,15 +155,21 @@ const Cohorts: React.FC = (props:any) => {
                               })
                           })
                           .then(res => {
-                              if(res.status === 401){
-                                  alert("error")
-                              }
-
-                              return res.json()
+                            if(res.status !== 200){
+                                return res.json()
+                            }else{
+                                // success
+                                // send user id and remove the user from the selectedCohort
+                                // setTimeout(() => {
+                                    // dispatch(approveBlog(_id));
+                                    // setApproval(false)
+                                // }, 1000)
+                            }
                           })
                           .then(data =>{
                               if(data){
-                                  // remove admin
+                                  // error
+                                  alert("Something went wrong in the server")
                               }
                           })
                       }}>

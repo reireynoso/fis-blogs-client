@@ -1,20 +1,26 @@
 import Cookies from 'universal-cookie';
 import {server} from '../config/endpoints';
 const cookies = new Cookies();
-const token : String = cookies.get('token');
+
 // handles new blog request
 type informationObjectType = {
     tags: string[],
     link: string,
     cohort: string
 }
+
+// fix to address closure issue when pulling out the token when logging in
+function checkToken():string{
+    return cookies.get('token')
+}
+
 export const newBlogRequest = (informationObject: informationObjectType) => {
     return fetch(`${server}/blog/new`, {
         method: "post",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application.json",
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${checkToken()}`
         },
         body: JSON.stringify(informationObject)
     })
@@ -33,7 +39,7 @@ export const approveBlogRequest = (selectedBlogId:string) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${checkToken()}`
         }
       })
 }
@@ -56,7 +62,7 @@ export const fetchInitialData = () => {
 //         method: "get",
 //         headers: {
 //             "Accept": "application.json",
-//             "Authorization": `Bearer ${token}`
+//             "Authorization": `Bearer ${checkToken(token)}`
 //         },
 //     })
 //     .then(res => res.json())
@@ -77,7 +83,7 @@ export const newCohortRequest = (name: string) => {
         headers: {
             'Content-Type': "application/json",
             'Accept': "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${checkToken()}`
         },
         body: JSON.stringify({
             name
@@ -94,7 +100,7 @@ export const handleAutoLogin = () => {
         headers: {
           'Content-Type': 'application/json',
           'Accept': "application/json",
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${checkToken()}`
         },
       })
       .then(res => {

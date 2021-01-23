@@ -17,6 +17,11 @@ export const selectCohort = (selectedCohort) => ({
     selectedCohort
 })
 
+export const removeUserAdmin = (userId) => ({
+    type: "REMOVE_USER_ADMIN",
+    userId
+})
+
 // blog actions
 
 // export const setUserBlogs = (userBlogs) => ({
