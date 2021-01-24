@@ -3,7 +3,7 @@ import {useStateValue} from '../context-api/Provider'
 
 import Blogs from './Blogs';
 
-import {selectCohort, removeUserAdmin} from '../context-api/actions';
+import {selectCohort, removeUserAdmin, setNotificationOpen, setNotificationClose} from '../context-api/actions';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -45,6 +45,14 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing(2),
+    },
+    icon: {
+        borderRadius: "10px",
+        cursor: "pointer",
+        "&:hover": {
+            background: "#9e9e9e",
+            transition: "0.3s ease"
+        }
     },
   }),
 );
@@ -142,38 +150,44 @@ const Cohorts: React.FC = (props:any) => {
                       </ListItemAvatar>
                       <ListItemText primary={user.name} />
                       <ListItemIcon onClick={() => {
-                          dispatch(removeUserAdmin(user._id))
-                          fetch(`${server}/cohort/${selectedCohort._id}`, {
-                              method: "PATCH",
-                              headers: {
-                                  "Content-Type": "application/json",
-                                  "Accept": "application/json"
-                              },
-                              body: JSON.stringify({
-                                  action: Action.REMOVE,
-                                  userId: user._id
-                              })
-                          })
-                          .then(res => {
-                            if(res.status !== 200){
-                                return res.json()
-                            }else{
-                                // success
-                                // send user id and remove the user from the selectedCohort
-                                // setTimeout(() => {
-                                    // dispatch(approveBlog(_id));
-                                    // setApproval(false)
-                                // }, 1000)
-                            }
-                          })
-                          .then(data =>{
-                              if(data){
-                                  // error
-                                  alert("Something went wrong in the server")
-                              }
-                          })
+                          const statement = `${user.name} will be removed as an admin for cohort, ${selectedCohort.name}.`
+                          const callback = () => {
+                            dispatch(setNotificationClose());
+                            dispatch(removeUserAdmin(user._id));
+                          }
+                          dispatch(setNotificationOpen(statement, callback))
+                        //   dispatch(removeUserAdmin(user._id))
+                        //   fetch(`${server}/cohort/${selectedCohort._id}`, {
+                        //       method: "PATCH",
+                        //       headers: {
+                        //           "Content-Type": "application/json",
+                        //           "Accept": "application/json"
+                        //       },
+                        //       body: JSON.stringify({
+                        //           action: Action.REMOVE,
+                        //           userId: user._id
+                        //       })
+                        //   })
+                        //   .then(res => {
+                        //     if(res.status !== 200){
+                        //         return res.json()
+                        //     }else{
+                        //         // success
+                        //         // send user id and remove the user from the selectedCohort
+                        //         // setTimeout(() => {
+                        //             // dispatch(approveBlog(_id));
+                        //             // setApproval(false)
+                        //         // }, 1000)
+                        //     }
+                        //   })
+                        //   .then(data =>{
+                        //       if(data){
+                        //           // error
+                        //           alert("Something went wrong in the server")
+                        //       }
+                        //   })
                       }}>
-                          <Clear />
+                          <Clear className={classes.icon}/>
                       </ListItemIcon>
                   </ListItem>
                   ))}

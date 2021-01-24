@@ -5,7 +5,10 @@ export const initialState = {
     titleFilter: "",
     tagFilter: "",
     cohortFilter: "",
-    selectedCohort: null
+    selectedCohort: null,
+    notificationOpen: false,
+    notificationStatement: "",
+    notificationCallbackFunction: null
 }
 
 const reducer = (state,action) => {
@@ -30,7 +33,6 @@ const reducer = (state,action) => {
                 selectedCohort: action.selectedCohort
             }
         case "REMOVE_USER_ADMIN": 
-            console.log(action.userId)
             const removedUser = state.selectedCohort.admins.filter(admin => admin._id !== action.userId)
             const updatedSelectedCohort = {
                 ...state.selectedCohort,
@@ -99,6 +101,24 @@ const reducer = (state,action) => {
             return {
                 ...state,
                 cohortFilter: action.input
+            }
+        case "SET_NOTIFICATION_OPEN":
+            return {
+                ...state,
+                notificationOpen: true,
+                notificationStatement: action.statement,
+                notificationCallbackFunction: action.callback
+            }
+        case "SET_NOTIFICATION_CLOSE":
+            return {
+                ...state,
+                notificationOpen: false
+            }
+        case "CLEAR_NOTIFICATION_FIELDS":
+            return {
+                ...state,
+                notificationStatement: "",
+                notificationCallbackFunction: null
             }
         default: 
             return state

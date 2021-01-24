@@ -57,6 +57,21 @@ export const deleteBlog = (id) => {
     })
 }
 
+//notificaiton actions
+export const setNotificationOpen = (statement, callback) => ({
+    type: "SET_NOTIFICATION_OPEN",
+    statement,
+    callback
+})
+
+export const setNotificationClose = () => ({
+    type: "SET_NOTIFICATION_CLOSE"
+})
+
+export const clearNotificationFields = () => ({
+    type: "CLEAR_NOTIFICATION_FIELDS"
+})
+
 // filter actions
 export const setTitleFilter = (input) => ({
     type: "SET_TITLE_FILTER",
@@ -72,3 +87,4 @@ export const setCohortFilter = (input) => ({
     type: "SET_COHORT_FILTER",
     input
 })
+

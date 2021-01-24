@@ -14,6 +14,7 @@ import NewCohort from './components/NewCohort';
 import LockedRoute from './routes/LockedRoute';
 import Blogs from './components/Blogs';
 import Cohorts from './components/Cohorts';
+import Notification from './components/Notification';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -54,6 +55,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
         <Header/>
+        <Notification/>
         <Container className={classes.heroContent} component="main">
           <Switch>
             <Route path="/" exact component={Blogs}/>

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 
-import {approveBlog} from '../context-api/actions';
-import {approveBlogRequest} from '../config/fetch-requests';
+import {approveBlog, deleteBlog, setNotificationOpen, setNotificationClose} from '../context-api/actions';
+import {approveBlogRequest, deleteBlogRequest} from '../config/fetch-requests';
 
 import {truncate} from '../helpers/helper-methods'
 import { makeStyles } from '@material-ui/core/styles';
@@ -72,17 +72,33 @@ interface Props {
           pathname: string
       }
     },
-    handleClickOpen: (id:string, title:string) => void
+    // handleClickOpen: (id:string, title:string) => void
   }
 
-const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, history, approved, handleClickOpen}) => {
+const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, history, approved}) => {
     const classes = useStyles();
     const [{user:loggedUser}, dispatch] = useStateValue();
     const [approval, setApproval] = useState(false);
 
     return <Card className={classes.root}>
     {
-        loggedUser && (loggedUser.admin || loggedUser._id === user._id) && <ClearIcon onClick={() => handleClickOpen(_id, title)} className={classes.icon}/>
+        loggedUser && (loggedUser.admin || loggedUser._id === user._id) && <ClearIcon onClick={() => {
+          // handleClickOpen(_id, title)
+          const statement = `"${title}" from cohort, ${cohort.name} will be removed.`
+          const callback = () => {
+            deleteBlogRequest(_id)
+            .then(data => {
+              if(data.error){
+                alert("Something went wrong. Try again");
+              }else{
+                dispatch(setNotificationClose());
+                dispatch(deleteBlog(_id));
+              }
+            })
+          }
+          dispatch(setNotificationOpen(statement, callback))
+        }} 
+        className={classes.icon}/>
     }
     <CardContent>
         <Typography className={classes.title} gutterBottom variant="h5" component="h2">

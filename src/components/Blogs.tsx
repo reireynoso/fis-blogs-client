@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import BlogCard from './BlogCard';
 import FilterComponent from './FilterComponet';
 
 import {useStateValue} from '../context-api/Provider';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {deleteBlogRequest} from '../config/fetch-requests';
-import {deleteBlog} from '../context-api/actions';
+// import {deleteBlogRequest} from '../config/fetch-requests';
+// import {deleteBlog} from '../context-api/actions';
 import {findUserBlogs, handleFilter, findCohortBlogs} from '../helpers/helper-methods'
 
 import Grid from '@material-ui/core/Grid';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
+// import Dialog from '@material-ui/core/Dialog';
+// import DialogActions from '@material-ui/core/DialogActions';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogTitle from '@material-ui/core/DialogTitle';
+// import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,17 +73,17 @@ const Blogs : React.FC<Props> = ({history}) => {
     }, 
       dispatch
     ] = useStateValue();
-    const [open, setOpen] = useState(false);
-    const [selectedBlogTitle, setSelectedBlogTitle] = useState("")
-    const [selectedBlogId, setSelectedBlogId] = useState("");
+    // const [open, setOpen] = useState(false);
+    // const [selectedBlogTitle, setSelectedBlogTitle] = useState("")
+    // const [selectedBlogId, setSelectedBlogId] = useState("");
 
     const classes = useStyles();
 
-    const handleClickOpen = (id:string, title:string):void => {
-      setOpen(true);
-      setSelectedBlogId(id)
-      setSelectedBlogTitle(title)
-    };
+    // const handleClickOpen = (id:string, title:string):void => {
+    //   setOpen(true);
+    //   setSelectedBlogId(id)
+    //   setSelectedBlogTitle(title)
+    // };
 
     const determinePath = () => {
       if(history.location.pathname === "/blogs/me"){
@@ -95,9 +95,9 @@ const Blogs : React.FC<Props> = ({history}) => {
       }
     }
     
-    const handleClose = ():void => {
-      setOpen(false);
-    };
+    // const handleClose = ():void => {
+    //   setOpen(false);
+    // };
 
     const renderBlogs = () => {  
         const matchingBlogs = determinePath();
@@ -121,7 +121,7 @@ const Blogs : React.FC<Props> = ({history}) => {
               cohort={cohort}
               user={user}
               history={history}
-              handleClickOpen={handleClickOpen}
+              // handleClickOpen={handleClickOpen}
             />
           </Grid> 
         })
@@ -137,7 +137,7 @@ const Blogs : React.FC<Props> = ({history}) => {
                 !user && history.location.pathname === "/blogs/me" ? "You're not logged in!" : renderBlogs()
             }
         </Grid>
-        <Dialog
+        {/* <Dialog
               open={open}
               onClose={handleClose}
               onExited={() => {
@@ -160,22 +160,22 @@ const Blogs : React.FC<Props> = ({history}) => {
                   </Button>
                   <Button variant="contained" onClick={() => {
                       // handle delete request
-                      deleteBlogRequest(selectedBlogId)
-                      .then(data => {
-                        if(data.error){
-                          alert("Something went wrong. Try again");
-                        }else{
-                          dispatch(deleteBlog(selectedBlogId));
-                          handleClose()
-                        }
-                      })
+                      // deleteBlogRequest(selectedBlogId)
+                      // .then(data => {
+                      //   if(data.error){
+                      //     alert("Something went wrong. Try again");
+                      //   }else{
+                      //     dispatch(deleteBlog(selectedBlogId));
+                      //     handleClose()
+                      //   }
+                      // })
                     }} 
                     color="secondary"
                   >
                     Delete
                   </Button>
               </DialogActions>
-          </Dialog>
+          </Dialog> */}
         </>
     )
 }
