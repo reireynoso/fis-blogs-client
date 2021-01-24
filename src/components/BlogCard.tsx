@@ -89,7 +89,7 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
             deleteBlogRequest(_id)
             .then(data => {
               if(data.error){
-                alert("Something went wrong. Try again");
+                alert(`Error: ${data.error}`);
               }else{
                 dispatch(setNotificationClose());
                 dispatch(deleteBlog(_id));

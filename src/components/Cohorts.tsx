@@ -1,28 +1,29 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useStateValue} from '../context-api/Provider'
+import {selectCohort, removeUserAdmin, setNotificationOpen, setNotificationClose} from '../context-api/actions';
 
 import Blogs from './Blogs';
 
-import {selectCohort, removeUserAdmin, setNotificationOpen, setNotificationClose} from '../context-api/actions';
-
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Clear from '@material-ui/icons/Clear';
+import AddIcon from '@material-ui/icons/Add';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
-import { server } from '../config/endpoints';
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const drawerWidth = 240;
 
@@ -61,8 +62,9 @@ enum Action {
     ADD = "add",
     REMOVE = "remove"
 }
+
 const Cohorts: React.FC = (props:any) => {
-    const [{user, cohorts, selectedCohort}, dispatch] = useStateValue();
+    const [{cohorts, selectedCohort}, dispatch] = useStateValue();
 
     const classes = useStyles();
     return  (
@@ -130,6 +132,9 @@ const Cohorts: React.FC = (props:any) => {
                 <List>
                     <ListItem>
                       <ListItemText primary={"Admins"} />
+                      <ListItemIcon>
+                          <AddIcon className={classes.icon}/>
+                      </ListItemIcon>
                     </ListItem>
                 </List>
                 <Divider />
@@ -194,7 +199,35 @@ const Cohorts: React.FC = (props:any) => {
                 </List>
               </div>
             </Drawer>
-          }   
+          }
+          <Dialog 
+            open={false} 
+            //onClose={handleClose} 
+            aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    To subscribe to this website, please enter your email address here. We will send updates
+                    occasionally.
+                </DialogContentText>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Email Address"
+                    type="email"
+                    fullWidth
+                />
+                </DialogContent>
+                <DialogActions>
+                <Button  color="primary">
+                    Cancel
+                </Button>
+                <Button  color="primary">
+                    Subscribe
+                </Button>
+                </DialogActions>
+            </Dialog>   
         </div>
       );
 }

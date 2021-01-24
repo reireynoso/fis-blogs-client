@@ -29,7 +29,11 @@ export const newBlogRequest = (informationObject: informationObjectType) => {
 
 export const deleteBlogRequest = (selectedBlogId:string) => {
     return fetch(`${server}/blog/delete/${selectedBlogId}`, {
-        method: "POST"
+        method: "POST",
+        headers: {
+            "Accept": "application.json",
+            "Authorization": `Bearer ${checkToken()}`
+        }
       })
       .then(res => res.json())
 } 
