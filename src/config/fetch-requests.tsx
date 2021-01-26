@@ -135,3 +135,14 @@ export const handleLogin = (code:string) => {
             return res.json()
         })
 }
+
+// fetch all users for admin view
+
+export const handleFetchUsers = () => {
+    return fetch(`${server}/users/all`, {
+        headers: {
+            'Accept': "application/json",
+            'Authorization': `Bearer ${checkToken()}`
+        }
+    })
+}

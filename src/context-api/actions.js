@@ -4,6 +4,11 @@ export const setUser = (user) => ({
     user
 })
 
+export const setAdminUsers = (users) => ({
+    type: "SET_USERS_ADMIN_VIEW",
+    users
+})
+
 // cohort actions
 
 // export const setCohorts = (cohorts) => ({
@@ -88,3 +93,8 @@ export const setCohortFilter = (input) => ({
     input
 })
 
+// admin update modal
+export const setAdminUpdate = (status) => ({
+    type: "SET_ADMIN_UPDATE",
+    status
+})

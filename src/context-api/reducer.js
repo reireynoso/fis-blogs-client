@@ -2,13 +2,15 @@ export const initialState = {
     user: null,
     cohorts: [],
     blogs: [],
+    users: null, // ideally empty array but for useEffect purposes
     titleFilter: "",
     tagFilter: "",
     cohortFilter: "",
     selectedCohort: null,
     notificationOpen: false,
     notificationStatement: "",
-    notificationCallbackFunction: null
+    notificationCallbackFunction: null,
+    adminUpdateModal: false
 }
 
 const reducer = (state,action) => {
@@ -20,6 +22,11 @@ const reducer = (state,action) => {
                 user: action.user,
                 // blogs: action.user ? action.blogs : []
                 // blogs: action.blogs
+            }
+        case "SET_USERS_ADMIN_VIEW": 
+            return {
+                ...state,
+                users: action.users
             }
         case "SET_INITIAL_DATA":
             return {
@@ -102,6 +109,7 @@ const reducer = (state,action) => {
                 ...state,
                 cohortFilter: action.input
             }
+        // notification modal
         case "SET_NOTIFICATION_OPEN":
             return {
                 ...state,
@@ -120,6 +128,17 @@ const reducer = (state,action) => {
                 notificationStatement: "",
                 notificationCallbackFunction: null
             }
+        // user admin modal
+        case "SET_ADMIN_UPDATE":
+            return {
+                ...state,
+                adminUpdateModal: action.status
+            }
+        // case "SET_ADMIN_UPDATE_CLOSE":
+        //     return {
+        //         ...state,
+        //         adminUpdateModal: false
+        //     }
         default: 
             return state
     }

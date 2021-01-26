@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useStateValue} from '../context-api/Provider'
-import {selectCohort, removeUserAdmin, setNotificationOpen, setNotificationClose} from '../context-api/actions';
+import {
+    selectCohort, 
+    removeUserAdmin, 
+    setNotificationOpen, 
+    setNotificationClose,
+    setAdminUpdate
+} 
+from '../context-api/actions';
+import {handleFetchUsers} from '../config/fetch-requests';
 
 import Blogs from './Blogs';
 
@@ -64,9 +72,25 @@ enum Action {
 }
 
 const Cohorts: React.FC = (props:any) => {
-    const [{cohorts, selectedCohort}, dispatch] = useStateValue();
+    const [{
+        user: loggedUser,
+        users,
+        cohorts, 
+        selectedCohort, 
+        adminUpdateModal}, dispatch] = useStateValue();
 
     const classes = useStyles();
+
+    useEffect(() => {
+        // if no users in global state, fetch the array and store
+        // have to create fetch users route
+        if(adminUpdateModal && !users){
+            handleFetchUsers()
+            .then(res => res.json())
+            .then(console.log)
+        }
+    }, [adminUpdateModal])
+
     return  (
         <div className={classes.root}>
           <Drawer
@@ -132,7 +156,13 @@ const Cohorts: React.FC = (props:any) => {
                 <List>
                     <ListItem>
                       <ListItemText primary={"Admins"} />
-                      <ListItemIcon>
+                      <ListItemIcon onClick={() => {
+                            if(loggedUser.admin){
+                                dispatch(setAdminUpdate(true))
+                            }else{
+                                alert("You're not an admin. Not permitted to view.")
+                            }
+                          }}>
                           <AddIcon className={classes.icon}/>
                       </ListItemIcon>
                     </ListItem>
@@ -201,8 +231,8 @@ const Cohorts: React.FC = (props:any) => {
             </Drawer>
           }
           <Dialog 
-            open={false} 
-            //onClose={handleClose} 
+            open={adminUpdateModal} 
+            onClose={() => dispatch(setAdminUpdate(false))} 
             aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                 <DialogContent>
@@ -220,7 +250,7 @@ const Cohorts: React.FC = (props:any) => {
                 />
                 </DialogContent>
                 <DialogActions>
-                <Button  color="primary">
+                <Button onClick={() => dispatch(setAdminUpdate(false))}  color="primary">
                     Cancel
                 </Button>
                 <Button  color="primary">
