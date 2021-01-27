@@ -120,6 +120,16 @@ const Header : React.FC = () => {
             >
                 Cohorts
             </Button>
+
+            <Button
+            component={NavLink}
+            onClick={handleCloseDrawer} 
+            className={classes.link}
+            activeClassName={classes.activeLink} 
+            to={user && user.admin ? "/admin/users": ""}
+            >
+                Admit User
+            </Button>
             </>
         }
 

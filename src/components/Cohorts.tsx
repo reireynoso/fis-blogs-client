@@ -5,12 +5,14 @@ import {
     removeUserAdmin, 
     setNotificationOpen, 
     setNotificationClose,
-    setAdminUpdate
+    setAdminUpdate,
+    setAdminUsers
 } 
 from '../context-api/actions';
 import {handleFetchUsers} from '../config/fetch-requests';
 
 import Blogs from './Blogs';
+import AdminUsers from './AdminUsers';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -63,6 +65,10 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: "0.3s ease"
         }
     },
+    userList: {
+      maxHeight: "200px",
+      overflowY: "scroll"
+    }
   }),
 );
 
@@ -87,7 +93,7 @@ const Cohorts: React.FC = (props:any) => {
         if(adminUpdateModal && !users){
             handleFetchUsers()
             .then(res => res.json())
-            .then(console.log)
+            .then(data => dispatch(setAdminUsers(data.users)))
         }
     }, [adminUpdateModal])
 
@@ -236,19 +242,21 @@ const Cohorts: React.FC = (props:any) => {
             aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                 <DialogContent>
-                <DialogContentText>
-                    To subscribe to this website, please enter your email address here. We will send updates
-                    occasionally.
-                </DialogContentText>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Email Address"
-                    type="email"
-                    fullWidth
-                />
+                    <DialogContentText>
+                        To subscribe to this website, please enter your email address here. We will send updates
+                        occasionally.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                    />
                 </DialogContent>
+                <AdminUsers/>
+                
                 <DialogActions>
                 <Button onClick={() => dispatch(setAdminUpdate(false))}  color="primary">
                     Cancel
