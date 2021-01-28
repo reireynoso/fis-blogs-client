@@ -39,9 +39,9 @@ const Notification:React.FC = () => {
           Cancel
         </Button>
         <Button variant="contained" onClick={() => notificationCallbackFunction()} 
-          color="secondary"
+          color="primary"
         >
-          Delete
+          Confirm
         </Button>
     </DialogActions>
     </Dialog>

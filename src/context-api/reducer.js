@@ -39,6 +39,20 @@ const reducer = (state,action) => {
                 ...state,
                 selectedCohort: action.selectedCohort
             }
+        case "UPDATE_USER":
+            const updateUsers = state.users.map(user => {
+                if(user._id === action.userId){
+                    return {
+                        ...user,
+                        admin: !user.admin
+                    }
+                }
+                return user
+            })
+            return {
+                ...state,
+                users: updateUsers
+            }
         case "REMOVE_USER_ADMIN": 
             const removedUser = state.selectedCohort.admins.filter(admin => admin._id !== action.userId)
             const updatedSelectedCohort = {

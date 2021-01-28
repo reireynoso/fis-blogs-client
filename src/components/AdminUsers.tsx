@@ -9,7 +9,8 @@ import {
     setNotificationOpen, 
     setNotificationClose,
     setAdminUpdate,
-    setAdminUsers
+    setAdminUsers,
+    updateUser
 } 
 from '../context-api/actions';
 
@@ -113,6 +114,14 @@ const AdminUsers:React.FC = () => {
                             variant="contained"
                             color={user.admin ? "secondary" : "primary"}
                             size="small"
+                            onClick={() => {
+                                const statement = `${user.name} will ${user.admin ? "lose admin privilege" : "be made an admin"}.`
+                                const callback = () => {
+                                  dispatch(setNotificationClose());
+                                  dispatch(updateUser(user._id))
+                                }
+                                dispatch(setNotificationOpen(statement, callback))
+                            }}
                         >
                             {user.admin ? "Revoke admin" : "Make admin"}
                         </Button>

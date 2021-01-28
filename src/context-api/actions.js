@@ -9,6 +9,11 @@ export const setAdminUsers = (users) => ({
     users
 })
 
+export const updateUser = (userId) => ({
+    type: "UPDATE_USER",
+    userId
+})
+
 // cohort actions
 
 // export const setCohorts = (cohorts) => ({
@@ -22,6 +27,7 @@ export const selectCohort = (selectedCohort) => ({
     selectedCohort
 })
 
+// remove user from cohort as an admin
 export const removeUserAdmin = (userId) => ({
     type: "REMOVE_USER_ADMIN",
     userId
