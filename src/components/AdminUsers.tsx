@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 import {useHistory} from 'react-router-dom';
 
@@ -10,9 +10,11 @@ import {
     setNotificationClose,
     setAdminUpdate,
     setAdminUsers,
-    updateUser
+    updateUser,
 } 
 from '../context-api/actions';
+
+import {handleUserFilter} from '../helpers/helper-methods';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -28,6 +30,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 
 const drawerWidth = 240;
@@ -64,18 +67,28 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: "200px",
     //   maxWidth: "500px",
       overflowY: "scroll",
+    },
+    userSearch: {
+        display: "block",
+        margin: "auto",
+        maxWidth: 300,
+        marginBottom: 20
     }
   }),
 );
 
 const AdminUsers:React.FC = () => {
 
+    const [filter, setFilter] = useState("")
+
     const [{
         user: loggedUser,
         users,
         cohorts, 
         selectedCohort, 
-        adminUpdateModal}, dispatch] = useStateValue();
+        adminUpdateModal,
+        userNameFilter
+    }, dispatch] = useStateValue();
 
     const classes = useStyles();
     const history = useHistory();
@@ -91,8 +104,19 @@ const AdminUsers:React.FC = () => {
     }, [])
 
     return <List dense className={classes.userList}>
+            <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Search User"
+                    fullWidth
+                    className={classes.userSearch}
+                    // value={userNameFilter}
+                    // onChange={(e) => dispatch(setUserNameFilter(e.target.value))}
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                />
             {
-            users?.map((user: {
+            handleUserFilter(users,filter, history.location.pathname)?.map((user: {
                     _id: string,
                     name: string,
                     admin: boolean,
@@ -112,18 +136,32 @@ const AdminUsers:React.FC = () => {
                     <ListItemSecondaryAction>
                         <Button 
                             variant="contained"
-                            color={user.admin ? "secondary" : "primary"}
+                            color={history.location.pathname === "/admin/users" ? (user.admin ? "secondary" : "primary") : "primary"}
                             size="small"
-                            onClick={() => {
+                            onClick={
+                                history.location.pathname === "/admin/users" 
+                                ?
+                                () => {
                                 const statement = `${user.name} will ${user.admin ? "lose admin privilege" : "be made an admin"}.`
                                 const callback = () => {
                                   dispatch(setNotificationClose());
                                   dispatch(updateUser(user._id))
                                 }
                                 dispatch(setNotificationOpen(statement, callback))
-                            }}
+                                }
+                                : 
+                                () => {
+                                    console.log('something')
+                                }
+                            }
                         >
-                            {user.admin ? "Revoke admin" : "Make admin"}
+                            {
+                                history.location.pathname === "/admin/users" 
+                                ? 
+                                (user.admin ? "Revoke admin" : "Make admin")
+                                :
+                                "Add admin"    
+                            }
                         </Button>
                     </ListItemSecondaryAction>
                 </ListItem>

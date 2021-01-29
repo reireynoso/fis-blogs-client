@@ -246,17 +246,9 @@ const Cohorts: React.FC = (props:any) => {
                         To subscribe to this website, please enter your email address here. We will send updates
                         occasionally.
                     </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                    />
                 </DialogContent>
                 <AdminUsers/>
-                
+
                 <DialogActions>
                 <Button onClick={() => dispatch(setAdminUpdate(false))}  color="primary">
                     Cancel

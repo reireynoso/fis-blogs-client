@@ -29,3 +29,21 @@ export const handleFilter = (blogs, title, tag, cohort) => blogs.filter(blog =>
     && tagMatch(blog,tag) 
     && cohortMatch(blog,cohort)
 )
+
+export const handleUserFilter = (users, searchTerm, route) => {
+    if(!users) return null;
+    if(route === "/admin/users"){
+        if(!searchTerm) return users
+        return users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    }
+    else{
+        let filtered = [];
+        filtered = users.filter(user => user.admin)
+        if(!searchTerm){
+            return filtered
+        }
+        return filtered.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    }
+}
+    // if(!searchTerm && route === "/admin/users") return users;
+    // return users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
