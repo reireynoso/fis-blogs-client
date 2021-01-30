@@ -146,3 +146,7 @@ export const handleFetchUsers = () => {
         }
     })
 }
+
+// export const addUserAsAdminToCohort = () => {
+//     return fetch(`${server}/`)
+// }

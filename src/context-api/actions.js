@@ -33,6 +33,12 @@ export const removeUserAdmin = (userId) => ({
     userId
 })
 
+// add user as admin to cohort
+export const addUserAdminToCohort = (user) => ({
+    type: "ADD_USER_ADMIN_COHORT",
+    user
+})
+
 // blog actions
 
 // export const setUserBlogs = (userBlogs) => ({

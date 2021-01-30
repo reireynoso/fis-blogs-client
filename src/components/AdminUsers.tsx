@@ -11,6 +11,7 @@ import {
     setAdminUpdate,
     setAdminUsers,
     updateUser,
+    addUserAdminToCohort
 } 
 from '../context-api/actions';
 
@@ -103,6 +104,8 @@ const AdminUsers:React.FC = () => {
         }
     }, [])
 
+    const determineUsers = () => handleUserFilter(users,filter, history.location.pathname, (history.location.pathname!=="/admin/users" ? selectedCohort.admins : null))
+
     return <List dense className={classes.userList}>
             <TextField
                     autoFocus
@@ -116,7 +119,7 @@ const AdminUsers:React.FC = () => {
                     onChange={(e) => setFilter(e.target.value)}
                 />
             {
-            handleUserFilter(users,filter, history.location.pathname)?.map((user: {
+            determineUsers()?.map((user: {
                     _id: string,
                     name: string,
                     admin: boolean,
@@ -151,7 +154,9 @@ const AdminUsers:React.FC = () => {
                                 }
                                 : 
                                 () => {
-                                    console.log('something')
+                                    // actual add user as admin to the cohort function
+                                    console.log('added')
+                                    dispatch(addUserAdminToCohort(user))
                                 }
                             }
                         >

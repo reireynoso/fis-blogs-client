@@ -70,6 +70,25 @@ const reducer = (state,action) => {
                 selectedCohort: updatedSelectedCohort,
                 cohorts: updatedCohorts
             }
+        case "ADD_USER_ADMIN_COHORT":
+            const addedUser = [...state.selectedCohort.admins, action.user]
+            const addedSelectedCohort = {
+                ...state.selectedCohort,
+                admins: addedUser
+            }
+            const addedUserCohorts = state.cohorts.map(cohort => {
+                if(cohort._id === addedSelectedCohort._id){
+                    return addedSelectedCohort
+                }
+                return cohort
+            })
+
+            return {
+                ...state,
+                selectedCohort: addedSelectedCohort,
+                cohorts: addedUserCohorts,
+                adminUpdateModal: false
+            }
         // case "SET_COHORTS":
         //     return {
         //         ...state,
