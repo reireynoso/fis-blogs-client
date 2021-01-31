@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     },
     userList: {
-      maxHeight: "200px",
+      maxHeight: "400px",
     //   maxWidth: "500px",
       overflowY: "scroll",
     },
@@ -74,6 +74,10 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: "auto",
         maxWidth: 300,
         marginBottom: 20
+    },
+    noUsers: {
+        textAlign: "center",
+        color: 'red'
     }
   }),
 );
@@ -85,10 +89,8 @@ const AdminUsers:React.FC = () => {
     const [{
         user: loggedUser,
         users,
-        cohorts, 
         selectedCohort, 
-        adminUpdateModal,
-        userNameFilter
+    
     }, dispatch] = useStateValue();
 
     const classes = useStyles();
@@ -104,22 +106,21 @@ const AdminUsers:React.FC = () => {
         }
     }, [])
 
-    const determineUsers = () => handleUserFilter(users,filter, history.location.pathname, (history.location.pathname!=="/admin/users" ? selectedCohort.admins : null))
+    const determineUsers = handleUserFilter(users,filter, history.location.pathname, (history.location.pathname!=="/admin/users" ? selectedCohort.admins : null), loggedUser)
 
-    return <List dense className={classes.userList}>
+    return users && users.length ? <List dense className={classes.userList}>
             <TextField
+                    disabled={determineUsers && determineUsers.length === 0 && !filter}
                     autoFocus
                     margin="dense"
                     label="Search User"
                     fullWidth
                     className={classes.userSearch}
-                    // value={userNameFilter}
-                    // onChange={(e) => dispatch(setUserNameFilter(e.target.value))}
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
                 />
             {
-            determineUsers()?.map((user: {
+            determineUsers?.map((user: {
                     _id: string,
                     name: string,
                     admin: boolean,
@@ -173,6 +174,17 @@ const AdminUsers:React.FC = () => {
                 );
             })
             }
+            {
+                determineUsers && determineUsers.length === 0 && history.location.pathname!=="/admin/users" && !filter && <ListItem className={classes.noUsers}>
+                    <ListItemText>All available admins are already assigned to the cohort</ListItemText>
+                </ListItem>
+            }
+        </List>
+        :
+        <List>
+            <ListItem className={classes.noUsers}>
+                <ListItemText>There are no users</ListItemText>
+            </ListItem>
         </List>
 }
 

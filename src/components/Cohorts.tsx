@@ -237,7 +237,7 @@ const Cohorts: React.FC = (props:any) => {
             </Drawer>
           }
           <Dialog 
-            open={adminUpdateModal} 
+            open={users && adminUpdateModal} 
             onClose={() => dispatch(setAdminUpdate(false))} 
             aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
