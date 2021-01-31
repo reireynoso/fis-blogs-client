@@ -2,13 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 import {useHistory} from 'react-router-dom';
 
-import {handleFetchUsers} from '../config/fetch-requests';
+import {handleFetchUsers, updateCohortAdminRequest} from '../config/fetch-requests';
 import {
-    selectCohort, 
-    removeUserAdmin, 
     setNotificationOpen, 
     setNotificationClose,
-    setAdminUpdate,
     setAdminUsers,
     updateUser,
     addUserAdminToCohort
@@ -18,21 +15,18 @@ from '../context-api/actions';
 import {handleUserFilter} from '../helpers/helper-methods';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Clear from '@material-ui/icons/Clear';
-import AddIcon from '@material-ui/icons/Add';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+enum Action {
+    ADD = "add"
+}
 
 const drawerWidth = 240;
 
@@ -156,8 +150,21 @@ const AdminUsers:React.FC = () => {
                                 : 
                                 () => {
                                     // actual add user as admin to the cohort function
-                                    console.log('added')
-                                    dispatch(addUserAdminToCohort(user))
+                                    updateCohortAdminRequest(Action.ADD,user._id,selectedCohort._id)
+                                    .then(res => {
+                                        if(res.status !== 200){
+                                            return res.json()
+                                        }
+                                        else{
+                                            dispatch(addUserAdminToCohort(user))
+                                        }
+                                    })
+                                    .then(data => {
+                                        if(data){
+                                            alert(`Something went wrong with the request. Error: ${data.error}`)
+                                        }
+                                    })
+                                    
                                 }
                             }
                         >
@@ -166,7 +173,7 @@ const AdminUsers:React.FC = () => {
                                 ? 
                                 (user.admin ? "Revoke admin" : "Make admin")
                                 :
-                                "Add admin"    
+                                "Add as admin"    
                             }
                         </Button>
                     </ListItemSecondaryAction>

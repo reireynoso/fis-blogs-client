@@ -147,6 +147,23 @@ export const handleFetchUsers = () => {
     })
 }
 
+// cohort update request
+
+export const updateCohortAdminRequest = (action:string, userId:string, selectedCohortId:string) => {
+    return fetch(`${server}/cohort/${selectedCohortId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            action,
+            userId
+        })
+    })
+}
+
 // export const addUserAsAdminToCohort = () => {
 //     return fetch(`${server}/`)
 // }
+

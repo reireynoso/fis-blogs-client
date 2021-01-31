@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {NavLink} from 'react-router-dom';
 import {useStateValue} from '../context-api/Provider'
 import {
     selectCohort, 
@@ -9,7 +10,7 @@ import {
     setAdminUsers
 } 
 from '../context-api/actions';
-import {handleFetchUsers} from '../config/fetch-requests';
+import {handleFetchUsers, updateCohortAdminRequest} from '../config/fetch-requests';
 
 import Blogs from './Blogs';
 import AdminUsers from './AdminUsers';
@@ -28,7 +29,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerContainer: {
       overflow: 'auto',
+      display: "flex",
+      flexDirection: "column",
+      height: "100%"
     },
     content: {
       flexGrow: 1,
@@ -68,12 +71,24 @@ const useStyles = makeStyles((theme: Theme) =>
     userList: {
       maxHeight: "200px",
       overflowY: "scroll"
+    },
+    listItem: {
+      wordBreak: "break-word"
+    },
+    listIcon: {
+      minWidth: 20
+    },
+    privilegeButton: {
+      display: "block",
+      margin: "auto"
+    },
+    adminList: {
+      flex: "1 0 auto"
     }
   }),
 );
 
 enum Action {
-    ADD = "add",
     REMOVE = "remove"
 }
 
@@ -111,6 +126,11 @@ const Cohorts: React.FC = (props:any) => {
               <List>
                   <ListItem>
                     <ListItemText primary={"Cohorts"} />
+                    <NavLink to="/cohort/new">
+                      <ListItemIcon className={classes.listIcon}> 
+                          <AddIcon className={classes.icon}/>
+                      </ListItemIcon>
+                    </NavLink>
                   </ListItem>
               </List>
               <Divider />
@@ -162,7 +182,7 @@ const Cohorts: React.FC = (props:any) => {
                 <List>
                     <ListItem>
                       <ListItemText primary={"Admins"} />
-                      <ListItemIcon onClick={() => {
+                      <ListItemIcon className={classes.listIcon} onClick={() => {
                             if(loggedUser.admin){
                                 dispatch(setAdminUpdate(true))
                             }else{
@@ -174,7 +194,7 @@ const Cohorts: React.FC = (props:any) => {
                     </ListItem>
                 </List>
                 <Divider />
-                <List>
+                <List className={classes.adminList}>
                   {selectedCohort?.admins.map((user: {
                       _id: string,
                       name: string,
@@ -182,7 +202,7 @@ const Cohorts: React.FC = (props:any) => {
                       image_url: string,
                       email: string
                   }) => (
-                  <ListItem key={user._id}>
+                  <ListItem className={classes.listItem} key={user._id}>
                       <ListItemAvatar>
                         <Avatar
                             alt={user.image_url}
@@ -190,49 +210,42 @@ const Cohorts: React.FC = (props:any) => {
                         />
                       </ListItemAvatar>
                       <ListItemText primary={user.name} />
-                      <ListItemIcon onClick={() => {
+                      <ListItemIcon className={classes.listIcon} onClick={() => {
                           const statement = `${user.name} will be removed as an admin for cohort, ${selectedCohort.name}.`
                           const callback = () => {
                             dispatch(setNotificationClose());
-                            dispatch(removeUserAdmin(user._id));
+                            updateCohortAdminRequest(Action.REMOVE, user._id, selectedCohort._id)
+                            .then(res => {
+                              if(res.status !== 200){
+                                  return res.json()
+                              }else{
+                                  // success
+                                  dispatch(removeUserAdmin(user._id));
+                              }
+                            })
+                            .then(data =>{
+                                if(data){
+                                    // error
+                                    alert(`Something went wrong with the request. Error: ${data.error}`)
+                                }
+                            })
                           }
                           dispatch(setNotificationOpen(statement, callback))
-                        //   dispatch(removeUserAdmin(user._id))
-                        //   fetch(`${server}/cohort/${selectedCohort._id}`, {
-                        //       method: "PATCH",
-                        //       headers: {
-                        //           "Content-Type": "application/json",
-                        //           "Accept": "application/json"
-                        //       },
-                        //       body: JSON.stringify({
-                        //           action: Action.REMOVE,
-                        //           userId: user._id
-                        //       })
-                        //   })
-                        //   .then(res => {
-                        //     if(res.status !== 200){
-                        //         return res.json()
-                        //     }else{
-                        //         // success
-                        //         // send user id and remove the user from the selectedCohort
-                        //         // setTimeout(() => {
-                        //             // dispatch(approveBlog(_id));
-                        //             // setApproval(false)
-                        //         // }, 1000)
-                        //     }
-                        //   })
-                        //   .then(data =>{
-                        //       if(data){
-                        //           // error
-                        //           alert("Something went wrong in the server")
-                        //       }
-                        //   })
                       }}>
                           <Clear className={classes.icon}/>
                       </ListItemIcon>
                   </ListItem>
                   ))}
                 </List>
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  className={classes.privilegeButton}
+                  component={NavLink}
+                  to={"/admin/users"}
+                  >
+                    Grant Admin Privileges
+                  </Button>
               </div>
             </Drawer>
           }
@@ -240,11 +253,10 @@ const Cohorts: React.FC = (props:any) => {
             open={users && adminUpdateModal} 
             onClose={() => dispatch(setAdminUpdate(false))} 
             aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                <DialogTitle id="form-dialog-title">Add Admin</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        To subscribe to this website, please enter your email address here. We will send updates
-                        occasionally.
+                        If you do not see the users you want to add as an admin for this cohort, please make sure the user has admin privileges. Otherwise, the user will not appear in the list.
                     </DialogContentText>
                 </DialogContent>
                 <AdminUsers/>
@@ -252,9 +264,6 @@ const Cohorts: React.FC = (props:any) => {
                 <DialogActions>
                 <Button onClick={() => dispatch(setAdminUpdate(false))}  color="primary">
                     Cancel
-                </Button>
-                <Button  color="primary">
-                    Subscribe
                 </Button>
                 </DialogActions>
             </Dialog>   

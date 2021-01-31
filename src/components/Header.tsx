@@ -121,7 +121,7 @@ const Header : React.FC = () => {
                 Cohorts
             </Button>
 
-            <Button
+            {/* <Button
             component={NavLink}
             onClick={handleCloseDrawer} 
             className={classes.link}
@@ -129,7 +129,7 @@ const Header : React.FC = () => {
             to={user && user.admin ? "/admin/users": ""}
             >
                 Admit User
-            </Button>
+            </Button> */}
             </>
         }
 
