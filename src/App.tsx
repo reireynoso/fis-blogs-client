@@ -7,7 +7,6 @@ import {handleAutoLogin} from './config/fetch-requests';
 
 // components
 import Login from './components/Login';
-import MainComponent from './components/MainComponent';
 import NewBlog from './components/NewBlog';
 import Header from './components/Header';
 import NewCohort from './components/NewCohort';

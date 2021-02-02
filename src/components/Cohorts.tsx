@@ -25,6 +25,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Clear from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
@@ -34,6 +35,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 const drawerWidth = 240;
 
@@ -84,6 +86,20 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     adminList: {
       flex: "1 0 auto"
+    },
+    cohortList: {
+      background: "#eeeeee"
+    },
+    header: {
+      color: "#002984"
+    },
+    cohortSubHeader: {
+      color: "#3f51b5"
+    },
+    emptyCohort: {
+      display: "flex",
+      alignItems: "center",
+      fontSize: "2rem"
     }
   }),
 );
@@ -149,7 +165,10 @@ const Cohorts: React.FC = (props:any) => {
                 }) => (
                 <ListItem onClick={() => {    
                     dispatch(selectCohort(cohort));
-                }} button key={cohort._id}>
+                }} 
+                className={selectedCohort?._id === cohort._id ? classes.cohortList : ""}
+                button 
+                key={cohort._id}>
                     <ListItemText primary={cohort.name} />
                 </ListItem>
                 ))}
@@ -159,12 +178,16 @@ const Cohorts: React.FC = (props:any) => {
           <main className={classes.content}>
             {
                 selectedCohort ? <>
-                    <h1>{selectedCohort?.name}</h1>
-                    <h3>Reviews Blogs for Approval</h3>
+                    <h1 className={classes.header}>{selectedCohort?.name}</h1>
+                    <h3 className={classes.cohortSubHeader}>Reviews Blogs for Approval</h3>
+                    <hr/>
                     <Blogs {...props} history={props.history}/>
                 </>
                 :
-                "Select cohort"
+                <div className={classes.emptyCohort}>
+                  <ArrowBackIcon fontSize="large"/>
+                  Select cohort
+                </div>
             } 
           </main>
 

@@ -154,7 +154,8 @@ export const updateCohortAdminRequest = (action:string, userId:string, selectedC
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "application/json",
+            'Authorization': `Bearer ${checkToken()}`
         },
         body: JSON.stringify({
             action,
@@ -162,8 +163,3 @@ export const updateCohortAdminRequest = (action:string, userId:string, selectedC
         })
     })
 }
-
-// export const addUserAsAdminToCohort = () => {
-//     return fetch(`${server}/`)
-// }
-

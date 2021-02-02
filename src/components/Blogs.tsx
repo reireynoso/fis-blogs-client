@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
     control: {
       padding: theme.spacing(2),
     },
+    header: {
+      color: "#f44336"
+    }
   }),
 );
 
@@ -102,7 +105,7 @@ const Blogs : React.FC<Props> = ({history}) => {
     const renderBlogs = () => {  
         const matchingBlogs = determinePath();
         if(!matchingBlogs.length){
-          return "No blogs"
+          return <h3 className={classes.header}>No blogs</h3>
         }
         return matchingBlogs.map((blog: Blog) => {
           const {title,createdAt,image,link,tags,approved,user, _id, cohort} = blog

@@ -118,18 +118,8 @@ const Header : React.FC = () => {
             activeClassName={classes.activeLink} 
             to={user && user.admin ? "/cohort/admin": ""}
             >
-                Cohorts
+                Admin View
             </Button>
-
-            {/* <Button
-            component={NavLink}
-            onClick={handleCloseDrawer} 
-            className={classes.link}
-            activeClassName={classes.activeLink} 
-            to={user && user.admin ? "/admin/users": ""}
-            >
-                Admit User
-            </Button> */}
             </>
         }
 

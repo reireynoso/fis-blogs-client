@@ -53,5 +53,3 @@ export const handleUserFilter = (users, searchTerm, route, cohortAdmins, loggedU
         return filtered//filtered.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     }
 }
-    // if(!searchTerm && route === "/admin/users") return users;
-    // return users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
