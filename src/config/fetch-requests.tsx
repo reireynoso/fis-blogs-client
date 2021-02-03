@@ -136,6 +136,16 @@ export const handleLogin = (code:string) => {
         })
 }
 
+export const updateUserAdminStatus = (userId:string) => {
+    return fetch(`${server}/user/${userId}`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${checkToken()}`
+        }
+    })
+}
+
 // fetch all users for admin view
 
 export const handleFetchUsers = () => {
@@ -163,3 +173,4 @@ export const updateCohortAdminRequest = (action:string, userId:string, selectedC
         })
     })
 }
+

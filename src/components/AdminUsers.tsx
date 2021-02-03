@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 import {useHistory} from 'react-router-dom';
 
-import {handleFetchUsers, updateCohortAdminRequest} from '../config/fetch-requests';
+import {handleFetchUsers, updateCohortAdminRequest, updateUserAdminStatus} from '../config/fetch-requests';
 import {
     setNotificationOpen, 
     setNotificationClose,
@@ -142,8 +142,21 @@ const AdminUsers:React.FC = () => {
                                 () => {
                                 const statement = `${user.name} will ${user.admin ? "lose admin privilege" : "be made an admin"}.`
                                 const callback = () => {
-                                  dispatch(setNotificationClose());
-                                  dispatch(updateUser(user._id))
+                                    updateUserAdminStatus(user._id)
+                                    .then(res => {
+                                        if(res.status === 200){
+                                            dispatch(setNotificationClose());
+                                            dispatch(updateUser(user._id))
+                                        }else{
+                                            return res.json()
+                                        }
+                                    })
+                                    .then(data => {
+                                        if(data){
+                                            alert(`Something went wrong with the request. Error: ${data.error}`)
+                                        }
+                                    })
+                                  
                                 }
                                 dispatch(setNotificationOpen(statement, callback))
                                 }
