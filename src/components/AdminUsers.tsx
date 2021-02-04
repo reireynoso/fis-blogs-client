@@ -2,7 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 import {useHistory} from 'react-router-dom';
 
-import {handleFetchUsers, updateCohortAdminRequest, updateUserAdminStatus} from '../config/fetch-requests';
+import {
+    handleFetchUsers, 
+    updateCohortAdminRequest, 
+    updateUserAdminStatus
+} 
+from '../config/fetch-requests';
 import {
     setNotificationOpen, 
     setNotificationClose,

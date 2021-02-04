@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {newCohortRequest} from '../config/fetch-requests';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,26 +11,22 @@ enum Status {
     ERROR = "error"
 }
 
+const useStyles = makeStyles(() => ({
+    formContainer: {
+        display: "flex",
+        flexDirection: "column",
+        maxWidth: "300px",
+        margin: "auto",
+        textAlign: "center"
+    }
+}));
+
 const NewCohort : React.FC = () => {
     const [name, setName] = useState("");
     const [serverMessage, setServerMessage] = useState("");
     const [statusCode, setStatusCode] = useState<Status>(Status.LOADING);
 
-    const useStyles = makeStyles(() => ({
-        formContainer: {
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: "300px",
-            margin: "auto",
-            textAlign: "center"
-        }
-    }));
-
     const classes = useStyles();
-
-    // useEffect(() => {
-    //     console.log(statusCode, serverMessage);
-    // }, [statusCode, serverMessage])
 
     const onNameChange = (e:React.ChangeEvent<HTMLInputElement>) : void => {
         setName(e.target.value)

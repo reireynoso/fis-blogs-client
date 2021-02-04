@@ -1,4 +1,4 @@
-# FIS Blogs Management App Client
+# codingBlogs (FIS Blogs Management) App Client
 
 # Todo
 - Address loose ends regarding auto login and locked routes

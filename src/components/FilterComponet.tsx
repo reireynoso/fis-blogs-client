@@ -14,15 +14,9 @@ import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles(() => ({
     root: {
         flexGrow: 1,
-        // position: "sticky",
-        // top: "70px",
-        // zIndex: 150
     },
     formControl: {
         minWidth: 120,
-    },
-    text: {
-        // minWidth: 150,
     },
   }));
 
@@ -33,8 +27,6 @@ const FilterComponent : React.FC = () => {
     return <Grid container justify="center" className={classes.root} spacing={2}>
         <Grid item>
             <TextField 
-                className={classes.text} 
-                id="outlined-basic" 
                 label="Search by title" 
                 variant="outlined"
                 value={titleFilter} 
@@ -46,7 +38,6 @@ const FilterComponent : React.FC = () => {
                 <InputLabel id="tag-filter-select">Tag</InputLabel>
                 <Select
                 labelId="tag-filter-select"
-                id="demo-simple-select-outlined"
                 value={tagFilter}
                 onChange={(e) => dispatch(setTagFilter(e.target.value))}
                 label="tag"
@@ -74,7 +65,6 @@ const FilterComponent : React.FC = () => {
                 <InputLabel id="cohort-filter-select">Cohort</InputLabel>
                 <Select
                 labelId="cohort-filter-select"
-                id="demo-simple-select-outlined"
                 value={cohortFilter}
                 onChange={(e) => dispatch(setCohortFilter(e.target.value))}
                 label="cohort"
