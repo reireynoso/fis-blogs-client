@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {newCohortRequest} from '../config/fetch-requests';
+import {useStateValue} from '../context-api/Provider';
+
+import {
+    addNewCohort
+} 
+from '../context-api/actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +25,9 @@ const useStyles = makeStyles(() => ({
         maxWidth: "300px",
         margin: "auto",
         textAlign: "center"
+    },
+    message: {
+        color: "#388e3c"
     }
 }));
 
@@ -26,7 +36,10 @@ const NewCohort : React.FC = () => {
     const [serverMessage, setServerMessage] = useState("");
     const [statusCode, setStatusCode] = useState<Status>(Status.LOADING);
 
+    const [{}, dispatch] = useStateValue();
+
     const classes = useStyles();
+    const history = useHistory();
 
     const onNameChange = (e:React.ChangeEvent<HTMLInputElement>) : void => {
         setName(e.target.value)
@@ -38,6 +51,8 @@ const NewCohort : React.FC = () => {
 
     const handleSubmit = (e:React.FormEvent) : void => {
         e.preventDefault();
+
+        
         newCohortRequest(name)
         .then(data => {
             if(data.error){
@@ -49,6 +64,10 @@ const NewCohort : React.FC = () => {
                 setStatusCode(Status.SUCCESS);
                 setServerMessage("Cohort created!");
                 setName("");
+                setTimeout(() => {
+                    dispatch(addNewCohort(data))
+                    history.push('/cohort/admin')
+                }, 1500)
             }
         })
     }
@@ -66,9 +85,18 @@ const NewCohort : React.FC = () => {
                 onChange={onNameChange}
                 value={name}
             />
-            <Button onClick={handleSubmit} variant="contained" color="primary">
+            <Button 
+                onClick={handleSubmit} 
+                variant="contained" 
+                color="primary"
+                disabled={statusCode === Status.SUCCESS}
+                >
                 Submit Cohort Name
             </Button>
+
+            {
+                statusCode === Status.SUCCESS && <h1 className={classes.message}>{serverMessage}</h1>
+            }
         </div>
     )
 }

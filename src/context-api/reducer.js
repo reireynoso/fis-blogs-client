@@ -88,6 +88,11 @@ const reducer = (state,action) => {
                 cohorts: addedUserCohorts,
                 adminUpdateModal: false
             }
+        case "ADD_COHORT":
+            return {
+                ...state,
+                cohorts: [...state.cohorts, action.cohort]
+            }
         // case "SET_COHORTS":
         //     return {
         //         ...state,
@@ -171,6 +176,7 @@ const reducer = (state,action) => {
         //         ...state,
         //         adminUpdateModal: false
         //     }
+        
         default: 
             return state
     }

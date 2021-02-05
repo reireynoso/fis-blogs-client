@@ -16,6 +16,11 @@ export const updateUser = (userId) => ({
 
 // cohort actions
 
+export const addNewCohort = (cohort) => ({
+    type: "ADD_COHORT",
+    cohort
+})
+
 // export const setCohorts = (cohorts) => ({
 //     type: "SET_COHORTS",
 //     cohorts

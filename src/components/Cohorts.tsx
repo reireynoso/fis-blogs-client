@@ -28,6 +28,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -151,6 +152,13 @@ const Cohorts: React.FC = (props:any) => {
               </List>
               <Divider />
               <List>
+                <ListItem>
+                  <TextField 
+                    label="Search Cohorts" 
+                    // type="search" 
+                    variant="outlined" 
+                  />
+                </ListItem>
                 {cohorts.map((cohort: {
                     _id: string,
                     name: string,
