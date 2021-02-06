@@ -174,3 +174,17 @@ export const updateCohortAdminRequest = (action:string, userId:string, selectedC
     })
 }
 
+export const updateCohortName = (name:string, selectedCohortId:string) => {
+    return fetch(`${server}/cohort/${selectedCohortId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            'Authorization': `Bearer ${checkToken()}`
+        },
+        body: JSON.stringify({
+            name
+        })
+    })
+}
+

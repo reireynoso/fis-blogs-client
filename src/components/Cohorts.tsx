@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {useStateValue} from '../context-api/Provider'
 import {
@@ -10,7 +10,8 @@ import {
     setAdminUsers
 } 
 from '../context-api/actions';
-import {handleFetchUsers, updateCohortAdminRequest} from '../config/fetch-requests';
+import {handleFetchUsers, updateCohortAdminRequest, updateCohortName} from '../config/fetch-requests';
+import {handleCohortFilter} from '../helpers/helper-methods';
 
 import Blogs from './Blogs';
 import AdminUsers from './AdminUsers';
@@ -29,6 +30,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -110,6 +113,10 @@ enum Action {
 }
 
 const Cohorts: React.FC = (props:any) => {
+  const [filter, setFilter] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+
     const [{
         user: loggedUser,
         users,
@@ -118,6 +125,12 @@ const Cohorts: React.FC = (props:any) => {
         adminUpdateModal}, dispatch] = useStateValue();
 
     const classes = useStyles();
+
+    useEffect(() => {
+      if(selectedCohort){
+        setEditTitle(selectedCohort.name)
+      }
+    }, [selectedCohort, editMode])
 
     useEffect(() => {
         // if no users in global state, fetch the array and store
@@ -156,10 +169,12 @@ const Cohorts: React.FC = (props:any) => {
                   <TextField 
                     label="Search Cohorts" 
                     // type="search" 
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
                     variant="outlined" 
                   />
                 </ListItem>
-                {cohorts.map((cohort: {
+                {handleCohortFilter(cohorts, filter).map((cohort: {
                     _id: string,
                     name: string,
                     admins: {
@@ -186,7 +201,39 @@ const Cohorts: React.FC = (props:any) => {
           <main className={classes.content}>
             {
                 selectedCohort ? <>
-                    <h1 className={classes.header}>{selectedCohort?.name}</h1>
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}>
+                      {
+                        !editMode ? <h1 className={classes.header}>
+                            {selectedCohort?.name} 
+                        </h1>
+                        :
+                        <TextField
+                          style={{
+                            flexGrow: 0.95
+                          }}
+                          value={editTitle}
+                          variant="outlined"
+                          helperText="Press Enter to submit changes"
+                          onChange={(e) => setEditTitle(e.target.value)}
+                          onKeyPress={(e) => {
+                            if(e.key === "Enter"){
+                              console.log(editTitle)
+                              // updateCohortName(editTitle)
+                            }
+                          }}
+                          autoFocus
+                        />
+                      }
+                      <IconButton
+                        onClick={() => setEditMode(!editMode)}
+                      >
+                        <EditIcon/>
+                      </IconButton>
+                    </div>
                     <h3 className={classes.cohortSubHeader}>Reviews Blogs for Approval</h3>
                     <hr/>
                     <Blogs {...props} history={props.history}/>

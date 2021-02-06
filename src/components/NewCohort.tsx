@@ -81,7 +81,7 @@ const NewCohort : React.FC = () => {
                 variant="standard"
                 label="Cohort Name"
                 placeholder="Ex. NYC-040119"
-                helperText={statusCode === Status.ERROR ? serverMessage : "Format: CampusLocation-CohortDate"}
+                helperText={statusCode === Status.ERROR ? serverMessage : "Format: CampusLocation-CohortDate (NYC-040119)"}
                 onChange={onNameChange}
                 value={name}
             />

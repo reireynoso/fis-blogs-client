@@ -53,3 +53,8 @@ export const handleUserFilter = (users, searchTerm, route, cohortAdmins, loggedU
         return filtered//filtered.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     }
 }
+
+export const handleCohortFilter = (cohorts, filter) => {
+    if(!filter) return cohorts 
+    return cohorts.filter(cohort => cohort.name.toLowerCase().includes(filter.toLowerCase()))
+}
