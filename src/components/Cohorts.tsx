@@ -123,13 +123,14 @@ const Cohorts: React.FC = (props:any) => {
         users,
         cohorts, 
         selectedCohort, 
-        adminUpdateModal}, dispatch] = useStateValue();
+        adminUpdateModal
+      }, dispatch] = useStateValue();
 
     const classes = useStyles();
 
     useEffect(() => {
       if(selectedCohort){
-        setEditTitle(selectedCohort.name)
+        setEditTitle(cohorts[selectedCohort].name)
       }
     }, [selectedCohort, editMode])
 
@@ -178,6 +179,7 @@ const Cohorts: React.FC = (props:any) => {
                 {handleCohortFilter(cohorts, filter).map((cohort: {
                     _id: string,
                     name: string,
+                    source: number,
                     admins: {
                         admin: boolean,
                         email: string,
@@ -187,10 +189,12 @@ const Cohorts: React.FC = (props:any) => {
 
                     }[]
                 }) => (
-                <ListItem onClick={() => {    
+                <ListItem onClick={() => {
+                  if(cohort._id !== cohorts[selectedCohort]._id){
                     dispatch(selectCohort(cohort));
+                  }    
                 }} 
-                className={selectedCohort?._id === cohort._id ? classes.cohortList : ""}
+                className={cohorts[selectedCohort]?._id === cohort._id ? classes.cohortList : ""}
                 button 
                 key={cohort._id}>
                     <ListItemText primary={cohort.name} />
@@ -201,7 +205,7 @@ const Cohorts: React.FC = (props:any) => {
           </Drawer>
           <main className={classes.content}>
             {
-                selectedCohort ? <>
+                selectedCohort !== null ? <>
                     <div style={{
                       display: "flex",
                       alignItems: "center",
@@ -209,7 +213,7 @@ const Cohorts: React.FC = (props:any) => {
                     }}>
                       {
                         !editMode ? <h1 className={classes.header}>
-                            {selectedCohort?.name} 
+                            {cohorts[selectedCohort]?.name} 
                         </h1>
                         :
                         <TextField
@@ -222,7 +226,7 @@ const Cohorts: React.FC = (props:any) => {
                           onChange={(e) => setEditTitle(e.target.value)}
                           onKeyPress={(e) => {
                             if(e.key === "Enter"){
-                              updateCohortName(editTitle, selectedCohort._id)
+                              updateCohortName(editTitle, cohorts[selectedCohort]._id)
                               .then(res => {
                                 if(res.status === 200){
                                   dispatch(editCohortName(editTitle));
@@ -260,7 +264,7 @@ const Cohorts: React.FC = (props:any) => {
           </main>
 
           {
-              selectedCohort && <Drawer
+              selectedCohort !== null && <Drawer
               className={classes.drawer}
               variant="permanent"
               anchor="right"
@@ -286,7 +290,7 @@ const Cohorts: React.FC = (props:any) => {
                 </List>
                 <Divider />
                 <List className={classes.adminList}>
-                  {selectedCohort?.admins.map((user: {
+                  {cohorts[selectedCohort]?.admins.map((user: {
                       _id: string,
                       name: string,
                       admin: boolean,
@@ -302,10 +306,10 @@ const Cohorts: React.FC = (props:any) => {
                       </ListItemAvatar>
                       <ListItemText primary={user.name} />
                       <ListItemIcon className={classes.listIcon} onClick={() => {
-                          const statement = `${user.name} will be removed as an admin for cohort, ${selectedCohort.name}.`
+                          const statement = `${user.name} will be removed as an admin for cohort, ${cohorts[selectedCohort].name}.`
                           const callback = () => {
                             dispatch(setNotificationClose());
-                            updateCohortAdminRequest(Action.REMOVE, user._id, selectedCohort._id)
+                            updateCohortAdminRequest(Action.REMOVE, user._id, cohorts[selectedCohort]._id)
                             .then(res => {
                               if(res.status !== 200){
                                   return res.json()

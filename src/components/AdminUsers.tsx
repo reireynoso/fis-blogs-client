@@ -89,6 +89,7 @@ const AdminUsers:React.FC = () => {
         user: loggedUser,
         users,
         selectedCohort, 
+        cohorts
     
     }, dispatch] = useStateValue();
 
@@ -105,7 +106,7 @@ const AdminUsers:React.FC = () => {
         }
     }, [])
 
-    const determineUsers = handleUserFilter(users,filter, history.location.pathname, (history.location.pathname!=="/admin/users" ? selectedCohort.admins : null), loggedUser)
+    const determineUsers = handleUserFilter(users,filter, history.location.pathname, (history.location.pathname!=="/admin/users" ? cohorts[selectedCohort].admins : null), loggedUser)
 
     return users && users.length ? <List dense className={classes.userList}>
             <TextField
@@ -168,7 +169,7 @@ const AdminUsers:React.FC = () => {
                                 : 
                                 () => {
                                     // actual add user as admin to the cohort function
-                                    updateCohortAdminRequest(Action.ADD,user._id,selectedCohort._id)
+                                    updateCohortAdminRequest(Action.ADD,user._id,cohorts[selectedCohort]._id)
                                     .then(res => {
                                         if(res.status !== 200){
                                             return res.json()

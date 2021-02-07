@@ -34,9 +34,19 @@ const reducer = (state,action) => {
                 blogs: action.blogs
             }
         case "SELECT_COHORT": 
+            let matchIndex;
+
+            for(let i = 0; i < state.cohorts.length; i++){
+                if(state.cohorts[i]._id === action.selectedCohort._id){
+                    matchIndex = i
+                    break;
+                }
+            }
             return {
                 ...state,
-                selectedCohort: action.selectedCohort
+                selectedCohort: matchIndex
+                // selectedCohort: action.selectedCohort,
+                // selectedCohortIndex: matchIndex
             }
         case "UPDATE_USER":
             const updateUsers = state.users.map(user => {
@@ -53,9 +63,9 @@ const reducer = (state,action) => {
                 users: updateUsers
             }
         case "REMOVE_USER_ADMIN": 
-            const removedUser = state.selectedCohort.admins.filter(admin => admin._id !== action.userId)
+            const removedUser = state.cohorts[state.selectedCohort].admins.filter(admin => admin._id !== action.userId)
             const updatedSelectedCohort = {
-                ...state.selectedCohort,
+                ...state.cohorts[state.selectedCohort],
                 admins: removedUser
             }
             const updatedCohorts = state.cohorts.map(cohort => {
@@ -66,13 +76,13 @@ const reducer = (state,action) => {
             })
             return {
                 ...state,
-                selectedCohort: updatedSelectedCohort,
+                // selectedCohort: updatedSelectedCohort,
                 cohorts: updatedCohorts
             }
         case "ADD_USER_ADMIN_COHORT":
-            const addedUser = [...state.selectedCohort.admins, action.user]
+            const addedUser = [...state.cohorts[state.selectedCohort].admins, action.user]
             const addedSelectedCohort = {
-                ...state.selectedCohort,
+                ...state.cohorts[state.selectedCohort],
                 admins: addedUser
             }
             const addedUserCohorts = state.cohorts.map(cohort => {
@@ -84,13 +94,13 @@ const reducer = (state,action) => {
 
             return {
                 ...state,
-                selectedCohort: addedSelectedCohort,
+                // selectedCohort: addedSelectedCohort,
                 cohorts: addedUserCohorts,
                 adminUpdateModal: false
             }
         case "EDIT_COHORT_NAME":
             const editedSelectedCohort = {
-                ...state.selectedCohort,
+                ...state.cohorts[state.selectedCohort],
                 name: action.name
             }
             const editedCohorts = state.cohorts.map(cohort => {
@@ -102,7 +112,7 @@ const reducer = (state,action) => {
 
             return {
                 ...state,
-                selectedCohort: editedSelectedCohort,
+                // selectedCohort: editedSelectedCohort,
                 cohorts: editedCohorts
             }
 

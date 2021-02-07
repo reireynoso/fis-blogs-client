@@ -65,7 +65,8 @@ const Blogs : React.FC<Props> = ({history}) => {
       titleFilter, 
       tagFilter, 
       cohortFilter, 
-      selectedCohort
+      selectedCohort,
+      cohorts
     },
     ] = useStateValue();
 
@@ -75,7 +76,7 @@ const Blogs : React.FC<Props> = ({history}) => {
       if(history.location.pathname === "/blogs/me"){
         return findUserBlogs(blogs, user)
       }else if(history.location.pathname === "/cohort/admin"){
-        return findCohortBlogs(blogs, selectedCohort)
+        return findCohortBlogs(blogs, cohorts[selectedCohort])
       }else{
         return handleFilter(blogs, titleFilter, tagFilter, cohortFilter);
       }
