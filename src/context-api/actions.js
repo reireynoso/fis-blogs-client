@@ -44,6 +44,11 @@ export const addUserAdminToCohort = (user) => ({
     user
 })
 
+export const editCohortName = (name) => ({
+    type: "EDIT_COHORT_NAME",
+    name
+})
+
 // blog actions
 
 // export const setUserBlogs = (userBlogs) => ({

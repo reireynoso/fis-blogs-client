@@ -175,7 +175,7 @@ export const updateCohortAdminRequest = (action:string, userId:string, selectedC
 }
 
 export const updateCohortName = (name:string, selectedCohortId:string) => {
-    return fetch(`${server}/cohort/${selectedCohortId}`, {
+    return fetch(`${server}/cohort/${selectedCohortId}/edit/name`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",

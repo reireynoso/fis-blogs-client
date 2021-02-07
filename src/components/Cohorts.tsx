@@ -7,7 +7,8 @@ import {
     setNotificationOpen, 
     setNotificationClose,
     setAdminUpdate,
-    setAdminUsers
+    setAdminUsers,
+    editCohortName
 } 
 from '../context-api/actions';
 import {handleFetchUsers, updateCohortAdminRequest, updateCohortName} from '../config/fetch-requests';
@@ -217,12 +218,24 @@ const Cohorts: React.FC = (props:any) => {
                           }}
                           value={editTitle}
                           variant="outlined"
-                          helperText="Press Enter to submit changes"
+                          helperText="Press Enter to submit changes. Format: CampusLocation-CohortDate (NYC-040119)"
                           onChange={(e) => setEditTitle(e.target.value)}
                           onKeyPress={(e) => {
                             if(e.key === "Enter"){
-                              console.log(editTitle)
-                              // updateCohortName(editTitle)
+                              updateCohortName(editTitle, selectedCohort._id)
+                              .then(res => {
+                                if(res.status === 200){
+                                  dispatch(editCohortName(editTitle));
+                                  setEditMode(false);
+                                }else{
+                                  return res.json()
+                                }
+                              })
+                              .then(data => {
+                                if(data){
+                                  alert(`Something went wrong. Error: ${data.error}`)
+                                }
+                              })
                             }
                           }}
                           autoFocus
