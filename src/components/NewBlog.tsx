@@ -19,7 +19,7 @@ type Props = {
     history: {push: (route:string) => void}
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     formContainer: {
         display: "flex",
         flexDirection: "column",
@@ -46,7 +46,8 @@ const NewBlog : React.FC<Props> = ({history}) => {
     const [cohort, setCohort] = useState<string>("");
     const [errorCohort, setErrorCohort] = useState<boolean>(false);
 
-    const [requestMsg, setRequestMsg] = useState<string>("")
+    const [requestMsg, setRequestMsg] = useState<string>("");
+    const [submitting, handleSubmitted] = useState<boolean>(false);
 
     const classes = useStyles();
 
@@ -67,23 +68,28 @@ const NewBlog : React.FC<Props> = ({history}) => {
         setRequestMsg("Success!");
         setTimeout(() => {
             history.push("/")
-        }, 2000)
+        }, 1500)
     }
 
     const handleSubmit = async() => {
         // error management for fields
+        handleSubmitted(true);
+
         if(!link) {
-            setErrorLink(true)
+            setErrorLink(true);
+            handleSubmitted(false);
             return
         }
 
         if(!cohort) {
-            setErrorCohort(true)
+            setErrorCohort(true);
+            handleSubmitted(false);
             return
         }
 
         if(!tags.length || tags.length > 5) {
-            setErrorTags(true)
+            setErrorTags(true);
+            handleSubmitted(false);
             return
         }
 
@@ -96,7 +102,8 @@ const NewBlog : React.FC<Props> = ({history}) => {
         const result = await newBlogRequest(blogInformation);
         // console.log(result)
         if(result.error){
-            handleError(result.error)
+            handleError(result.error);
+            handleSubmitted(false);
             return;
         }
         // console.log(result)
@@ -193,7 +200,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
                         value={tags}
                     />
 
-                    <Button disabled={errorTags || errorLink || errorCohort} onClick={handleSubmit} variant="contained" color="primary">
+                    <Button disabled={errorTags || errorLink || errorCohort || submitting} onClick={handleSubmit} variant="contained" color="primary">
                         Post blog
                     </Button>
                     {

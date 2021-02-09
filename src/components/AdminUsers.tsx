@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AdminUsers:React.FC = () => {
 
-    const [filter, setFilter] = useState("")
+    const [filter, setFilter] = useState<string>("")
 
     const [{
         user: loggedUser,

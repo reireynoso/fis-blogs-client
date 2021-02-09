@@ -78,7 +78,7 @@ interface Props {
 const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, history, approved}) => {
     const classes = useStyles();
     const [{user:loggedUser}, dispatch] = useStateValue();
-    const [approval, setApproval] = useState(false);
+    const [approval, setApproval] = useState<boolean>(false);
 
     return <Card className={classes.root}>
     {
@@ -117,7 +117,7 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
     <CardContent>
       <Typography className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} gutterBottom component="h2">
           {
-              "By: " + user.name
+              "By: " + (user.name ? user.name : "No Name Provided")
           }
       </Typography>
     </CardContent>

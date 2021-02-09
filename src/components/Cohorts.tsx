@@ -114,9 +114,9 @@ enum Action {
 }
 
 const Cohorts: React.FC = (props:any) => {
-  const [filter, setFilter] = useState("");
-  const [editMode, setEditMode] = useState(false);
-  const [editTitle, setEditTitle] = useState("");
+  const [filter, setFilter] = useState<string>("");
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editTitle, setEditTitle] = useState<string>("");
 
     const [{
         user: loggedUser,
@@ -129,7 +129,7 @@ const Cohorts: React.FC = (props:any) => {
     const classes = useStyles();
 
     useEffect(() => {
-      if(selectedCohort){
+      if(selectedCohort !== null){
         setEditTitle(cohorts[selectedCohort].name)
       }
     }, [selectedCohort, editMode])
@@ -190,7 +190,8 @@ const Cohorts: React.FC = (props:any) => {
                     }[]
                 }) => (
                 <ListItem onClick={() => {
-                  if(cohort._id !== cohorts[selectedCohort]._id){
+                  // avoid filtering to find the index of cohort if it's the same
+                  if(cohort._id !== (selectedCohort !== null ? cohorts[selectedCohort]._id : "")){
                     dispatch(selectCohort(cohort));
                   }    
                 }} 
@@ -223,7 +224,7 @@ const Cohorts: React.FC = (props:any) => {
                           value={editTitle}
                           variant="outlined"
                           helperText="Press Enter to submit changes. Format: CampusLocation-CohortDate (NYC-040119)"
-                          onChange={(e) => setEditTitle(e.target.value)}
+                          onChange={(e) => setEditTitle(e.target.value.toUpperCase())}
                           onKeyPress={(e) => {
                             if(e.key === "Enter"){
                               updateCohortName(editTitle, cohorts[selectedCohort]._id)

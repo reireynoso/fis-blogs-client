@@ -42,6 +42,7 @@ const reducer = (state,action) => {
                     break;
                 }
             }
+
             return {
                 ...state,
                 selectedCohort: matchIndex

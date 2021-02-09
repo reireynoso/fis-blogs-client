@@ -9,17 +9,22 @@ import {handleLogin} from '../config/fetch-requests';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 const cookies = new Cookies();
 
 const useStyles = makeStyles({
     root: {
       width: 250,
-      height: 150,
+      height: 200,
       margin: "auto",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      flexDirection: "column",
+      padding: "1rem",
+      textAlign: "center"
     },
   });
 
@@ -78,6 +83,11 @@ const Login : React.FC<Props> = ({history}) => {
             >
                 Login with Github
             </Button>
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" >
+                    Note: On your Github account, make sure your name is filled out. Otherwise, the blogs you submit will not include your name.
+                </Typography>
+            </CardContent>
         </Card>
     )
 }

@@ -42,7 +42,7 @@ const NewCohort : React.FC = () => {
     const history = useHistory();
 
     const onNameChange = (e:React.ChangeEvent<HTMLInputElement>) : void => {
-        setName(e.target.value)
+        setName(e.target.value.toUpperCase())
         if(serverMessage || statusCode !== Status.LOADING){
             setServerMessage("");
             setStatusCode(Status.LOADING);
