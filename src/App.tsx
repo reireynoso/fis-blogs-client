@@ -65,6 +65,7 @@ const App: React.FC = () => {
             <LockedRoute path="/admin/users" component={AdminUsers}/>
             <LockedRoute path="/cohort/admin" component={Cohorts}/>
             <LockedRoute path="/cohort/new" component={NewCohort}/>
+            <Route component={Login}/>
           </Switch>
         </Container>
     </div>
