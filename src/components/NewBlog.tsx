@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
-import {addBlog} from '../context-api/actions';
+import {changeBlogs} from '../context-api/actions';
 
 import {newBlogRequest} from '../config/fetch-requests';
 import acceptableTags from '../config/tags';
@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 type Props = {
     history: {push: (route:string) => void}
@@ -107,7 +108,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
             return;
         }
         // console.log(result)
-        dispatch(addBlog(blogLL.addBlog(result.blog)))
+        dispatch(changeBlogs(blogLL.addBlog(result.blog)))
         handleSuccess()
     }
 
@@ -138,6 +139,9 @@ const NewBlog : React.FC<Props> = ({history}) => {
                 :
                 <>
                     <h1>New Medium Blog</h1>
+                    <Typography variant="body2" color="textSecondary" >
+                        Note: When submitting a new blog, you'll have to wait for an admin to approve before it's displayed for the public. Let an admin know!
+                    </Typography>
                     <TextField
                         error={errorLink}
                         variant="standard"

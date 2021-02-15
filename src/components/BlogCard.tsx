@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 
-import {approveBlog, deleteBlog, setNotificationOpen, setNotificationClose} from '../context-api/actions';
+import {changeBlogs, setNotificationOpen, setNotificationClose} from '../context-api/actions';
 import {approveBlogRequest, deleteBlogRequest} from '../config/fetch-requests';
 
 import {truncate} from '../helpers/helper-methods'
@@ -15,6 +15,11 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 const useStyles = makeStyles({
   root: {
@@ -61,7 +66,8 @@ interface Props {
     _id: string,
     user: {
         _id: string,
-        name: string
+        name: string,
+        image_url: string
     },
     cohort: {
         admins: string[],
@@ -72,10 +78,9 @@ interface Props {
           pathname: string
       }
     },
-    // handleClickOpen: (id:string, title:string) => void
   }
 
-const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, history, approved}) => {
+const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history, approved}) => {
     const classes = useStyles();
     const [{blogLL, user:loggedUser}, dispatch] = useStateValue();
     const [approval, setApproval] = useState<boolean>(false);
@@ -91,7 +96,7 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
               if(data.error){
                 alert(`Error: ${data.error}`);
               }else{
-                dispatch(deleteBlog(blogLL.removeBlog(_id)));
+                dispatch(changeBlogs(blogLL.removeBlog(_id)));
                 dispatch(setNotificationClose());
               }
             })
@@ -115,11 +120,19 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
         title={title}
     />
     <CardContent>
-      <Typography className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} gutterBottom component="h2">
-          {
-              "By: " + (user.name ? user.name : "No Name Provided")
-          }
-      </Typography>
+        <List>
+            <ListItem style={{
+              textAlign: "center"
+            }}>
+              <ListItemAvatar>
+                <Avatar
+                    alt={user.image_url}
+                    src={user.image_url}
+                />
+              </ListItemAvatar>
+              <ListItemText style={{wordBreak: "break-word"}} className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={truncate(user.name ? user.name : "No Name Provided")} />
+            </ListItem>
+        </List>
     </CardContent>
     <CardActions>
       <Link
@@ -147,7 +160,7 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
               return res.json()
             }else{
               setTimeout(() => {
-                dispatch(approveBlog(blogLL.approveBlog(_id)));
+                dispatch(changeBlogs(blogLL.approveBlog(_id)));
                 setApproval(false)
               }, 1000)
             }

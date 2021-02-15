@@ -60,10 +60,15 @@ export const editCohortName = (name) => ({
 //     blogs
 // })
 
-export const addBlog = (blogs) => ({
-    type: "ADD_BLOG",
+export const changeBlogs = (blogs) => ({
+    type: "CHANGE_BLOG",
     blogs
 })
+
+// export const addBlog = (blogs) => ({
+//     type: "ADD_BLOG",
+//     blogs
+// })
 
 export const setInitialData = (blogs, cohorts) => ({
     type: "SET_INITIAL_DATA",
@@ -71,18 +76,18 @@ export const setInitialData = (blogs, cohorts) => ({
     cohorts
 })
 
-export const approveBlog = (blogs) => ({
-    type: "APPROVE_BLOG",
-    blogs
-})
+// export const approveBlog = (blogs) => ({
+//     type: "APPROVE_BLOG",
+//     blogs
+// })
 
-export const deleteBlog = (blogs) => {
-    // console.log(id)
-    return ({
-        type: "DELETE_BLOG",
-        blogs
-    })
-}
+// export const deleteBlog = (blogs) => {
+//     // console.log(id)
+//     return ({
+//         type: "DELETE_BLOG",
+//         blogs
+//     })
+// }
 
 //notificaiton actions
 export const setNotificationOpen = (statement, callback) => ({

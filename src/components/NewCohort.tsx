@@ -11,6 +11,7 @@ from '../context-api/actions';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 enum Status {
     LOADING = "loading",
@@ -75,6 +76,9 @@ const NewCohort : React.FC = () => {
     return (
         <div className={classes.formContainer}>
             <h1>Add a New Cohort</h1>
+            <Typography variant="body2" color="textSecondary" >
+                Attention Admins: If there's an error typing the cohort name, please do not create a new one with the correct name. Instead, edit the name under the "Admin View".
+            </Typography>
             <TextField
                 error={statusCode === Status.ERROR}
                 required

@@ -33,8 +33,7 @@ const reducer = (state,action) => {
             }
         case "SET_INITIAL_DATA":
             const linkedList = new BlogLinkedList();
-            const blogs = linkedList.convertArrayToLinkedList(action.blogs)
-            console.log(linkedList)
+            const blogs = linkedList.convertArrayToLinkedList(action.blogs);
             return {
                 ...state,
                 cohorts: action.cohorts,
@@ -147,30 +146,35 @@ const reducer = (state,action) => {
         //         ...state,
         //         userBlogs: action.userBlogs
         //     }
-        case "ADD_BLOG":
-            return {
-                ...state,
-                // blogs: [...state.blogs, action.blog]
-                blogs: action.blogs
-            }
-        case "DELETE_BLOG":
-            // const removedUserBlog = state.blogs.filter(userBlog => userBlog._id !== action.id)
+        case "CHANGE_BLOG":
             return {
                 ...state,
                 blogs: action.blogs
-                // blogs: removedUserBlog
             }
-        case "APPROVE_BLOG": 
-        // const updatedBlogs = state.blogs.map(blog => {
-        //     if(blog._id === action.blogId){
-        //         blog.approved = true
+        // case "ADD_BLOG":
+        //     return {
+        //         ...state,
+        //         // blogs: [...state.blogs, action.blog]
+        //         blogs: action.blogs
         //     }
-        //     return blog
-        // })
-        return {
-            ...state,
-            blogs: action.blogs
-        }
+        // case "DELETE_BLOG":
+        //     // const removedUserBlog = state.blogs.filter(userBlog => userBlog._id !== action.id)
+        //     return {
+        //         ...state,
+        //         blogs: action.blogs
+        //         // blogs: removedUserBlog
+        //     }
+        // case "APPROVE_BLOG": 
+        // // const updatedBlogs = state.blogs.map(blog => {
+        // //     if(blog._id === action.blogId){
+        // //         blog.approved = true
+        // //     }
+        // //     return blog
+        // // })
+        // return {
+        //     ...state,
+        //     blogs: action.blogs
+        // }
         case "SET_TITLE_FILTER":
             return {
                 ...state,
