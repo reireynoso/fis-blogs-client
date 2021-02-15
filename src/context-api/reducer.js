@@ -1,6 +1,9 @@
+import {BlogLinkedList} from '../helpers/blogs-ds';
+
 export const initialState = {
     user: null,
     cohorts: [],
+    blogLL: null,
     blogs: [],
     users: null, // ideally empty array but for useEffect purposes
     titleFilter: "",
@@ -12,6 +15,7 @@ export const initialState = {
     notificationCallbackFunction: null,
     adminUpdateModal: false
 }
+
 
 const reducer = (state,action) => {
     switch(action.type){
@@ -28,10 +32,15 @@ const reducer = (state,action) => {
                 users: action.users
             }
         case "SET_INITIAL_DATA":
+            const linkedList = new BlogLinkedList();
+            const blogs = linkedList.convertArrayToLinkedList(action.blogs)
+            console.log(linkedList)
             return {
                 ...state,
                 cohorts: action.cohorts,
-                blogs: action.blogs
+                // blogs: action.blogs,
+                blogs,
+                blogLL: linkedList
             }
         case "SELECT_COHORT": 
             let matchIndex;
@@ -141,25 +150,26 @@ const reducer = (state,action) => {
         case "ADD_BLOG":
             return {
                 ...state,
-                blogs: [...state.blogs, action.blog]
+                // blogs: [...state.blogs, action.blog]
+                blogs: action.blogs
             }
         case "DELETE_BLOG":
-            const removedUserBlog = state.blogs.filter(userBlog => userBlog._id !== action.id)
+            // const removedUserBlog = state.blogs.filter(userBlog => userBlog._id !== action.id)
             return {
                 ...state,
-                blogs: removedUserBlog
+                blogs: action.blogs
+                // blogs: removedUserBlog
             }
         case "APPROVE_BLOG": 
-        const updatedBlogs = state.blogs.map(blog => {
-            if(blog._id === action.blogId){
-                blog.approved = true
-            }
-            return blog
-        })
-
+        // const updatedBlogs = state.blogs.map(blog => {
+        //     if(blog._id === action.blogId){
+        //         blog.approved = true
+        //     }
+        //     return blog
+        // })
         return {
             ...state,
-            blogs: updatedBlogs
+            blogs: action.blogs
         }
         case "SET_TITLE_FILTER":
             return {

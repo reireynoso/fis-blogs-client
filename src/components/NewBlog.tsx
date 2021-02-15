@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
 
 const NewBlog : React.FC<Props> = ({history}) => {
 
-    const [{user, cohorts}, dispatch] = useStateValue();
+    const [{blogLL, user, cohorts}, dispatch] = useStateValue();
     
     const [tags, setTags] = useState<string[]>([]);
     const [errorTags, setErrorTags] = useState<boolean>(false);
@@ -107,7 +107,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
             return;
         }
         // console.log(result)
-        dispatch(addBlog(result.blog))
+        dispatch(addBlog(blogLL.addBlog(result.blog)))
         handleSuccess()
     }
 

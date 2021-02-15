@@ -60,9 +60,9 @@ export const editCohortName = (name) => ({
 //     blogs
 // })
 
-export const addBlog = (blog) => ({
+export const addBlog = (blogs) => ({
     type: "ADD_BLOG",
-    blog
+    blogs
 })
 
 export const setInitialData = (blogs, cohorts) => ({
@@ -71,16 +71,16 @@ export const setInitialData = (blogs, cohorts) => ({
     cohorts
 })
 
-export const approveBlog = (blogId) => ({
+export const approveBlog = (blogs) => ({
     type: "APPROVE_BLOG",
-    blogId
+    blogs
 })
 
-export const deleteBlog = (id) => {
+export const deleteBlog = (blogs) => {
     // console.log(id)
     return ({
         type: "DELETE_BLOG",
-        id
+        blogs
     })
 }
 

@@ -77,7 +77,7 @@ interface Props {
 
 const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, history, approved}) => {
     const classes = useStyles();
-    const [{user:loggedUser}, dispatch] = useStateValue();
+    const [{blogLL, user:loggedUser}, dispatch] = useStateValue();
     const [approval, setApproval] = useState<boolean>(false);
 
     return <Card className={classes.root}>
@@ -91,8 +91,8 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
               if(data.error){
                 alert(`Error: ${data.error}`);
               }else{
+                dispatch(deleteBlog(blogLL.removeBlog(_id)));
                 dispatch(setNotificationClose());
-                dispatch(deleteBlog(_id));
               }
             })
           }
@@ -147,7 +147,7 @@ const BlogCard : React.FC<Props> = ({title, tags,image,link,user, _id, cohort, h
               return res.json()
             }else{
               setTimeout(() => {
-                dispatch(approveBlog(_id));
+                dispatch(approveBlog(blogLL.approveBlog(_id)));
                 setApproval(false)
               }, 1000)
             }
