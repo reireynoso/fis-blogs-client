@@ -108,7 +108,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
             return;
         }
         // console.log(result)
-        dispatch(changeBlogs(blogLL.addBlog(result.blog)))
+        dispatch(changeBlogs(blogLL.addItem(result.blog)))
         handleSuccess()
     }
 

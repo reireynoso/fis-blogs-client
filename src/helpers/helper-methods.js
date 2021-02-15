@@ -20,7 +20,7 @@ const tagMatch = (blog, tag) => {
 }
 
 const cohortMatch = (blog, cohort) => {
-    return !cohort || (cohort && blog.cohort.name === cohort)
+    return !cohort || (cohort && blog.cohort._id === cohort)
 }
 
 export const handleFilter = (blogs, title, tag, cohort) => blogs.filter(blog => 

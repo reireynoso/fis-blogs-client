@@ -75,10 +75,10 @@ const FilterComponent : React.FC = () => {
                         All
                     </MenuItem>
                 {
-                    cohorts.map((cohort:{name:string}) => (
+                    cohorts.map((cohort:{name:string, _id:string}) => (
                         <MenuItem 
                         key={cohort.name}
-                        value={cohort.name}
+                        value={cohort._id}
                         >
                             {cohort.name}
                         </MenuItem>

@@ -1,29 +1,15 @@
-class Node {
-    constructor(val){
-        this.val = val;
-        this.next = null;
-    }
-}
+// export class Node {
+//     constructor(val){
+//         this.val = val;
+//         this.next = null;
+//     }
+// }
+import {DSLinkedListTemplate} from './ds-template';
 
-export class BlogLinkedList {
+export class BlogLinkedList extends DSLinkedListTemplate {
     constructor(){
+        super();
         this.length = 0;
-        this.head = null;
-        this.tail = null;
-    }
-
-    addBlog(val){
-        const newVal = new Node(val);
-        if(!this.head){
-            this.head = newVal;
-            this.tail = this.head;
-        }
-        else{
-            this.tail.next = newVal;
-            this.tail = newVal;
-        }
-        this.length++;
-        return this.blogsArrayList();
     }
 
     removeBlog(id){
@@ -48,7 +34,7 @@ export class BlogLinkedList {
             currentNode = currentNode.next;
         }
         this.length--;
-        return this.blogsArrayList();
+        return this.arrayList();
     }
 
     approveBlog(id){
@@ -68,25 +54,6 @@ export class BlogLinkedList {
             }
         }
 
-        return this.blogsArrayList()
-    }
-
-    convertArrayToLinkedList(blogsArr){
-        for(let i = 0; i < blogsArr.length; i++){
-            this.addBlog(blogsArr[i])
-        }
-
-        return this.blogsArrayList();
-    }
-
-    blogsArrayList(){
-        let currentNode = this.head;
-        const blogsArray = [];
-        while(currentNode){
-            blogsArray.push(currentNode.val);
-            currentNode = currentNode.next
-        }
-
-        return blogsArray
+        return this.arrayList()
     }
 }

@@ -1,7 +1,9 @@
 import {BlogLinkedList} from '../helpers/blogs-ds';
+import { CohortLinkedList } from '../helpers/cohort-ds';
 
 export const initialState = {
     user: null,
+    cohortLL: null,
     cohorts: [],
     blogLL: null,
     blogs: [],
@@ -32,14 +34,21 @@ const reducer = (state,action) => {
                 users: action.users
             }
         case "SET_INITIAL_DATA":
-            const linkedList = new BlogLinkedList();
-            const blogs = linkedList.convertArrayToLinkedList(action.blogs);
+            const blogLinkedList = new BlogLinkedList();
+            const blogs = blogLinkedList.convertArrayToLinkedList(action.blogs);
+            const cohortLinkedList = new CohortLinkedList();
+            const cohorts = cohortLinkedList.convertArrayToLinkedList(action.cohorts);
+
+            // console.log(cohorts)
+
             return {
                 ...state,
-                cohorts: action.cohorts,
+                // cohorts: action.cohorts,
+                cohorts,
+                cohortLL: cohortLinkedList,
                 // blogs: action.blogs,
                 blogs,
-                blogLL: linkedList
+                blogLL: blogLinkedList
             }
         case "SELECT_COHORT": 
             let matchIndex;
