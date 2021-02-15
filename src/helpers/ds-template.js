@@ -9,6 +9,7 @@ export class DSLinkedListTemplate {
     constructor(){
         this.head = null;
         this.tail = null;
+        this.length = 0;
     }
 
     convertArrayToLinkedList(itemsArray){
@@ -40,7 +41,14 @@ export class DSLinkedListTemplate {
             this.tail.next = newVal;
             this.tail = newVal;
         }
+
+        if(this.cohortObj){
+            this.cohortObj[newVal.val._id] = this.length
+            // console.log(this.cohortObj)
+        }
+
         this.length++;
+
         return this.arrayList();
     }
     

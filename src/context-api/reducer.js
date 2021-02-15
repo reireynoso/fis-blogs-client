@@ -51,19 +51,18 @@ const reducer = (state,action) => {
                 blogLL: blogLinkedList
             }
         case "SELECT_COHORT": 
-            let matchIndex;
+            // let matchIndex;
 
-            for(let i = 0; i < state.cohorts.length; i++){
-                if(state.cohorts[i]._id === action.selectedCohort._id){
-                    matchIndex = i
-                    break;
-                }
-            }
-
+            // for(let i = 0; i < state.cohorts.length; i++){
+            //     if(state.cohorts[i]._id === action.selectedCohort._id){
+            //         matchIndex = i
+            //         break;
+            //     }
+            // }
             return {
                 ...state,
-                selectedCohort: matchIndex
-                // selectedCohort: action.selectedCohort,
+                // selectedCohort: matchIndex
+                selectedCohort: action.selectedCohort,
                 // selectedCohortIndex: matchIndex
             }
         case "UPDATE_USER":
@@ -117,28 +116,30 @@ const reducer = (state,action) => {
                 adminUpdateModal: false
             }
         case "EDIT_COHORT_NAME":
-            const editedSelectedCohort = {
-                ...state.cohorts[state.selectedCohort],
-                name: action.name
-            }
-            const editedCohorts = state.cohorts.map(cohort => {
-                if(cohort._id === editedSelectedCohort._id){
-                    return editedSelectedCohort
-                }
-                return cohort
-            })
+            // const editedSelectedCohort = {
+            //     ...state.cohorts[state.selectedCohort],
+            //     name: action.name
+            // }
+            // const editedCohorts = state.cohorts.map(cohort => {
+            //     if(cohort._id === editedSelectedCohort._id){
+            //         return editedSelectedCohort
+            //     }
+            //     return cohort
+            // })
 
             return {
                 ...state,
                 // selectedCohort: editedSelectedCohort,
-                cohorts: editedCohorts
+                // cohorts: editedCohorts
+                cohorts: action.name
             }
 
 
         case "ADD_COHORT":
             return {
                 ...state,
-                cohorts: [...state.cohorts, action.cohort]
+                // cohorts: [...state.cohorts, action.cohort]
+                cohorts: action.cohort
             }
         // case "SET_COHORTS":
         //     return {

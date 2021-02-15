@@ -123,7 +123,8 @@ const Cohorts: React.FC = (props:any) => {
         users,
         cohorts, 
         selectedCohort, 
-        adminUpdateModal
+        adminUpdateModal,
+        cohortLL
       }, dispatch] = useStateValue();
 
     const classes = useStyles();
@@ -192,7 +193,7 @@ const Cohorts: React.FC = (props:any) => {
                 <ListItem onClick={() => {
                   // avoid filtering to find the index of cohort if it's the same
                   if(cohort._id !== (selectedCohort !== null ? cohorts[selectedCohort]._id : "")){
-                    dispatch(selectCohort(cohort));
+                    dispatch(selectCohort(cohortLL.findCohortIndex(cohort._id)));
                   }    
                 }} 
                 className={cohorts[selectedCohort]?._id === cohort._id ? classes.cohortList : ""}
@@ -230,7 +231,7 @@ const Cohorts: React.FC = (props:any) => {
                               updateCohortName(editTitle, cohorts[selectedCohort]._id)
                               .then(res => {
                                 if(res.status === 200){
-                                  dispatch(editCohortName(editTitle));
+                                  dispatch(editCohortName(cohortLL.editCohortName(cohorts[selectedCohort]._id,editTitle)));
                                   setEditMode(false);
                                 }else{
                                   return res.json()

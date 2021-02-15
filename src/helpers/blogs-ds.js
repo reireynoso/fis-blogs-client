@@ -9,7 +9,7 @@ import {DSLinkedListTemplate} from './ds-template';
 export class BlogLinkedList extends DSLinkedListTemplate {
     constructor(){
         super();
-        this.length = 0;
+        // this.length = 0;
     }
 
     removeBlog(id){

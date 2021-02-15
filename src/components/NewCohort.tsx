@@ -37,7 +37,7 @@ const NewCohort : React.FC = () => {
     const [serverMessage, setServerMessage] = useState("");
     const [statusCode, setStatusCode] = useState<Status>(Status.LOADING);
 
-    const [{}, dispatch] = useStateValue();
+    const [{cohortLL}, dispatch] = useStateValue();
 
     const classes = useStyles();
     const history = useHistory();
@@ -66,7 +66,7 @@ const NewCohort : React.FC = () => {
                 setServerMessage("Cohort created!");
                 setName("");
                 setTimeout(() => {
-                    dispatch(addNewCohort(data))
+                    dispatch(addNewCohort(cohortLL.addItem(data)))
                     history.push('/cohort/admin')
                 }, 1500)
             }
