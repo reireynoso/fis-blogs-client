@@ -80,21 +80,22 @@ const reducer = (state,action) => {
                 users: updateUsers
             }
         case "REMOVE_USER_ADMIN": 
-            const removedUser = state.cohorts[state.selectedCohort].admins.filter(admin => admin._id !== action.userId)
-            const updatedSelectedCohort = {
-                ...state.cohorts[state.selectedCohort],
-                admins: removedUser
-            }
-            const updatedCohorts = state.cohorts.map(cohort => {
-                if(cohort._id === updatedSelectedCohort._id){
-                    return updatedSelectedCohort
-                }
-                return cohort
-            })
+            // const removedUser = state.cohorts[state.selectedCohort].admins.filter(admin => admin._id !== action.userId)
+            // const updatedSelectedCohort = {
+            //     ...state.cohorts[state.selectedCohort],
+            //     admins: removedUser
+            // }
+            // const updatedCohorts = state.cohorts.map(cohort => {
+            //     if(cohort._id === updatedSelectedCohort._id){
+            //         return updatedSelectedCohort
+            //     }
+            //     return cohort
+            // })
             return {
                 ...state,
                 // selectedCohort: updatedSelectedCohort,
-                cohorts: updatedCohorts
+                // cohorts: updatedCohorts
+                cohorts: action.userId
             }
         case "ADD_USER_ADMIN_COHORT":
             const addedUser = [...state.cohorts[state.selectedCohort].admins, action.user]

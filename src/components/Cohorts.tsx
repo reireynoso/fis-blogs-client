@@ -298,7 +298,7 @@ const Cohorts: React.FC = (props:any) => {
                       admin: boolean,
                       image_url: string,
                       email: string
-                  }) => (
+                  }, index:number) => (
                   <ListItem className={classes.listItem} key={user._id}>
                       <ListItemAvatar>
                         <Avatar
@@ -317,7 +317,7 @@ const Cohorts: React.FC = (props:any) => {
                                   return res.json()
                               }else{
                                   // success
-                                  dispatch(removeUserAdmin(user._id));
+                                  dispatch(removeUserAdmin(cohortLL.removeUserAdmin(cohorts[selectedCohort]._id, index)));
                               }
                             })
                             .then(data =>{
