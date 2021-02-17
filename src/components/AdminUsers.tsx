@@ -86,6 +86,7 @@ const AdminUsers:React.FC = () => {
     const [filter, setFilter] = useState<string>("")
 
     const [{
+        cohortLL,
         user: loggedUser,
         users,
         selectedCohort, 
@@ -175,7 +176,7 @@ const AdminUsers:React.FC = () => {
                                             return res.json()
                                         }
                                         else{
-                                            dispatch(addUserAdminToCohort(user))
+                                            dispatch(addUserAdminToCohort(cohortLL.addUserAdmin(cohorts[selectedCohort]._id, user)))
                                         }
                                     })
                                     .then(data => {

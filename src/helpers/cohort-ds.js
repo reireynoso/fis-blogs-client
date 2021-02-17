@@ -28,7 +28,6 @@ export class CohortLinkedList extends DSLinkedListTemplate {
 
     removeUserAdmin(cohortId, userIndex){
         const cohortNode = this.findCohortNode(cohortId);
-        // console.log(cohortNode)
 
         let index = userIndex;
 
@@ -37,9 +36,13 @@ export class CohortLinkedList extends DSLinkedListTemplate {
             cohortNode.val.admins[index] = cohortNode.val.admins[++index];
         }
 
-
         cohortNode.val.admins.pop();
-        // console.log(cohortNode.val.admins)
+        return this.arrayList();
+    }
+
+    addUserAdmin(cohortId, user){
+        const cohortNode = this.findCohortNode(cohortId);
+        cohortNode.val.admins.push(user);
         return this.arrayList();
     }
 }
