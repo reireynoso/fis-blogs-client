@@ -4,7 +4,7 @@ import {newCohortRequest} from '../config/fetch-requests';
 import {useStateValue} from '../context-api/Provider';
 
 import {
-    addNewCohort
+    changeCohorts
 } 
 from '../context-api/actions';
 
@@ -66,7 +66,7 @@ const NewCohort : React.FC = () => {
                 setServerMessage("Cohort created!");
                 setName("");
                 setTimeout(() => {
-                    dispatch(addNewCohort(cohortLL.addItem(data)))
+                    dispatch(changeCohorts(cohortLL.addItem(data)))
                     history.push('/cohort/admin')
                 }, 1500)
             }

@@ -16,10 +16,10 @@ export const updateUser = (userId) => ({
 
 // cohort actions
 
-export const addNewCohort = (cohort) => ({
-    type: "ADD_COHORT",
-    cohort
-})
+// export const addNewCohort = (cohort) => ({
+//     type: "ADD_COHORT",
+//     cohort
+// })
 
 // export const setCohorts = (cohorts) => ({
 //     type: "SET_COHORTS",
@@ -33,22 +33,26 @@ export const selectCohort = (selectedCohort) => ({
 })
 
 // remove user from cohort as an admin
-export const removeUserAdmin = (userId) => ({
-    type: "REMOVE_USER_ADMIN",
-    userId
-})
+// export const removeUserAdmin = (userId) => ({
+//     type: "REMOVE_USER_ADMIN",
+//     userId
+// })
 
 // add user as admin to cohort
-export const addUserAdminToCohort = (user) => ({
+export const addUserAdminToCohort = (cohorts) => ({
     type: "ADD_USER_ADMIN_COHORT",
-    user
+    cohorts
 })
 
-export const editCohortName = (name) => ({
-    type: "EDIT_COHORT_NAME",
-    name
-})
+// export const editCohortName = (name) => ({
+//     type: "EDIT_COHORT_NAME",
+//     name
+// })
 
+export const changeCohorts = (cohorts) => ({
+    type: "CHANGE_COHORTS",
+    cohorts
+})
 // blog actions
 
 // export const setUserBlogs = (userBlogs) => ({

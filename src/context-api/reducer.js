@@ -39,8 +39,6 @@ const reducer = (state,action) => {
             const cohortLinkedList = new CohortLinkedList();
             const cohorts = cohortLinkedList.convertArrayToLinkedList(action.cohorts);
 
-            // console.log(cohorts)
-
             return {
                 ...state,
                 // cohorts: action.cohorts,
@@ -79,6 +77,12 @@ const reducer = (state,action) => {
                 ...state,
                 users: updateUsers
             }
+        case "CHANGE_COHORTS":
+            return {
+                ...state,
+                cohorts: action.cohorts
+            }
+
         case "REMOVE_USER_ADMIN": 
             // const removedUser = state.cohorts[state.selectedCohort].admins.filter(admin => admin._id !== action.userId)
             // const updatedSelectedCohort = {
@@ -133,7 +137,7 @@ const reducer = (state,action) => {
                 ...state,
                 // selectedCohort: editedSelectedCohort,
                 // cohorts: editedCohorts
-                cohorts: action.name
+                cohorts: action.cohorts
             }
 
 
@@ -227,12 +231,6 @@ const reducer = (state,action) => {
                 ...state,
                 adminUpdateModal: action.status
             }
-        // case "SET_ADMIN_UPDATE_CLOSE":
-        //     return {
-        //         ...state,
-        //         adminUpdateModal: false
-        //     }
-        
         default: 
             return state
     }

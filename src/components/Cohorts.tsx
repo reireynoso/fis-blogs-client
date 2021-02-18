@@ -3,12 +3,13 @@ import {NavLink} from 'react-router-dom';
 import {useStateValue} from '../context-api/Provider'
 import {
     selectCohort, 
-    removeUserAdmin, 
+    // removeUserAdmin, 
+    changeCohorts,
     setNotificationOpen, 
     setNotificationClose,
     setAdminUpdate,
     setAdminUsers,
-    editCohortName
+    // editCohortName
 } 
 from '../context-api/actions';
 import {handleFetchUsers, updateCohortAdminRequest, updateCohortName} from '../config/fetch-requests';
@@ -231,7 +232,7 @@ const Cohorts: React.FC = (props:any) => {
                               updateCohortName(editTitle, cohorts[selectedCohort]._id)
                               .then(res => {
                                 if(res.status === 200){
-                                  dispatch(editCohortName(cohortLL.editCohortName(cohorts[selectedCohort]._id,editTitle)));
+                                  dispatch(changeCohorts(cohortLL.editCohortName(cohorts[selectedCohort]._id,editTitle)));
                                   setEditMode(false);
                                 }else{
                                   return res.json()
@@ -317,7 +318,7 @@ const Cohorts: React.FC = (props:any) => {
                                   return res.json()
                               }else{
                                   // success
-                                  dispatch(removeUserAdmin(cohortLL.removeUserAdmin(cohorts[selectedCohort]._id, index)));
+                                  dispatch(changeCohorts(cohortLL.removeUserAdmin(cohorts[selectedCohort]._id, index)));
                               }
                             })
                             .then(data =>{
