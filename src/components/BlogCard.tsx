@@ -143,7 +143,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
         rel="noopener" 
         className={classes.link}
       >
-        View in Medium
+        View Article
       </Link>
     </CardActions>
     {
