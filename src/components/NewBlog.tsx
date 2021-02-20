@@ -127,7 +127,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
                 setRequestMsg(error.message);
                 break;
             default :
-                setRequestMsg("")
+                alert(error.message)
         }
     } 
 
