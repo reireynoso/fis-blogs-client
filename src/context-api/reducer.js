@@ -118,7 +118,7 @@ const reducer = (state,action) => {
                 ...state,
                 // selectedCohort: addedSelectedCohort,
                 // cohorts: addedUserCohorts,
-                cohorts: action.user,
+                cohorts: action.cohorts,
                 adminUpdateModal: false
             }
         case "EDIT_COHORT_NAME":

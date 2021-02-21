@@ -5,8 +5,6 @@ export const truncate = (item) => {
     return item
 }
 
-// inefficient approach filtering
-
 export const findCohortBlogs = (blogs, cohort) => {
     return blogs.filter(blog => blog.cohort._id === cohort._id && !blog.approved)
 }
@@ -24,7 +22,8 @@ const cohortMatch = (blog, cohort) => {
 }
 
 export const handleFilter = (blogs, title, tag, cohort) => blogs.filter(blog => 
-    blog.title.toLowerCase().includes(title.toLowerCase()) 
+    // blog.title.toLowerCase().includes(title.toLowerCase()) 
+    blog.title.toLowerCase().indexOf(title.toLowerCase()) !== -1 
     && blog.approved
     && tagMatch(blog,tag) 
     && cohortMatch(blog,cohort)
@@ -34,7 +33,8 @@ export const handleUserFilter = (users, searchTerm, route, cohortAdmins, loggedU
     if(!users) return null;
     if(route === "/admin/users"){
         if(!searchTerm) return users
-        return users.filter(user =>  user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        // return users.filter(user =>  user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        return users.filter(user =>  user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
     }
     else{
         let filtered = [];
@@ -44,10 +44,11 @@ export const handleUserFilter = (users, searchTerm, route, cohortAdmins, loggedU
         }
 
         if(!cohortAdmins){
-            filtered = filtered.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            // filtered = filtered.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            filtered = filtered.filter(user => user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
         }else{
             filtered = [loggedUserId, ...filtered]
-            filtered = filtered.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()) && !cohortAdmins.some(admin => admin._id === user._id))
+            filtered = filtered.filter(user => user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 && !cohortAdmins.some(admin => admin._id === user._id))
         }
         
         return filtered//filtered.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -56,5 +57,5 @@ export const handleUserFilter = (users, searchTerm, route, cohortAdmins, loggedU
 
 export const handleCohortFilter = (cohorts, filter) => {
     if(!filter) return cohorts 
-    return cohorts.filter(cohort => cohort.name.toLowerCase().includes(filter.toLowerCase()))
+    return cohorts.filter(cohort => cohort.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)
 }
