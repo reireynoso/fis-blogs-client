@@ -13,7 +13,7 @@ import {
 } 
 from '../context-api/actions';
 import {handleFetchUsers, updateCohortAdminRequest, updateCohortName} from '../config/fetch-requests';
-import {handleCohortFilter} from '../helpers/helper-methods';
+import {handleCohortFilter, truncate} from '../helpers/helper-methods';
 
 import Blogs from './Blogs';
 import AdminUsers from './AdminUsers';
@@ -43,7 +43,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 
-const drawerWidth = 240;
+const drawerWidth = 225;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     drawerContainer: {
-      overflow: 'auto',
+      overflowY: 'scroll',
       display: "flex",
       flexDirection: "column",
       height: "100%"
@@ -75,10 +75,6 @@ const useStyles = makeStyles((theme: Theme) =>
             background: "#9e9e9e",
             transition: "0.3s ease"
         }
-    },
-    userList: {
-      maxHeight: "200px",
-      overflowY: "scroll"
     },
     listItem: {
       wordBreak: "break-word"
@@ -168,41 +164,40 @@ const Cohorts: React.FC = (props:any) => {
                   </ListItem>
               </List>
               <Divider />
-              <List>
-                <ListItem>
-                  <TextField 
+              <TextField 
                     label="Search Cohorts" 
-                    // type="search" 
+                    style={{margin: "5px"}}
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
                     variant="outlined" 
                   />
-                </ListItem>
-                {handleCohortFilter(cohorts, filter).map((cohort: {
-                    _id: string,
-                    name: string,
-                    source: number,
-                    admins: {
-                        admin: boolean,
-                        email: string,
-                        image_url: string,
-                        name: string,
-                        _id: string,
+              <List style={{height: "calc(100% - 136px)", overflowY: "scroll"}}>
+                  {handleCohortFilter(cohorts, filter).map((cohort: {
+                      _id: string,
+                      name: string,
+                      source: number,
+                      admins: {
+                          admin: boolean,
+                          email: string,
+                          image_url: string,
+                          name: string,
+                          _id: string,
 
-                    }[]
-                }) => (
-                <ListItem onClick={() => {
-                  // avoid filtering to find the index of cohort if it's the same
-                  if(cohort._id !== (selectedCohort !== null ? cohorts[selectedCohort]._id : "")){
-                    dispatch(selectCohort(cohortLL.findCohortIndex(cohort._id)));
-                  }    
-                }} 
-                className={cohorts[selectedCohort]?._id === cohort._id ? classes.cohortList : ""}
-                button 
-                key={cohort._id}>
-                    <ListItemText primary={cohort.name} />
-                </ListItem>
-                ))}
+                      }[]
+                  }) => (
+                  <ListItem onClick={() => {
+                    // avoid filtering to find the index of cohort if it's the same
+                    if(cohort._id !== (selectedCohort !== null ? cohorts[selectedCohort]._id : "")){
+                      dispatch(selectCohort(cohortLL.findCohortIndex(cohort._id)));
+                    }    
+                  }} 
+                  className={cohorts[selectedCohort]?._id === cohort._id ? classes.cohortList : ""}
+                  button 
+                  key={cohort._id}>
+                      <ListItemText primary={cohort.name} />
+                  </ListItem>
+                  ))}
+
               </List>
             </div>
           </Drawer>
@@ -307,7 +302,7 @@ const Cohorts: React.FC = (props:any) => {
                             src={user.image_url}
                         />
                       </ListItemAvatar>
-                      <ListItemText primary={user.name} />
+                      <ListItemText primary={truncate(user.name, 25)} />
                       <ListItemIcon className={classes.listIcon} onClick={() => {
                           const statement = `${user.name} will be removed as an admin for cohort, ${cohorts[selectedCohort].name}.`
                           const callback = () => {

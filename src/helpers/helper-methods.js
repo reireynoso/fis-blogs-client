@@ -1,6 +1,8 @@
-export const truncate = (item) => {
-    if(item.length > 50){
-        return item.slice(0, 40) + "..."
+export const truncate = (item, length) => {
+    if(!length) return item
+
+    if(item.length > length){
+        return item.slice(0, length) + "..."
     }
     return item
 }

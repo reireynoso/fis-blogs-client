@@ -35,11 +35,12 @@ const useStyles = makeStyles((theme) => ({
     link: {
     //   margin: theme.spacing(1, 1.5),
       textDecoration: "none",
-      color: "inherit",
+    //   color: "inherit",
+    margin: "2px"
     },
     activeLink: {
-        borderTop: "2px solid #bbb6b6",
-        borderBottom: "2px solid #bbb6b6",
+        borderTop: "1px solid #bbb6b6",
+        borderBottom: "1px solid #bbb6b6",
     },
     list: {
         display: "flex",
@@ -54,7 +55,7 @@ const Header : React.FC = () => {
     const [drawer, setDrawer] = useState(false);
     
     const classes = useStyles();
-    const matches = useMediaQuery('(min-width:640px)');
+    const matches = useMediaQuery('(min-width:724px)');
 
     useEffect(() => {
         if(matches && drawer){
@@ -96,7 +97,7 @@ const Header : React.FC = () => {
             className={classes.link} 
             to="/blogs/new"
         >
-            Submit a Blog
+            Submit Blog
         </Button>
 
         {
@@ -108,7 +109,7 @@ const Header : React.FC = () => {
             activeClassName={classes.activeLink} 
             to={user && user.admin ? "/cohort/new": ""}
             >
-                New Cohort
+                Create Cohort
             </Button>
 
             <Button
@@ -128,7 +129,7 @@ const Header : React.FC = () => {
             onClick={handleLogout} 
             className={classes.link}
             to={!user ? "/login": ""}
-            color={!user ? "default" : "secondary"}
+            color={!user ? "primary" : "secondary"}
             variant="contained"
         >
             {!user ? "Login": "Logout"}
@@ -147,7 +148,7 @@ const Header : React.FC = () => {
                         className={classes.link} 
                         to="/"
                     >
-                        FIS Blogs
+                        coding|Blogs
                     </Button>
                 </Typography>
                 {

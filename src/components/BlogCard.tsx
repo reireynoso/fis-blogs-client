@@ -108,8 +108,8 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
     <CardContent>
         <Typography className={classes.title} gutterBottom variant="h5" component="h2">
             {
-                truncate(title)
-                // truncate("hellosdasiduhaidhaihdiandianidhaiiuhroqwhe9iqyweojqwoeijqowiejreinadlde reyrenoso ksadhoasdoajoiajodijapowj")
+                truncate(title, 40)
+                // truncate("hellosdasiduhaidhaihdiandianidhaiiuhroqwhe9iqyweojqwoeijqowiejreinadlde reyrenoso ksadhoasdoajoiajodijapowj", 40)
             }
         </Typography>
         <Divider/>
@@ -130,7 +130,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
                     src={user.image_url}
                 />
               </ListItemAvatar>
-              <ListItemText style={{wordBreak: "break-word"}} className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={truncate(user.name ? user.name : "No Name Provided")} />
+              <ListItemText style={{wordBreak: "break-word"}} className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={truncate(user.name ? user.name : "No Name Provided", 25)} />
             </ListItem>
         </List>
     </CardContent>
