@@ -5,11 +5,8 @@ import {setTitleFilter, setTagFilter, setCohortFilter} from '../context-api/acti
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -21,7 +18,7 @@ const useStyles = makeStyles(() => ({
   }));
 
 const FilterComponent : React.FC = () => {
-    const [{cohorts, titleFilter, tagFilter, cohortFilter}, dispatch] = useStateValue();
+    const [{cohorts, titleFilter}, dispatch] = useStateValue();
     const classes = useStyles();
 
     return <Grid container justify="center" className={classes.root} spacing={2}>
@@ -34,58 +31,38 @@ const FilterComponent : React.FC = () => {
             />
         </Grid>
         <Grid item>
-            <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="tag-filter-select">Tag</InputLabel>
-                <Select
-                labelId="tag-filter-select"
-                value={tagFilter}
-                onChange={(e) => dispatch(setTagFilter(e.target.value))}
-                label="tag"
-                >
-                    <MenuItem 
-                    value=""
-                    >
-                        All
-                    </MenuItem>
-                {
-                    acceptableTags.map((tag: string) => (
-                        <MenuItem 
-                            key={tag}
-                            value={tag}
-                            >
-                                {tag}
-                            </MenuItem>
-                    ))
-                }
-                </Select>
-        </FormControl>
+            <Autocomplete
+                style={{width: "195px"}}
+                options={acceptableTags}
+                renderInput={(params) => (
+                <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Tags"
+                />
+                )}
+                onChange={(_, val) => dispatch(setTagFilter(val || ""))}
+            />
         </Grid>
         <Grid item>
-            <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="cohort-filter-select">Cohort</InputLabel>
-                <Select
-                labelId="cohort-filter-select"
-                value={cohortFilter}
-                onChange={(e) => dispatch(setCohortFilter(e.target.value))}
-                label="cohort"
-                >
-                    <MenuItem 
-                    value=""
-                    >
-                        All
-                    </MenuItem>
-                {
-                    cohorts.map((cohort:{name:string, _id:string}) => (
-                        <MenuItem 
-                        key={cohort.name}
-                        value={cohort._id}
-                        >
-                            {cohort.name}
-                        </MenuItem>
-                    ))
-                }
-                </Select>
-            </FormControl>
+            <Autocomplete
+                style={{width: "195px"}}
+                options={cohorts}
+                getOptionLabel={(option: {
+                    name:string,
+                    _id: string
+                }) => option.name}
+                renderInput={(params) => (
+                <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Cohort"
+                />
+                )}
+                onChange={(_, val) => {
+                    dispatch(setCohortFilter(val?._id || ""))
+                }}
+            />
         </Grid>
     </Grid>
 }

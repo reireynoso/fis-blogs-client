@@ -108,8 +108,8 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
     <CardContent>
         <Typography className={classes.title} gutterBottom variant="h5" component="h2">
             {
-                truncate(title, 40)
-                // truncate("hellosdasiduhaidhaihdiandianidhaiiuhroqwhe9iqyweojqwoeijqowiejreinadlde reyrenoso ksadhoasdoajoiajodijapowj", 40)
+                truncate(title, 60)
+                // truncate("hellosdasiduhaidhaihdiandianidhaiiuhroqwhe9iqyweojqwoeijqowiejreinadlde reyrenoso ksadhoasdoajoiajodijapowj", 60)
             }
         </Typography>
         <Divider/>

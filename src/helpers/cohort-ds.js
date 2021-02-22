@@ -1,9 +1,30 @@
-import {DSLinkedListTemplate} from './ds-template';
+import {DSLinkedListTemplate, Node} from './ds-template';
 
 export class CohortLinkedList extends DSLinkedListTemplate {
     constructor(){
         super();
         this.cohortObj = {}
+    }
+
+    addItem(val){
+        const newVal = new Node(val);
+        if(!this.head){
+            this.head = newVal;
+            this.tail = this.head;
+        }
+        else{
+            this.tail.next = newVal;
+            this.tail = newVal;
+        }
+
+        if(this.cohortObj){
+            this.cohortObj[newVal.val._id] = this.length
+            // console.log(this.cohortObj)
+        }
+
+        this.length++;
+
+        return this.arrayList();
     }
 
     findCohortIndex(id){

@@ -4,12 +4,31 @@
 //         this.next = null;
 //     }
 // }
-import {DSLinkedListTemplate} from './ds-template';
+import {DSLinkedListTemplate, Node} from './ds-template';
 
 export class BlogLinkedList extends DSLinkedListTemplate {
     constructor(){
         super();
-        // this.length = 0;
+    }
+
+    addItem(val){
+        const newVal = new Node(val);
+        if(!this.head){
+            this.head = newVal;
+            this.tail = this.head;
+        }
+        else{
+            // lists in regular order
+            // this.tail.next = newVal;
+            // this.tail = newVal;
+            // lists in recent order
+            newVal.next = this.head;
+            this.head = newVal;
+        }
+
+        this.length++;
+
+        return this.arrayList();
     }
 
     removeBlog(id){

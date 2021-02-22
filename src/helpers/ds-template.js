@@ -30,26 +30,4 @@ export class DSLinkedListTemplate {
 
         return itemsArray
     }
-
-    addItem(val){
-        const newVal = new Node(val);
-        if(!this.head){
-            this.head = newVal;
-            this.tail = this.head;
-        }
-        else{
-            this.tail.next = newVal;
-            this.tail = newVal;
-        }
-
-        if(this.cohortObj){
-            this.cohortObj[newVal.val._id] = this.length
-            // console.log(this.cohortObj)
-        }
-
-        this.length++;
-
-        return this.arrayList();
-    }
-    
 }
