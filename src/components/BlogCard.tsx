@@ -168,7 +168,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
           .then(result => {
             if(result){
               // console.log(result.error)
-              alert(`ERROR: ${result.error}. Try again.`);
+              alert(`ERROR: ${result.error}.`);
               setApproval(false);
             }
           })

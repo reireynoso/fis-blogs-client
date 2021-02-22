@@ -75,7 +75,7 @@ const NewCohort : React.FC = () => {
 
     return (
         <div className={classes.formContainer}>
-            <h1>Add a New Cohort</h1>
+            <h1>Create Cohort</h1>
             <Typography variant="body2" color="textSecondary" >
                 Attention Admins: If there's an error typing the cohort name, please do not create a new one with the correct name. Instead, edit the name under the "Admin View".
             </Typography>

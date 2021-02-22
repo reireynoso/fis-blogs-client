@@ -138,7 +138,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
                 "Please login before posting a blog!" 
                 :
                 <>
-                    <h1>New Medium Blog</h1>
+                    <h1>Submit Blog</h1>
                     <Typography variant="body2" color="textSecondary" >
                         Note: When submitting a new blog, you'll have to wait for an admin to approve before it's displayed for the public. Let an admin know!
                     </Typography>

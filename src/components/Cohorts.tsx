@@ -194,7 +194,7 @@ const Cohorts: React.FC = (props:any) => {
                   className={cohorts[selectedCohort]?._id === cohort._id ? classes.cohortList : ""}
                   button 
                   key={cohort._id}>
-                      <ListItemText primary={cohort.name} />
+                      <ListItemText primary={truncate(cohort.name, 20)} />
                   </ListItem>
                   ))}
 
