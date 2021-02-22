@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useStateValue} from '../context-api/Provider';
 import acceptableTags from '../config/tags';
 import {setTitleFilter, setTagFilter, setCohortFilter} from '../context-api/actions';
@@ -7,10 +7,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles(() => ({
     root: {
         flexGrow: 1,
+        position: "sticky",
+        top: "65px",
+        zIndex: 10,
+        background: "#eeeeee",
+        marginBottom: "1rem"
     },
     formControl: {
         minWidth: 120,
@@ -20,6 +26,11 @@ const useStyles = makeStyles(() => ({
 const FilterComponent : React.FC = () => {
     const [{cohorts, titleFilter}, dispatch] = useStateValue();
     const classes = useStyles();
+    const matches = useMediaQuery('(min-width:630px)');
+
+    useEffect(() => {
+        console.log(matches)
+    }, [matches])
 
     return <Grid container justify="center" className={classes.root} spacing={2}>
         <Grid item>

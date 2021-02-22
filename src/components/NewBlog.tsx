@@ -8,11 +8,6 @@ import acceptableTags from '../config/tags';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
@@ -58,10 +53,9 @@ const NewBlog : React.FC<Props> = ({history}) => {
         setRequestMsg("")
     }
 
-    const handleCohortChange = (e:React.ChangeEvent<{value:unknown}>) : void => {
-        // console.log(e.target.value as string)
+    const handleCohortChange = (e:object,val:any) : void => {
         if(errorCohort) setErrorCohort(false);
-        setCohort(e.target.value as string)
+        setCohort(val?.name || "")
         setRequestMsg("")
     }
 
@@ -152,26 +146,21 @@ const NewBlog : React.FC<Props> = ({history}) => {
                         value={link}
                     />
 
-                    <FormControl error={errorCohort}>
-                        <InputLabel id="demo-simple-select-label">Cohort</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        value={cohort}
+                    <Autocomplete
+                        options={cohorts}
+                        getOptionLabel={(option: {
+                            name:string,
+                        }) => option.name}
+                        renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="Cohort"
+                            error={errorCohort}
+                            helperText={(errorCohort && requestMsg) || "If your cohort is not listed, let an instructor know!"}
+                        />
+                        )}
                         onChange={handleCohortChange}
-                        >
-                            {
-                                cohorts.map((cohort:{name:string}) => (
-                                    <MenuItem 
-                                        key={cohort.name}
-                                        value={cohort.name}
-                                        >
-                                            {cohort.name}
-                                        </MenuItem>
-                                ))
-                            }
-                        </Select>
-                        <FormHelperText>{(errorCohort && requestMsg) || "If your cohort is not listed, let an instructor know!"}</FormHelperText>
-                    </FormControl>
+                    />
                     
                     <Autocomplete
                         multiple
