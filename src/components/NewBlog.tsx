@@ -5,17 +5,21 @@ import {changeBlogs} from '../context-api/actions';
 import {newBlogRequest} from '../config/fetch-requests';
 import acceptableTags from '../config/tags';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 type Props = {
     history: {push: (route:string) => void}
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme:Theme) => ({
+    grid: {
+        padding: theme.spacing(2, 0)
+    },
     formContainer: {
         display: "flex",
         flexDirection: "column",
@@ -26,6 +30,9 @@ const useStyles = makeStyles(() => ({
     message: {
         textAlign: "center",
         color: "#388e3c"
+    },
+    header: {
+        color: "#f44336"
     }
 }));
 
@@ -129,7 +136,11 @@ const NewBlog : React.FC<Props> = ({history}) => {
         <div className={classes.formContainer}>
             {
                 !user ?  
-                "Please login before posting a blog!" 
+                <Grid className={classes.grid} container>
+                    <Typography variant="h4" className={classes.header}>
+                        Please login to submit a blog!
+                    </Typography>
+                </Grid> 
                 :
                 <>
                     <h1>Submit Blog</h1>
@@ -156,7 +167,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
                             {...params}
                             label="Cohort"
                             error={errorCohort}
-                            helperText={(errorCohort && requestMsg) || "If your cohort is not listed, let an instructor know!"}
+                            helperText={(errorCohort && requestMsg) || "If your cohort is not listed, let an admin know!"}
                         />
                         )}
                         onChange={handleCohortChange}

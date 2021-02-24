@@ -7,12 +7,14 @@ import {findUserBlogs, handleFilter, findCohortBlogs} from '../helpers/helper-me
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      padding: theme.spacing(2, 0)
     },
     paper: {
       height: 140,
@@ -118,7 +120,13 @@ const Blogs : React.FC<Props> = ({history}) => {
         } 
         <Grid container justify="center" className={classes.root} spacing={2}>
             {
-                !user && history.location.pathname === "/blogs/me" ? "You're not logged in!" : renderBlogs()
+                !user && history.location.pathname === "/blogs/me" ? <Grid item>
+                  <Typography variant="h4" className={classes.header}>
+                    You're not logged in!
+                  </Typography>
+                </Grid> 
+                : 
+                renderBlogs()
             }
         </Grid>
         </>

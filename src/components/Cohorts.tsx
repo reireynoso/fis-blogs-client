@@ -77,7 +77,8 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     },
     listItem: {
-      wordBreak: "break-word"
+      wordBreak: "break-word",
+      padding: theme.spacing(1)
     },
     listIcon: {
       minWidth: 20
@@ -101,7 +102,8 @@ const useStyles = makeStyles((theme: Theme) =>
     emptyCohort: {
       display: "flex",
       alignItems: "center",
-      fontSize: "2rem"
+      fontSize: "2rem",
+      padding: theme.spacing(15,0)
     }
   }),
 );
@@ -255,8 +257,14 @@ const Cohorts: React.FC = (props:any) => {
                 </>
                 :
                 <div className={classes.emptyCohort}>
-                  <ArrowBackIcon fontSize="large"/>
-                  Select cohort
+                  {
+                    cohorts.length ? <>
+                      <ArrowBackIcon fontSize="large"/>
+                      Select cohort
+                    </>
+                    :
+                    "There are no cohorts available"
+                  }
                 </div>
             } 
           </main>

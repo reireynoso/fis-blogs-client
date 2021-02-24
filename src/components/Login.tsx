@@ -6,7 +6,7 @@ import {useStateValue} from '../context-api/Provider'
 import {setUser} from '../context-api/actions';
 import {handleLogin} from '../config/fetch-requests';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,11 +14,12 @@ import Typography from '@material-ui/core/Typography';
 
 const cookies = new Cookies();
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme:Theme) => ({
     root: {
       width: 250,
       height: 200,
       margin: "auto",
+      marginTop: theme.spacing(2),
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
       padding: "1rem",
       textAlign: "center"
     },
-  });
+  }));
 
 type Props = {
     history: {push: (route: string) => void}
