@@ -145,14 +145,14 @@ const NewBlog : React.FC<Props> = ({history}) => {
                 <>
                     <h1>Submit Blog</h1>
                     <Typography variant="body2" color="textSecondary" >
-                        Note: When submitting a new blog, you'll have to wait for an admin to approve before it's displayed for the public. Let an admin know!
+                        Note: When submitting a new blog, it must be approved before it's displayed for the public. Let an admin know!
                     </Typography>
                     <TextField
                         error={errorLink}
                         variant="standard"
                         label="Link URL"
                         placeholder="Medium Blog"
-                        helperText={(errorLink && requestMsg) || "Please provide a friend link"}
+                        helperText={(errorLink && requestMsg) || "Only Medium and Dev.to articles are supported"}
                         onChange={handleLinkChange}
                         value={link}
                     />

@@ -106,7 +106,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
         className={classes.icon}/>
     }
     <CardContent>
-        <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+        <Typography className={classes.title} variant="h5">
             {
                 truncate(title, 60)
                 // truncate("hellosdasiduhaidhaihdiandianidhaiiuhroqwhe9iqyweojqwoeijqowiejreinadlde reyrenoso ksadhoasdoajoiajodijapowj", 60)
@@ -119,10 +119,41 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
         image={image ? image : "/images/no-image-found.jpg"}
         title={title}
     />
-    <CardContent>
+      {
+      history.location.pathname === "/blogs/me" && <CardContent style={{
+        padding: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}>
+          
+      </CardContent>
+    }
+    <CardContent style={{
+      padding: 0
+    }}>
+      {
+        history.location.pathname === "/blogs/me" ? <>
+          <Typography
+            variant="h6"
+            style={{wordBreak: "break-word"}}
+          >
+              {truncate(cohort.name, 25)}
+          </Typography>
+          <Button
+            disableFocusRipple
+            disableRipple
+            style={{cursor: "initial"}}
+            variant="contained" 
+            color={!approved ? "secondary":"primary"}
+          >{
+            approved ? "Approved" : "Pending"
+          }</Button>
+        </>
+        :
         <List>
             <ListItem style={{
-              textAlign: "center"
+              textAlign: "center",
             }}>
               <ListItemAvatar>
                 <Avatar
@@ -130,9 +161,10 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
                     src={user.image_url}
                 />
               </ListItemAvatar>
-              <ListItemText style={{wordBreak: "break-word"}} className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={truncate(user.name ? user.name : "No Name Provided", 25)} />
+              <ListItemText style={{wordBreak: "break-word"}} className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={user.name ? truncate(user.name, 25) : "No Name Provided"} />
             </ListItem>
         </List>
+      }
     </CardContent>
     <CardActions>
       <Link
