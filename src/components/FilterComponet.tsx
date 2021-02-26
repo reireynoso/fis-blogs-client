@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -81,18 +82,19 @@ const FilterComponent : React.FC = () => {
             </Grid>
         </Collapse>
         
-        <aside 
-        onClick={() => setOpen(!open)} 
-        style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: open ? "1rem": 0,
-            cursor: "pointer"
-        }}
+        <Typography
+            onClick={() => setOpen(!open)} 
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: open ? "1rem": 0,
+                cursor: "pointer"
+            }}
         >
             {open ? "Shrink": "Expand"} filter {open ? <ExpandLess/>: <ExpandMore/>}
-        </aside>
+        </Typography>
+
         
     </main>
 }

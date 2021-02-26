@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useStateValue} from '../context-api/Provider';
 
-import {changeBlogs, setNotificationOpen, setNotificationClose} from '../context-api/actions';
+import {changeBlogs, setNotificationOpen, setNotificationClose, setTagFilter} from '../context-api/actions';
 import {approveBlogRequest, deleteBlogRequest} from '../config/fetch-requests';
 
 import {truncate} from '../helpers/helper-methods'
@@ -20,6 +20,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Fab from '@material-ui/core/Fab';
 
 const useStyles = makeStyles({
   root: {
@@ -80,7 +81,7 @@ interface Props {
     },
   }
 
-const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history, approved}) => {
+const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history, approved, tags}) => {
     const classes = useStyles();
     const [{blogLL, user:loggedUser}, dispatch] = useStateValue();
     const [approval, setApproval] = useState<boolean>(false);
@@ -151,6 +152,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
           }</Button>
         </>
         :
+        <>
         <List>
             <ListItem style={{
               textAlign: "center",
@@ -164,6 +166,24 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
               <ListItemText style={{wordBreak: "break-word"}} className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={user.name ? truncate(user.name, 25) : "No Name Provided"} />
             </ListItem>
         </List>
+        {
+          // ["Javascript", "Ruby on Rails", "Technical Topic", "Fun Facts", "More fun facts", "Java", "C++"]
+            Object.keys(tags).map(tag => {
+            return <Fab
+              onClick={() => dispatch(setTagFilter(tag))}
+              variant="extended"
+              size="small"
+              // color="inherit"
+              style={{
+                margin: "3px 5px",
+                height: "25px"
+              }}
+            >
+              {tag}
+            </Fab>
+          })
+        }
+        </>
       }
     </CardContent>
     <CardActions>
