@@ -13,7 +13,7 @@ import {
 } 
 from '../context-api/actions';
 import {handleFetchUsers, updateCohortAdminRequest, updateCohortName} from '../config/fetch-requests';
-import {handleCohortFilter, truncate} from '../helpers/helper-methods';
+import {handleCohortFilter, truncate, checkIfUserIsAdminOfCohort, findCohortBlogs} from '../helpers/helper-methods';
 
 import Blogs from './Blogs';
 import AdminUsers from './AdminUsers';
@@ -34,6 +34,9 @@ import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import PersonIcon from '@material-ui/icons/Person';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -97,6 +100,10 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-between"
     },
+    cohortListContainer: {
+      height: "calc(100% - 136px)", 
+      overflowY: "scroll"
+    },
     cohortList: {
       background: "#eeeeee"
     },
@@ -131,7 +138,8 @@ const Cohorts: React.FC = (props:any) => {
         cohorts, 
         selectedCohort, 
         adminUpdateModal,
-        cohortLL
+        cohortLL,
+        blogs
       }, dispatch] = useStateValue();
 
     const classes = useStyles();
@@ -181,7 +189,7 @@ const Cohorts: React.FC = (props:any) => {
                     onChange={(e) => setFilter(e.target.value)}
                     variant="outlined" 
                   />
-              <List style={{height: "calc(100% - 136px)", overflowY: "scroll"}}>
+              <List className={classes.cohortListContainer}>
                   {handleCohortFilter(cohorts, filter).map((cohort: {
                       _id: string,
                       name: string,
@@ -191,8 +199,7 @@ const Cohorts: React.FC = (props:any) => {
                           email: string,
                           image_url: string,
                           name: string,
-                          _id: string,
-
+                          _id: string
                       }[]
                   }) => (
                   <ListItem onClick={() => {
@@ -204,7 +211,24 @@ const Cohorts: React.FC = (props:any) => {
                   className={cohorts[selectedCohort]?._id === cohort._id ? classes.cohortList : ""}
                   button 
                   key={cohort._id}>
-                      <ListItemText primary={truncate(cohort.name, 20)} />
+                      {
+                        checkIfUserIsAdminOfCohort(cohort.admins,loggedUser._id) && <Tooltip title="Cohort you're an admin of">
+                          <ListItemIcon className={classes.listIcon}> 
+                            <PersonIcon/>
+                          </ListItemIcon>
+                        </Tooltip>
+                      }
+
+                      {
+                        findCohortBlogs(blogs,cohort).length > 0 && <Tooltip title="Blogs need approval">
+                          <ListItemIcon className={classes.listIcon}> 
+                            <NewReleasesIcon/>
+                          </ListItemIcon>
+                        </Tooltip>
+                      }
+                      
+                      <ListItemText primary={truncate(cohort.name
+                        , 16)} />
                   </ListItem>
                   ))}
 
@@ -249,11 +273,13 @@ const Cohorts: React.FC = (props:any) => {
                           autoFocus
                         />
                       }
-                      <IconButton
-                        onClick={() => setEditMode(!editMode)}
-                      >
-                        <EditIcon/>
-                      </IconButton>
+                      <Tooltip title="Click to edit cohort name">
+                        <IconButton
+                          onClick={() => setEditMode(!editMode)}
+                        >
+                          <EditIcon/>
+                        </IconButton>
+                      </Tooltip>
                     </div>
                     <h3 className={classes.cohortSubHeader}>Reviews Blogs for Approval</h3>
                     <hr/>

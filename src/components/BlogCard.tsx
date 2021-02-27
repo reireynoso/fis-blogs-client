@@ -21,6 +21,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Fab from '@material-ui/core/Fab';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles({
   root: {
@@ -99,23 +100,25 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
 
     return <Card className={classes.root}>
     {
-        loggedUser && (loggedUser.admin || loggedUser._id === user._id) && <ClearIcon onClick={() => {
-          // handleClickOpen(_id, title)
-          const statement = `"${title}" from cohort, ${cohort.name} will be removed.`
-          const callback = () => {
-            deleteBlogRequest(_id)
-            .then(data => {
-              if(data.error){
-                alert(`Error: ${data.error}`);
-              }else{
-                dispatch(changeBlogs(blogLL.removeBlog(_id)));
-                dispatch(setNotificationClose());
-              }
-            })
-          }
-          dispatch(setNotificationOpen(statement, callback))
-        }} 
-        className={classes.icon}/>
+        loggedUser && (loggedUser.admin || loggedUser._id === user._id) && <Tooltip title="Delete blog">
+          <ClearIcon onClick={() => {
+            // handleClickOpen(_id, title)
+            const statement = `"${title}" from cohort, ${cohort.name} will be removed.`
+            const callback = () => {
+              deleteBlogRequest(_id)
+              .then(data => {
+                if(data.error){
+                  alert(`Error: ${data.error}`);
+                }else{
+                  dispatch(changeBlogs(blogLL.removeBlog(_id)));
+                  dispatch(setNotificationClose());
+                }
+              })
+            }
+            dispatch(setNotificationOpen(statement, callback))
+          }} 
+          className={classes.icon}/>
+        </Tooltip>
     }
     <CardContent>
         <Typography className={classes.title} variant="h5">
@@ -177,6 +180,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
               onClick={() => dispatch(setTagFilter(tag))}
               variant="extended"
               className={classes.fabs}
+              key={tag}
             >
                 {tag}
               </Fab>

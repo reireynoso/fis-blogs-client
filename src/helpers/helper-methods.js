@@ -61,3 +61,7 @@ export const handleCohortFilter = (cohorts, filter) => {
     if(!filter) return cohorts 
     return cohorts.filter(cohort => cohort.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)
 }
+
+export const checkIfUserIsAdminOfCohort = (admins, loggedUser) => {
+    return admins.some(admin => admin._id === loggedUser)
+}
