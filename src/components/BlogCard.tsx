@@ -55,6 +55,17 @@ const useStyles = makeStyles({
     marginBottom: "1rem",
     background: "green",
     color: "white"
+  },
+  fabAside: {
+    minHeight: "70px",
+  },
+  fabs: {
+    margin: "1px 2px",
+    height: "20px",
+    padding: "5px",
+    fontSize: "10px",
+    fontWeight: "bold",
+    boxShadow: "none"
   }
 });
 interface Props {
@@ -120,16 +131,6 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
         image={image ? image : "/images/no-image-found.jpg"}
         title={title}
     />
-      {
-      history.location.pathname === "/blogs/me" && <CardContent style={{
-        padding: 0,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-      }}>
-          
-      </CardContent>
-    }
     <CardContent style={{
       padding: 0
     }}>
@@ -167,21 +168,21 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
             </ListItem>
         </List>
         {
-          // ["Javascript", "Ruby on Rails", "Technical Topic", "Fun Facts", "More fun facts", "Java", "C++"]
-            Object.keys(tags).map(tag => {
+          history.location.pathname === "/" && <aside className={classes.fabAside}>
+        {
+          // [...Object.keys(tags), "Frontend Development", "Web Developement", "Command Line Interface", "Backend Development"]
+          Object.keys(tags)
+          .map(tag => {
             return <Fab
               onClick={() => dispatch(setTagFilter(tag))}
               variant="extended"
-              size="small"
-              // color="inherit"
-              style={{
-                margin: "3px 5px",
-                height: "25px"
-              }}
+              className={classes.fabs}
             >
-              {tag}
-            </Fab>
-          })
+                {tag}
+              </Fab>
+            })
+          }
+          </aside>
         }
         </>
       }

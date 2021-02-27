@@ -88,16 +88,24 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "auto"
     },
     adminList: {
-      flex: "1 0 auto"
+      // flex: "1"
+      height: "calc(100% - 100px)",
+      overflowY: "scroll"
+    },
+    selectedCohortMain: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
     },
     cohortList: {
       background: "#eeeeee"
     },
     header: {
-      color: "#002984"
+      color: "#002984",
     },
     cohortSubHeader: {
-      color: "#3f51b5"
+      color: "#3f51b5",
+      margin: 0
     },
     emptyCohort: {
       display: "flex",
@@ -206,11 +214,7 @@ const Cohorts: React.FC = (props:any) => {
           <main className={classes.content}>
             {
                 selectedCohort !== null ? <>
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between"
-                    }}>
+                    <div className={classes.selectedCohortMain}>
                       {
                         !editMode ? <h1 className={classes.header}>
                             {cohorts[selectedCohort]?.name} 
