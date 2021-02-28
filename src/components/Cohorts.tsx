@@ -174,11 +174,13 @@ const Cohorts: React.FC = (props:any) => {
               <List>
                   <ListItem>
                     <ListItemText primary={"Cohorts"} />
-                    <NavLink to="/cohort/new">
-                      <ListItemIcon className={classes.listIcon}> 
-                          <AddIcon className={classes.icon}/>
-                      </ListItemIcon>
-                    </NavLink>
+                    <Tooltip title="Create Cohort">
+                      <NavLink to="/cohort/new">
+                        <ListItemIcon className={classes.listIcon}> 
+                            <AddIcon className={classes.icon}/>
+                        </ListItemIcon>
+                      </NavLink>
+                    </Tooltip>
                   </ListItem>
               </List>
               <Divider />
@@ -273,7 +275,7 @@ const Cohorts: React.FC = (props:any) => {
                           autoFocus
                         />
                       }
-                      <Tooltip title="Click to edit cohort name">
+                      <Tooltip title={editMode ? "Exit edit (changes are not saved)" : "Edit cohort name"}>
                         <IconButton
                           onClick={() => setEditMode(!editMode)}
                         >
@@ -313,15 +315,17 @@ const Cohorts: React.FC = (props:any) => {
                 <List>
                     <ListItem>
                       <ListItemText primary={"Admins"} />
-                      <ListItemIcon className={classes.listIcon} onClick={() => {
-                            if(loggedUser.admin){
-                                dispatch(setAdminUpdate(true))
-                            }else{
-                                alert("You're not an admin. Not permitted to view.")
-                            }
-                          }}>
-                          <AddIcon className={classes.icon}/>
-                      </ListItemIcon>
+                      <Tooltip title="Add Admin">
+                        <ListItemIcon className={classes.listIcon} onClick={() => {
+                              if(loggedUser.admin){
+                                  dispatch(setAdminUpdate(true))
+                              }else{
+                                  alert("You're not an admin. Not permitted to view.")
+                              }
+                            }}>
+                            <AddIcon className={classes.icon}/>
+                        </ListItemIcon>
+                      </Tooltip>
                     </ListItem>
                 </List>
                 <Divider />
@@ -341,30 +345,32 @@ const Cohorts: React.FC = (props:any) => {
                         />
                       </ListItemAvatar>
                       <ListItemText primary={truncate(user.name, 25)} />
-                      <ListItemIcon className={classes.listIcon} onClick={() => {
-                          const statement = `${user.name} will be removed as an admin for cohort, ${cohorts[selectedCohort].name}.`
-                          const callback = () => {
-                            dispatch(setNotificationClose());
-                            updateCohortAdminRequest(Action.REMOVE, user._id, cohorts[selectedCohort]._id)
-                            .then(res => {
-                              if(res.status !== 200){
-                                  return res.json()
-                              }else{
-                                  // success
-                                  dispatch(changeCohorts(cohortLL.removeUserAdmin(cohorts[selectedCohort]._id, index)));
-                              }
-                            })
-                            .then(data =>{
-                                if(data){
-                                    // error
-                                    alert(`Something went wrong with the request. Error: ${data.error}`)
+                      <Tooltip title="Remove admin">
+                        <ListItemIcon className={classes.listIcon} onClick={() => {
+                            const statement = `${user.name} will be removed as an admin for cohort, ${cohorts[selectedCohort].name}.`
+                            const callback = () => {
+                              dispatch(setNotificationClose());
+                              updateCohortAdminRequest(Action.REMOVE, user._id, cohorts[selectedCohort]._id)
+                              .then(res => {
+                                if(res.status !== 200){
+                                    return res.json()
+                                }else{
+                                    // success
+                                    dispatch(changeCohorts(cohortLL.removeUserAdmin(cohorts[selectedCohort]._id, index)));
                                 }
-                            })
-                          }
-                          dispatch(setNotificationOpen(statement, callback))
-                      }}>
+                              })
+                              .then(data =>{
+                                  if(data){
+                                      // error
+                                      alert(`Something went wrong with the request. Error: ${data.error}`)
+                                  }
+                              })
+                            }
+                            dispatch(setNotificationOpen(statement, callback))
+                        }}>
                           <Clear className={classes.icon}/>
-                      </ListItemIcon>
+                        </ListItemIcon>
+                      </Tooltip>
                   </ListItem>
                   ))}
                 </List>

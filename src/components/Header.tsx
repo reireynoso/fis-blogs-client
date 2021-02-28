@@ -15,13 +15,13 @@ import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
-    '@global': {
-      ul: {
-        margin: 0,
-        padding: 0,
-        listStyle: 'none',
-      },
-    },
+    // '@global': {
+    //   ul: {
+    //     margin: 0,
+    //     padding: 0,
+    //     listStyle: 'none',
+    //   },
+    // },
     appBar: {
       borderBottom: `1px solid ${theme.palette.divider}`,
       zIndex: 10,
@@ -81,6 +81,17 @@ const Header : React.FC = () => {
 
     const navLinks = () => {
         return <>
+
+        <Button
+            className={classes.link}
+            activeClassName={classes.activeLink}
+            component={NavLink}
+            to="/about"
+            onClick={handleCloseDrawer}
+        >
+            About
+        </Button>
+
         <Button
             className={classes.link}
             activeClassName={classes.activeLink}
@@ -103,7 +114,7 @@ const Header : React.FC = () => {
 
         {
             user?.admin && <>
-            <Button
+            {/* <Button
             component={NavLink}
             onClick={handleCloseDrawer} 
             className={classes.link}
@@ -111,7 +122,7 @@ const Header : React.FC = () => {
             to={user && user.admin ? "/cohort/new": ""}
             >
                 Create Cohort
-            </Button>
+            </Button> */}
 
             <Button
             component={NavLink}

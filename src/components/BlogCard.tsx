@@ -219,7 +219,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
               setTimeout(() => {
                 dispatch(changeBlogs(blogLL.approveBlog(_id)));
                 setApproval(false)
-              }, 1000)
+              }, 500)
             }
           })
           .then(result => {
