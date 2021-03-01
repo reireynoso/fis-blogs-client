@@ -66,10 +66,11 @@ export class BlogLinkedList extends DSLinkedListTemplate {
         else{
             let currentNode = this.head;
             while(currentNode){
-                if(currentNode.val.id === id){
+                if(currentNode.val._id === id){
                     currentNode.val.approved = true;
                     break;
                 }
+                currentNode = currentNode.next;
             }
         }
 
