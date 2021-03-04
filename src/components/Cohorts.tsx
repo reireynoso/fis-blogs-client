@@ -230,7 +230,7 @@ const Cohorts: React.FC = (props:any) => {
                       }
                       
                       <ListItemText primary={truncate(cohort.name
-                        , 16)} />
+                        , 15)} />
                   </ListItem>
                   ))}
 

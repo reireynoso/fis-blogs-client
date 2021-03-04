@@ -38,8 +38,12 @@ const App: React.FC = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    process.env.NODE_ENV === "development" && !cookies.get('token') && cookies.set('token', process.env.REACT_APP_COOKIE, { 
+      path: '/',
+    }) 
+
     const token : String = cookies.get('token');
-    // console.log(token)
+
     if(token){
       // auto logging in a user logic
       handleAutoLogin()
