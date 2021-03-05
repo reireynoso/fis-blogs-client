@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './Footer'
 
 import Container from '@material-ui/core/Container';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -14,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      padding: theme.spacing(4,10)
+      padding: theme.spacing(4,4),
+      marginBottom: theme.spacing(4)
     },
     paper: {
       height: 140,
@@ -93,6 +95,7 @@ const About:React.FC = () => {
                 <li>Dev.to</li>
             </ul>
         </Typography>
+        <Footer/>
     </Container>
 
 }
