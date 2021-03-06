@@ -29,7 +29,7 @@ const cookies = new Cookies();
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
-    padding: theme.spacing(7, 0, 0),
+    padding: theme.spacing(8, 0, 0),
   }
 }));
 

@@ -5,7 +5,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-        background: "#eeeeee",
+        background: theme.palette.type === "dark" ? theme.palette.background.paper : "#eeeeee",
         position: "fixed",
         width: "100%",
         bottom: 0,

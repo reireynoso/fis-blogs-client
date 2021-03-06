@@ -3,7 +3,7 @@ import {useStateValue} from '../context-api/Provider';
 import acceptableTags from '../config/tags';
 import {setTitleFilter, setTagFilter, setCohortFilter} from '../context-api/actions';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -12,13 +12,13 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme:Theme) => ({
     root: {
         flexGrow: 1,
         position: "sticky",
         top: "68px",
         zIndex: 10,
-        background: "#eeeeee",
+        background: theme.palette.type === "dark" ? theme.palette.background.paper : "#eeeeee",
         marginBottom: "10px",
         padding: "0.4rem"
     },
