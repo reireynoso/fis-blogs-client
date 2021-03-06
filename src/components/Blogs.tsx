@@ -107,7 +107,6 @@ const Blogs : React.FC<Props> = ({history}) => {
               cohort={cohort}
               user={user}
               history={history}
-              // handleClickOpen={handleClickOpen}
             />
           </Grid> 
         })

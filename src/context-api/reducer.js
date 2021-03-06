@@ -41,27 +41,15 @@ const reducer = (state,action) => {
 
             return {
                 ...state,
-                // cohorts: action.cohorts,
                 cohorts,
                 cohortLL: cohortLinkedList,
-                // blogs: action.blogs,
                 blogs,
                 blogLL: blogLinkedList
             }
         case "SELECT_COHORT": 
-            // let matchIndex;
-
-            // for(let i = 0; i < state.cohorts.length; i++){
-            //     if(state.cohorts[i]._id === action.selectedCohort._id){
-            //         matchIndex = i
-            //         break;
-            //     }
-            // }
             return {
                 ...state,
-                // selectedCohort: matchIndex
                 selectedCohort: action.selectedCohort,
-                // selectedCohortIndex: matchIndex
             }
         case "UPDATE_USER":
             const updateUsers = state.users.map(user => {
@@ -84,59 +72,19 @@ const reducer = (state,action) => {
             }
 
         case "REMOVE_USER_ADMIN": 
-            // const removedUser = state.cohorts[state.selectedCohort].admins.filter(admin => admin._id !== action.userId)
-            // const updatedSelectedCohort = {
-            //     ...state.cohorts[state.selectedCohort],
-            //     admins: removedUser
-            // }
-            // const updatedCohorts = state.cohorts.map(cohort => {
-            //     if(cohort._id === updatedSelectedCohort._id){
-            //         return updatedSelectedCohort
-            //     }
-            //     return cohort
-            // })
             return {
                 ...state,
-                // selectedCohort: updatedSelectedCohort,
-                // cohorts: updatedCohorts
                 cohorts: action.userId
             }
         case "ADD_USER_ADMIN_COHORT":
-            // const addedUser = [...state.cohorts[state.selectedCohort].admins, action.user]
-            // const addedSelectedCohort = {
-            //     ...state.cohorts[state.selectedCohort],
-            //     admins: addedUser
-            // }
-            // const addedUserCohorts = state.cohorts.map(cohort => {
-            //     if(cohort._id === addedSelectedCohort._id){
-            //         return addedSelectedCohort
-            //     }
-            //     return cohort
-            // })
-
             return {
                 ...state,
-                // selectedCohort: addedSelectedCohort,
-                // cohorts: addedUserCohorts,
                 cohorts: action.cohorts,
                 adminUpdateModal: false
             }
         case "EDIT_COHORT_NAME":
-            // const editedSelectedCohort = {
-            //     ...state.cohorts[state.selectedCohort],
-            //     name: action.name
-            // }
-            // const editedCohorts = state.cohorts.map(cohort => {
-            //     if(cohort._id === editedSelectedCohort._id){
-            //         return editedSelectedCohort
-            //     }
-            //     return cohort
-            // })
-
             return {
                 ...state,
-                // selectedCohort: editedSelectedCohort,
-                // cohorts: editedCohorts
                 cohorts: action.cohorts
             }
 
@@ -144,53 +92,13 @@ const reducer = (state,action) => {
         case "ADD_COHORT":
             return {
                 ...state,
-                // cohorts: [...state.cohorts, action.cohort]
                 cohorts: action.cohort
             }
-        // case "SET_COHORTS":
-        //     return {
-        //         ...state,
-        //         cohorts: action.cohorts
-        //     }
-        // case "SET_BLOGS":
-        //     return {
-        //         ...state,
-        //         blogs: action.blogs
-        //     }
-        // case "SET_USER_BLOGS":
-        //     return {
-        //         ...state,
-        //         userBlogs: action.userBlogs
-        //     }
         case "CHANGE_BLOG":
             return {
                 ...state,
                 blogs: action.blogs
             }
-        // case "ADD_BLOG":
-        //     return {
-        //         ...state,
-        //         // blogs: [...state.blogs, action.blog]
-        //         blogs: action.blogs
-        //     }
-        // case "DELETE_BLOG":
-        //     // const removedUserBlog = state.blogs.filter(userBlog => userBlog._id !== action.id)
-        //     return {
-        //         ...state,
-        //         blogs: action.blogs
-        //         // blogs: removedUserBlog
-        //     }
-        // case "APPROVE_BLOG": 
-        // // const updatedBlogs = state.blogs.map(blog => {
-        // //     if(blog._id === action.blogId){
-        // //         blog.approved = true
-        // //     }
-        // //     return blog
-        // // })
-        // return {
-        //     ...state,
-        //     blogs: action.blogs
-        // }
         case "SET_TITLE_FILTER":
             return {
                 ...state,

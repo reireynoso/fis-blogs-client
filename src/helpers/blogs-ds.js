@@ -1,9 +1,3 @@
-// export class Node {
-//     constructor(val){
-//         this.val = val;
-//         this.next = null;
-//     }
-// }
 import {DSLinkedListTemplate, Node} from './ds-template';
 
 export class BlogLinkedList extends DSLinkedListTemplate {

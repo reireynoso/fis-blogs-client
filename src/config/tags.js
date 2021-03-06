@@ -17,8 +17,13 @@ export default [
     "REST API",
     "Java",
     "C++",
+    "C",
+    "Docker",
+    "Unix",
+    "Linux",
     "Python",
     "Django",
+    "Flask",
     "Semantic UI",
     "Material UI",
     "Materialize CSS",
@@ -26,6 +31,7 @@ export default [
     "Express JS",
     "Frontend Development",
     "Backend Development",
+    "Full Stack Development",
     "Teaching",
     "Guide",
     "Problem Solving",
@@ -48,5 +54,8 @@ export default [
     "Cryptography",
     "Command Line Interface",
     "Bootstrap",
-    "Tech Ethics"
+    "Tech Ethics",
+    "Non-Technical",
+    "Technical Interview",
+    "Job Search"
 ]

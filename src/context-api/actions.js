@@ -15,28 +15,11 @@ export const updateUser = (userId) => ({
 })
 
 // cohort actions
-
-// export const addNewCohort = (cohort) => ({
-//     type: "ADD_COHORT",
-//     cohort
-// })
-
-// export const setCohorts = (cohorts) => ({
-//     type: "SET_COHORTS",
-//     cohorts
-// })
-
 // cohort admin actions
 export const selectCohort = (selectedCohort) => ({
     type: "SELECT_COHORT",
     selectedCohort
 })
-
-// remove user from cohort as an admin
-// export const removeUserAdmin = (userId) => ({
-//     type: "REMOVE_USER_ADMIN",
-//     userId
-// })
 
 // add user as admin to cohort
 export const addUserAdminToCohort = (cohorts) => ({
@@ -44,54 +27,22 @@ export const addUserAdminToCohort = (cohorts) => ({
     cohorts
 })
 
-// export const editCohortName = (name) => ({
-//     type: "EDIT_COHORT_NAME",
-//     name
-// })
-
 export const changeCohorts = (cohorts) => ({
     type: "CHANGE_COHORTS",
     cohorts
 })
 // blog actions
 
-// export const setUserBlogs = (userBlogs) => ({
-//     type: "SET_USER_BLOGS",
-//     userBlogs
-// })
-// export const setBlogs = (blogs) => ({
-//     type: "SET_BLOGS",
-//     blogs
-// })
-
 export const changeBlogs = (blogs) => ({
     type: "CHANGE_BLOG",
     blogs
 })
-
-// export const addBlog = (blogs) => ({
-//     type: "ADD_BLOG",
-//     blogs
-// })
 
 export const setInitialData = (blogs, cohorts) => ({
     type: "SET_INITIAL_DATA",
     blogs,
     cohorts
 })
-
-// export const approveBlog = (blogs) => ({
-//     type: "APPROVE_BLOG",
-//     blogs
-// })
-
-// export const deleteBlog = (blogs) => {
-//     // console.log(id)
-//     return ({
-//         type: "DELETE_BLOG",
-//         blogs
-//     })
-// }
 
 //notificaiton actions
 export const setNotificationOpen = (statement, callback) => ({

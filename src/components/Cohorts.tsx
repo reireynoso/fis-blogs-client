@@ -2,14 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {useStateValue} from '../context-api/Provider'
 import {
-    selectCohort, 
-    // removeUserAdmin, 
+    selectCohort,  
     changeCohorts,
     setNotificationOpen, 
     setNotificationClose,
     setAdminUpdate,
     setAdminUsers,
-    // editCohortName
 } 
 from '../context-api/actions';
 import {handleFetchUsers, updateCohortAdminRequest, updateCohortName} from '../config/fetch-requests';
@@ -91,7 +89,6 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "auto"
     },
     adminList: {
-      // flex: "1"
       height: "calc(100% - 100px)",
       overflowY: "scroll"
     },
@@ -228,9 +225,10 @@ const Cohorts: React.FC = (props:any) => {
                           </ListItemIcon>
                         </Tooltip>
                       }
-                      
-                      <ListItemText primary={truncate(cohort.name
-                        , 15)} />
+                      <Tooltip title={cohort.name}>
+                        <ListItemText primary={truncate(cohort.name
+                          , 12)} />
+                      </Tooltip>
                   </ListItem>
                   ))}
 
