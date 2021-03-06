@@ -16,6 +16,7 @@ import Cohorts from './components/Cohorts';
 import Notification from './components/Notification';
 import AdminUsers from './components/AdminUsers';
 import About from './components/About';
+import Notice from './components/Notice';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -65,6 +66,9 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact component={Blogs}/>
             <Route path="/about" exact component={About}/>
+            <Route path="/about/terms-and-conditions" component={Notice}/>
+            <Route path="/about/disclaimer" component={Notice}/>
+            <Route path="/about/privacy" component={Notice}/>
             <Route path="/blogs/me" component={Blogs}/>
             <Route path="/blogs/new" component={NewBlog}/>
             <Route path="/login" component={Login}/>

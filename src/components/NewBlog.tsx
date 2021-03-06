@@ -11,6 +11,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Footer from './Footer';
 
 type Props = {
     history: {push: (route:string) => void}
@@ -214,6 +215,7 @@ const NewBlog : React.FC<Props> = ({history}) => {
                 </>
 
             }
+            <Footer/>
         </div>
         
     )

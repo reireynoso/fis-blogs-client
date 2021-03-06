@@ -11,6 +11,7 @@ import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Footer from './Footer';
 
 const cookies = new Cookies();
 
@@ -75,6 +76,7 @@ const Login : React.FC<Props> = ({history}) => {
         }
     }, [])
     return (
+        <>
         <Card className={classes.root}>
             <Button
                 href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=${client}/login/`}
@@ -90,6 +92,8 @@ const Login : React.FC<Props> = ({history}) => {
                 </Typography>
             </CardContent>
         </Card>
+        <Footer/>
+        </>
     )
 }
 

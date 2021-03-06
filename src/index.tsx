@@ -10,21 +10,21 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 const theme = createMuiTheme({
   palette:{
-      type:"dark"
+      type:"light"
   }
 })
 
 ReactDOM.render(
-  // <ThemeProvider theme={theme}>
+  <ThemeProvider theme={theme}>
   <React.StrictMode>
-      {/* <CssBaseline/> */}
+      <CssBaseline/>
       <StateProvider initialState={initialState} reducer={reducer}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </StateProvider>
-    </React.StrictMode>,
-  // </ThemeProvider>,
+    </React.StrictMode>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 

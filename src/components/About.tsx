@@ -10,6 +10,7 @@ import GroupIcon from '@material-ui/icons/Group';
 import DoneIcon from '@material-ui/icons/Done';
 import GavelIcon from '@material-ui/icons/Gavel';
 import HttpIcon from '@material-ui/icons/Http';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,16 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(4,4),
       marginBottom: theme.spacing(4)
     },
-    paper: {
-      height: 140,
-      width: 100,
-    },
-    control: {
-      padding: theme.spacing(2),
-    },
-    header: {
-      color: "#f44336"
-    }
   }),
 );
 
@@ -65,7 +56,7 @@ const About:React.FC = () => {
 
                 <br/>
                 <br/>
-                Outside of Flatiron School, if you're interested in becoming an <em>admin</em>, please send an email to <a href="mailto: reireynoso@gmail.com">reireynoso@gmail.com</a> regarding your interest. 
+                Outside of Flatiron School, if you're interested in becoming an <em>admin</em>, please send an email to <Link component="a" href="mailto: reireynoso@gmail.com">reireynoso@gmail.com</Link> regarding your interest. 
             </Typography>
             <br/>
             <Typography variant="h4">
