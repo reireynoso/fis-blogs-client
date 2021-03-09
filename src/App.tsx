@@ -18,11 +18,12 @@ import AdminUsers from './components/AdminUsers';
 import About from './components/About';
 import Notice from './components/Notice';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 
 import {fetchInitialData} from './config/fetch-requests'; 
-import {setInitialData} from './context-api/actions';
+import {setInitialData, setTheme} from './context-api/actions';
 
 import './App.css';
 const cookies = new Cookies();
@@ -34,9 +35,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App: React.FC = () => {
-  const [{}, dispatch] = useStateValue();
+  const [{theme}, dispatch] = useStateValue();
 
   const classes = useStyles();
+
+  const muiTheme = createMuiTheme({
+    palette:{
+        type: theme 
+    }
+  })
 
   useEffect(() => {
     process.env.NODE_ENV === "development" && !cookies.get('token') && cookies.set('token', process.env.REACT_APP_COOKIE, { 
@@ -59,26 +66,29 @@ const App: React.FC = () => {
     })
   }, [])
   return (
-    <div className="App">
-        <Header/>
-        <Notification/>
-        <Container className={classes.heroContent} component="main">
-          <Switch>
-            <Route path="/" exact component={Blogs}/>
-            <Route path="/about" exact component={About}/>
-            <Route path="/about/terms-and-conditions" component={Notice}/>
-            <Route path="/about/disclaimer" component={Notice}/>
-            <Route path="/about/privacy" component={Notice}/>
-            <Route path="/blogs/me" component={Blogs}/>
-            <Route path="/blogs/new" component={NewBlog}/>
-            <Route path="/login" component={Login}/>
-            <LockedRoute path="/admin/users" component={AdminUsers}/>
-            <LockedRoute path="/cohort/admin" component={Cohorts}/>
-            <LockedRoute path="/cohort/new" component={NewCohort}/>
-            <Route component={Login}/>
-          </Switch>
-        </Container>
-    </div>
+    <ThemeProvider theme={muiTheme}>
+      <div className="App">
+          <CssBaseline/>
+          <Header/>
+          <Notification/>
+          <Container className={classes.heroContent} component="main">
+            <Switch>
+              <Route path="/" exact component={Blogs}/>
+              <Route path="/about" exact component={About}/>
+              <Route path="/about/terms-and-conditions" component={Notice}/>
+              <Route path="/about/disclaimer" component={Notice}/>
+              <Route path="/about/privacy" component={Notice}/>
+              <Route path="/blogs/me" component={Blogs}/>
+              <Route path="/blogs/new" component={NewBlog}/>
+              <Route path="/login" component={Login}/>
+              <LockedRoute path="/admin/users" component={AdminUsers}/>
+              <LockedRoute path="/cohort/admin" component={Cohorts}/>
+              <LockedRoute path="/cohort/new" component={NewCohort}/>
+              <Route component={Login}/>
+            </Switch>
+          </Container>
+      </div>
+    </ThemeProvider>
   );
 }
 

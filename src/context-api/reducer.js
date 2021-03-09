@@ -2,6 +2,7 @@ import {BlogLinkedList} from '../helpers/blogs-ds';
 import { CohortLinkedList } from '../helpers/cohort-ds';
 
 export const initialState = {
+    theme: "light",
     user: null,
     cohortLL: null,
     cohorts: [],
@@ -21,6 +22,11 @@ export const initialState = {
 
 const reducer = (state,action) => {
     switch(action.type){
+        case "SET_THEME":
+            return {
+                ...state,
+                theme: action.theme
+            }
         case "SET_USER":
             return {
                 ...state,

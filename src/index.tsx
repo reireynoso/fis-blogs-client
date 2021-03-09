@@ -5,26 +5,15 @@ import {BrowserRouter} from 'react-router-dom';
 import {StateProvider} from './context-api/Provider'
 import reportWebVitals from './reportWebVitals';
 import reducer, { initialState } from './context-api/reducer';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
-const theme = createMuiTheme({
-  palette:{
-      type:"light"
-  }
-})
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
   <React.StrictMode>
-      <CssBaseline/>
       <StateProvider initialState={initialState} reducer={reducer}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </StateProvider>
-    </React.StrictMode>
-  </ThemeProvider>,
+    </React.StrictMode>,
   document.getElementById('root')
 );
 

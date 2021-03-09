@@ -1,3 +1,7 @@
+export const setTheme = (theme) => ({
+    type: "SET_THEME",
+    theme
+})
 // user actions
 export const setUser = (user) => ({
     type: "SET_USER",
