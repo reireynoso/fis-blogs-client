@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import {useStateValue} from '../context-api/Provider'
-import {setUser} from '../context-api/actions';
+import {setUser, setTheme} from '../context-api/actions';
 
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +13,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const cookies = new Cookies();
 
 const Header : React.FC = () => {
-    const [{user}, dispatch] = useStateValue();
+    const [{user,theme}, dispatch] = useStateValue();
     const [drawer, setDrawer] = useState(false);
     
     const classes = useStyles();
@@ -74,7 +76,6 @@ const Header : React.FC = () => {
 
     const navLinks = () => {
         return <>
-
         <Button
             className={classes.link}
             activeClassName={classes.activeLink}
@@ -140,6 +141,17 @@ const Header : React.FC = () => {
             {!user ? "Login": "Logout"}
         </Button>
 
+        <FormControlLabel
+            control={<Switch 
+                checked={theme === "dark"} 
+                onChange={() => dispatch(setTheme(theme === "light" ? "dark": "light"))} 
+                color="default" 
+                size="small"
+                />}
+            label={theme === "light" ? "Dark": "Light"}
+            labelPlacement="bottom"
+
+        />
         </>
     }
 

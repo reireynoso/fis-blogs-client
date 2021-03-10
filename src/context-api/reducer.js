@@ -23,6 +23,7 @@ export const initialState = {
 const reducer = (state,action) => {
     switch(action.type){
         case "SET_THEME":
+            localStorage.setItem("muiTheme", action.theme)
             return {
                 ...state,
                 theme: action.theme

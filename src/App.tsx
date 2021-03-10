@@ -50,6 +50,11 @@ const App: React.FC = () => {
       path: '/',
     }) 
 
+    const storedTheme = localStorage.getItem("muiTheme")
+    if(storedTheme){
+      dispatch(setTheme(storedTheme))
+    }
+
     const token : String = cookies.get('token');
 
     if(token){
