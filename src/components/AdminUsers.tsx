@@ -119,6 +119,7 @@ const AdminUsers:React.FC = () => {
                     className={classes.userSearch}
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
+                    color="primary"
                 />
             {
             determineUsers?.map((user: {

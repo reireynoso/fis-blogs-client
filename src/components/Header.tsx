@@ -145,8 +145,8 @@ const Header : React.FC = () => {
             control={<Switch 
                 checked={theme === "dark"} 
                 onChange={() => dispatch(setTheme(theme === "light" ? "dark": "light"))} 
-                color="default" 
                 size="small"
+                color="primary"
                 />}
             label={theme === "light" ? "Dark": "Light"}
             labelPlacement="bottom"

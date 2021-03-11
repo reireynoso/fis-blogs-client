@@ -41,7 +41,10 @@ const App: React.FC = () => {
 
   const muiTheme = createMuiTheme({
     palette:{
-        type: theme 
+        type: theme, 
+        primary: {
+          main: theme == "light" ? '#3f50b5': "#1e88e5",
+        }
     }
   })
 

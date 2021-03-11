@@ -102,10 +102,10 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "scroll"
     },
     cohortList: {
-      background: "#eeeeee"
+      background: theme.palette.type === "light" ? "#eeeeee" : "#616161"
     },
     header: {
-      color: "#002984",
+      color: theme.palette.type === "light" ? "#002984" : "#1e88e5",
     },
     cohortSubHeader: {
       color: "#3f51b5",
