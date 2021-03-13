@@ -135,15 +135,15 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
         title={title}
     />
     <CardContent style={{
-      padding: 0
+      padding: "0 5px"
     }}>
       {
         history.location.pathname === "/blogs/me" ? <>
           <Typography
             variant="h6"
-            style={{wordBreak: "break-word"}}
+            noWrap
           >
-              {truncate(cohort.name, 25)}
+              {cohort.name}
           </Typography>
           <Button
             disableFocusRipple
@@ -167,7 +167,7 @@ const BlogCard : React.FC<Props> = ({title,image,link,user, _id, cohort, history
                     src={user.image_url}
                 />
               </ListItemAvatar>
-              <ListItemText style={{wordBreak: "break-word"}} className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={user.name ? truncate(user.name, 25) : "No Name Provided"} />
+              <ListItemText className={(loggedUser && user._id === loggedUser._id) ? classes.author : ""} primary={user.name ? truncate(user.name, 25) : "No Name Provided"} />
             </ListItem>
         </List>
         {

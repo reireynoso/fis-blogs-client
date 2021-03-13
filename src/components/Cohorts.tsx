@@ -35,6 +35,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -226,8 +227,9 @@ const Cohorts: React.FC = (props:any) => {
                         </Tooltip>
                       }
                       <Tooltip title={cohort.name}>
-                        <ListItemText primary={truncate(cohort.name
-                          , 12)} />
+                        <Typography noWrap>
+                          {cohort.name}
+                        </Typography>
                       </Tooltip>
                   </ListItem>
                   ))}
@@ -241,7 +243,7 @@ const Cohorts: React.FC = (props:any) => {
                     <div className={classes.selectedCohortMain}>
                       {
                         !editMode ? <h1 className={classes.header}>
-                            {cohorts[selectedCohort]?.name} 
+                            {truncate(cohorts[selectedCohort]?.name, 54)} 
                         </h1>
                         :
                         <TextField
